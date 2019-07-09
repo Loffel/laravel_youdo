@@ -18,3 +18,13 @@ Route::get('/', function () {
 });
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/register-executor', function(){
+    return view('auth.register-exec');
+});
+
+Route::prefix('admin')->middleware('auth')->group(function(){
+    Route::get('/', 'AdminController@index')->name('admin.index');
+
+    // Служебные
+    Route::get('/users/activate/{user_id}', 'AdminController@activateUser')->name('admin.activate_user');
+});

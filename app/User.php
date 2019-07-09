@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'ogrn', 'type', 'phone', 'legal_address', 'address',
     ];
 
     /**
@@ -36,4 +36,12 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function getTypeName(){
+        $name = '';
+        if($this->type == 1) $name = 'Заказчик';
+        else if($this->type == 2) $name = 'Исполнитель';
+
+        return $name;
+    }
 }

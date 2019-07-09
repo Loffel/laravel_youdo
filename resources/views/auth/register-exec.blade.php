@@ -5,12 +5,12 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
-                <div class="card-header">Регистрация - Заказчик</div>
+                <div class="card-header">Регистрация - Исполнитель</div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('register') }}">
                         @csrf
-                        <input type="hidden" name="type" value="1">
+                        <input type="hidden" name="type" value="2">
                         <div class="form-group row">
                             <label for="name" class="col-md-4 col-form-label text-md-right">Имя</label>
 
@@ -58,6 +58,34 @@
 
                             <div class="col-md-6">
                                 <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required autocomplete="new-password">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label for="ogrn" class="col-md-4 col-form-label text-md-right">ОГРН</label>
+                            <div class="col-md-6">
+                                <input id="ogrn" type="text" class="form-control" name="ogrn" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
+                            <label for="legal_address" class="col-md-4 col-form-label text-md-right">Юр. адрес</label>
+                            <div class="col-md-6">
+                                <input id="legal_address" type="text" class="form-control" name="legal_address" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label for="address" class="col-md-4 col-form-label text-md-right">Физ. адрес</label>
+                            <div class="col-md-6">
+                                <input id="address" type="text" class="form-control" name="address" required>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group row">
+                            <label for="phone" class="col-md-4 col-form-label text-md-right">Телефон</label>
+                            <div class="col-md-6">
+                                <input id="phone" type="tel" class="form-control" name="phone" required>
                             </div>
                         </div>
 
