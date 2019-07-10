@@ -28,3 +28,13 @@ Route::prefix('admin')->middleware('auth')->group(function(){
     // Служебные
     Route::get('/users/activate/{user_id}', 'AdminController@activateUser')->name('admin.activate_user');
 });
+
+Route::prefix('tasks')->middleware('auth')->group(function(){
+    Route::get('/', 'TaskController@index')->name('tasks.index');
+    Route::get('/new', 'TaskController@create')->name('tasks.create');
+    Route::post('/new', 'TaskController@store')->name('tasks.store');
+    Route::get('/{id}', 'TaskController@show')->name('tasks.show');
+    Route::get('/edit/{id}', 'TaskController@edit')->name('tasks.edit');
+    Route::patch('/edit/{id}', 'TaskController@update')->name('tasks.update');
+    Route::delete('/delete/{id}', 'TaskController@show')->name('tasks.delete');
+});
