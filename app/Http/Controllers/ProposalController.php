@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Task;
+use App\Proposal;
 
-class TaskController extends Controller
+class ProposalController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +15,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::paginate(10);
-
-        return view('tasks.index', array('tasks' => $tasks));
+        //
     }
 
     /**
@@ -27,7 +25,7 @@ class TaskController extends Controller
      */
     public function create()
     {
-        return view('tasks.create');
+        //
     }
 
     /**
@@ -38,15 +36,14 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        $task = Task::create(array(
-            'title' => $request->title,
+        $proposal = Proposal::create(array(
             'description' => $request->description,
             'price' => $request->price,
-            'date_end' => $request->date_end,
-            'user_id' => Auth::user()->id
+            'user_id' => Auth::user()->id,
+            'task_id' => $request->task_id
         ));
 
-        return redirect()->route('tasks.show', $task->id);
+        return redirect()->route('tasks.show', $request->task_id);
     }
 
     /**
@@ -57,9 +54,7 @@ class TaskController extends Controller
      */
     public function show($id)
     {
-        $task = Task::findOrFail($id);
-        
-        return view('tasks.show', array('task' => $task));
+        //
     }
 
     /**
@@ -70,13 +65,7 @@ class TaskController extends Controller
      */
     public function edit($id)
     {
-        $task = Task::findOrFail($id);
-
-        if(Auth::user()->id != $task->user_id) redirect()->back();
-
-        $task->date_end = str_replace(' ', 'T', $task->date_end);
-
-        return view('tasks.edit', array('task' => $task));
+        //
     }
 
     /**
@@ -88,9 +77,7 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Task::findOrFail($id)->update($request->all());
-
-        return redirect()->route('tasks.show', $id);
+        //
     }
 
     /**
@@ -101,16 +88,6 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        Task::findOrFail($id)->delete();
-
-        return redirect()->route('tasks.index');
-    }
-
-    public function selectProposal($task_id, $prop_id){
-        $task = Task::findOrFail($task_id);
-        $task->proposal_id = $prop_id;
-        $task->save();
-
-        return redirect()->route('tasks.show', $task_id);
+        //
     }
 }

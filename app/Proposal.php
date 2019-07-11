@@ -4,21 +4,20 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Task extends Model
+class Proposal extends Model
 {
     protected $fillable = [
-        'title',
         'description',
         'price',
-        'date_end',
-        'user_id'
+        'user_id',
+        'task_id'
     ];
 
     public function user(){
         return $this->belongsTo('App\User');
     }
 
-    public function proposals(){
-        return $this->hasMany('App\Proposal');
+    public function task(){
+        return $this->belongsTo('App\Task');
     }
 }
