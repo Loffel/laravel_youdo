@@ -30,7 +30,8 @@
         </div>
     </div>
     @if($task->user->id != Auth::user()->id)
-    <div class="row">
+        <div class="row">
+        @if($userProposal === NULL)
         <div class="col-10 offset-1">
             <div class="card text-center my-4">
                 <div class="card-header">
@@ -53,7 +54,27 @@
                 </form>
             </div>
         </div>
-    </div>
+        @else
+        <div class="col-12 my-3">
+            <div class="card col-10 offset-1">
+                <div class="card-body">
+                    <h5 class="card-title">{{$userProposal->user->name}}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{$userProposal->price}}</h6>
+                    <p class="card-text">{{ $userProposal->description }}</p>
+                    @if($task->proposal_id == $userProposal->id)
+                    <a class="text-muted">Вы выбраны исполнителем</a>
+                    <div class="row mt-4">
+                        <div class="btn-group col-10 offset-1">
+                            <a href="" class="btn btn-success col-6">Задание выполнено</a>
+                            <a href="" class="btn btn-danger col-6">Задание не выполнено</a>
+                        </div>
+                    </div>
+                    @endif
+                </div>
+            </div>
+        </div>
+        @endif
+        </div>
     @else
     <div class="row">
         <div class="col-10 offset-1 my-3">
@@ -62,17 +83,17 @@
         <div class="col-12">
             @foreach($task->proposals as $proposal)
             <div class="card col-4">
-                    <div class="card-body">
-                      <h5 class="card-title">{{$proposal->user->name}}</h5>
-                      <h6 class="card-subtitle mb-2 text-muted">{{$proposal->price}}</h6>
-                      <p class="card-text">{{ $proposal->description }}</p>
-                      @if($task->proposal_id == $proposal->id)
-                      <a class="text-muted">Это предложение выбрано</a>
-                      @else
-                      <a href="{{ route('tasks.select_proposal', array($task->id, $proposal->id)) }}" class="card-link">Выбрать исполнителя</a>
-                      @endif
-                    </div>
-                  </div>
+                <div class="card-body">
+                    <h5 class="card-title">{{$proposal->user->name}}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{$proposal->price}}</h6>
+                    <p class="card-text">{{ $proposal->description }}</p>
+                    @if($task->proposal_id == $proposal->id)
+                    <a class="text-muted">Это предложение выбрано</a>
+                    @else
+                    <a href="{{ route('tasks.select_proposal.view', array($task->id, $proposal->id)) }}" class="card-link">Выбрать исполнителя</a>
+                    @endif
+                </div>
+            </div>
             @endforeach
         </div>
     </div>

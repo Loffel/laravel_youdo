@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\User;
+use App\Proposal;
 
 class AdminController extends Controller
 {
@@ -18,7 +19,9 @@ class AdminController extends Controller
 
     public function index(){
         $unactive = User::where('is_verified', 0)->get();
-        return view('admin.index', array('unactive' => $unactive));
+        $proposals = Proposal::all();
+
+        return view('admin.index', array('unactive' => $unactive, 'proposals' => $proposals));
     }
 
     public function activateUser($user_id){

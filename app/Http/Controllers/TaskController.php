@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Task;
+use App\Proposal;
 
 class TaskController extends Controller
 {
@@ -58,8 +59,12 @@ class TaskController extends Controller
     public function show($id)
     {
         $task = Task::findOrFail($id);
+        $userProposal = NULL;
+
+        if(Auth::check())
+            $userProposal = Proposal::where('task_id', $id)->where('user_id', Auth::user()->id)->first();
         
-        return view('tasks.show', array('task' => $task));
+        return view('tasks.show', array('task' => $task, 'userProposal' => $userProposal));
     }
 
     /**
@@ -106,11 +111,14 @@ class TaskController extends Controller
         return redirect()->route('tasks.index');
     }
 
-    public function selectProposal($task_id, $prop_id){
-        $task = Task::findOrFail($task_id);
-        $task->proposal_id = $prop_id;
-        $task->save();
+    public function selectProposalView($task_id, $prop_id){
+        return view('tasks.select_proposal', array('task_id' => $task_id, 'prop_id' => $prop_id));
+    }
 
-        return redirect()->route('tasks.show', $task_id);
+    public function selectProposalStore(Request $request){
+        $task = Task::findOrFail($request->task_id);
+        $task->selectProposal($request->prop_id);
+
+        return redirect()->route('tasks.show', $request->task_id);
     }
 }
