@@ -15,6 +15,10 @@ class Task extends Model
         'user_id'
     ];
 
+    protected $dates = [
+        'date_end'
+    ];
+
     public function user(){
         return $this->belongsTo('App\User');
     }

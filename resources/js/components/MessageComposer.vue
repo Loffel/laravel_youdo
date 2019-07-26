@@ -1,5 +1,8 @@
 <template>
-    <textarea class="form-control col-12" v-model="message" @keydown.enter="send" placeholder="Введите сообщение..."></textarea>
+    <div class="message-reply">
+        <textarea v-model="message" cols="1" rows="1" placeholder="Введите сообщение..." data-autoresize></textarea>
+        <button v-on:click="send" class="button ripple-effect">Отправить</button>
+    </div>
 </template>
 
 <script>

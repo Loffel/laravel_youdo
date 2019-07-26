@@ -7,86 +7,44 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
-
-    <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
+    <title>{{ config('app.name', 'Laravel_YouDo') }}</title>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/colors/blue.css') }}">
 </head>
-<body>
-    <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
-            <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
+<body class="{{ Route::current()->getPrefix() == 'tasks' ? 'gray' : ''}}">
+    <div id="wrapper" class="{{ Route::currentRouteName() == 'welcome' ? 'wrapper-with-transparent-header' : ''}}">
+        @include('includes/header')
 
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
+        @yield('intro')
+        @yield('content')
 
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ml-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('login') }}">Вход</a>
-                            </li>
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">Регистрация</a>
-                                </li>
-                            @endif
-                        @else
-                            @if(Auth::user()->is_admin)
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('admin.index') }}">Админ-панель</a>
-                            </li>
-                            @endif
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('tasks.index') }}">Задания</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('posts.index') }}">Блог</a>
-                            </li>
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a href="{{ route('messenger.index') }}" class="dropdown-item">Личные сообщения</a>
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        Выйти
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
-        <main class="py-4">
-            @yield('content')
-        </main>
+        @if(Route::currentRouteName() != 'tasks.edit' && Route::currentRouteName() != 'tasks.create' && Route::currentRouteName() != 'messenger.index' && Route::currentRouteName() != 'admin.index')
+        @include('includes/footer')
+        @endif
+        
+        @guest
+            @include('includes/login_popup')    
+        @endguest
     </div>
+    <script src="{{ asset('js/app.js') }}"></script>
+    <script type="application/javascript" src="{{ asset('js/jquery-migrate-3.0.0.min.js') }}"></script>
+    <script type="application/javascript" src="{{ asset('js/bootstrap-select.min.js') }}"></script>
+    <script type="application/javascript" src="{{ asset('js/mmenu.min.js') }}"></script>
+    <script type="application/javascript" src="{{ asset('js/tippy.all.min.js') }}"></script>
+    <script type="application/javascript" src="{{ asset('js/simplebar.min.js') }}"></script>
+    <script type="application/javascript" src="{{ asset('js/bootstrap-slider.min.js') }}"></script>
+    <script type="application/javascript" src="{{ asset('js/snackbar.js') }}"></script>
+    <script type="application/javascript" src="{{ asset('js/clipboard.min.js') }}"></script>
+    <script type="application/javascript" src="{{ asset('js/magnific-popup.min.js') }}"></script>
+    <script type="application/javascript" src="{{ asset('js/slick.min.js') }}"></script>
+    {{--  <script type="application/javascript" src="{{ asset('js/custom.js') }}"></script>  --}}
+    {{--  <script type="application/javascript" src="{{ asset('js/bundle.min.js') }}"></script>  --}}
+    @stack('scripts')
 </body>
 </html>

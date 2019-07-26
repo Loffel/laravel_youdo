@@ -1,20 +1,8 @@
 <template>
-    <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-header">Сообщения</div>
-
-                    <div class="card-body row">
-                        <div class="col-8">
-                            <Conversation :contact="selectedContact" :messages="messages" @new="saveNewMessage"/>
-                        </div>
-                        <div class="col-4" style="border-left: 1px solid #d8d8d8;">
-                            <ContactList :contacts="contacts" @selected="startConversationWith"/>
-                        </div>
-                    </div>                   
-                </div>
-            </div>
+    <div class="messages-container margin-top-0">
+        <div class="messages-container-inner">
+            <ContactList :contacts="contacts" @selected="startConversationWith"/>
+            <Conversation :contact="selectedContact" :messages="messages" @new="saveNewMessage"/>
         </div>
     </div>
 </template>

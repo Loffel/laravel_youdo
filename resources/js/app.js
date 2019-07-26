@@ -18,7 +18,6 @@ window.Vue = require('vue');
 
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
-
 Vue.component('messenger', require('./components/Messenger.vue').default);
 
 /**
@@ -27,9 +26,28 @@ Vue.component('messenger', require('./components/Messenger.vue').default);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+import counterUp from 'counterup2'
+
  window.onload = function(){
     const app = new Vue({
-        el: '#app',
+        el: '#wrapper',
+        mounted(){
+          let bundleScript = document.createElement('script')
+          bundleScript.setAttribute('src', '/js/custom.js')
+          document.body.appendChild(bundleScript)
+
+          const el = document.querySelector( '.fun-fact h4' )
+
+          $('.fun-fact h4, .counter').each(function(index, el){
+            counterUp(el, {
+              duration: 500,
+              delay: 5,
+            });
+          });
+          
+
+          console.log('Boom');
+        }
     });
  }
 

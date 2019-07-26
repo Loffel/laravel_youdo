@@ -1,10 +1,11 @@
 <template>
-    <div class="row">
-        <div class="col-12" style="width: 100%">
-            <h4> {{contact ? 'Беседа с ' + contact.name : ''}} </h4>
-            <MessagesHistory :contact="contact" :messages="messages"/>
-            <MessageComposer @send="sendMessage"/>
+    <div class="message-content">
+        <div class="messages-headline">
+            <h4>{{contact ? contact.name : ''}}</h4>
+            <a v-if="contact" href="#" class="message-action"><i class="icon-feather-trash-2"></i> Удалить диалог</a>
         </div>
+        <MessagesHistory v-if="contact" :contact="contact" :messages="messages"/>
+        <MessageComposer v-if="contact" @send="sendMessage"/>
     </div>
 </template>
 

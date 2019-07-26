@@ -16,7 +16,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        $tasks = Task::paginate(10);
+        $tasks = Task::paginate(5);
 
         return view('tasks.index', array('tasks' => $tasks));
     }
@@ -79,9 +79,10 @@ class TaskController extends Controller
 
         if(Auth::user()->id != $task->user_id) redirect()->back();
 
-        $task->date_end = str_replace(' ', 'T', $task->date_end);
+        $dateEndString = $task->date_end->toDateTimeString();
+        $dateEndString = str_replace(' ', 'T', $dateEndString);
 
-        return view('tasks.edit', array('task' => $task));
+        return view('tasks.edit', array('task' => $task, 'dateEndString' => $dateEndString));
     }
 
     /**
@@ -93,7 +94,10 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Task::findOrFail($id)->update($request->all());
+        $requestData = $request->all();
+        $requestData['date_end'] = \Carbon\Carbon::parse($request->date_end)->format('Y-m-d h:m:s');
+
+        Task::findOrFail($id)->update($requestData);
 
         return redirect()->route('tasks.show', $id);
     }
@@ -112,7 +116,8 @@ class TaskController extends Controller
     }
 
     public function selectProposalView($task_id, $prop_id){
-        return view('tasks.select_proposal', array('task_id' => $task_id, 'prop_id' => $prop_id));
+        $taskPrice = Task::findOrFail($task_id)->price;
+        return view('tasks.select_proposal', array('task_id' => $task_id, 'prop_id' => $prop_id, 'taskPrice' => $taskPrice));
     }
 
     public function selectProposalStore(Request $request){

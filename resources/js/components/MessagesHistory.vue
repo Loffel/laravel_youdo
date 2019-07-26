@@ -1,9 +1,13 @@
 <template>
-    <ul v-if="contact">
-        <li v-for="message in messages" :class="`col-6 ${message.to_id == contact.id ? 'float-right text-right':'float-left text-left'}`" :key="message.id" style="clear:both">
-            {{ message.text }}
-        </li>
-    </ul>
+    <div class="message-content-inner">			
+        <div v-for="message in messages" :class="`message-bubble ${message.to_id == contact.id ? 'me':''}`" :key="message.id">
+            <div class="message-bubble-inner">
+                <div class="message-avatar"><img src="/images/user-avatar-placeholder.png" alt="" /></div>
+                <div class="message-text"><p>{{ message.text }}</p></div>
+            </div>
+            <div class="clearfix"></div>
+        </div>
+    </div>
 </template>
 
 <script>

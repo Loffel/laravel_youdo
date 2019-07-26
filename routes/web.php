@@ -13,11 +13,8 @@
 
 Auth::routes();
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@welcome')->name('welcome');
+Route::get('/home', 'HomeController@index')->middleware('auth')->name('home');
 Route::get('/register-executor', function(){
     return view('auth.register-exec');
 });
@@ -62,4 +59,8 @@ Route::prefix('messenger')->middleware('auth')->name('messenger.')->group(functi
     Route::post('/conversation/send', 'MessengerController@sendMessage')->name('sendMessage');
     
     Route::get('/contacts', 'MessengerController@getContacts')->name('contacts');
+});
+
+Route::prefix('profile')->name('profile.')->group(function(){
+    Route::get('/{id}', 'ProfileController@show')->name('show');
 });

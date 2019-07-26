@@ -1850,6 +1850,22 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     contacts: {
@@ -1859,7 +1875,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      selected: 0
+      selected: -1
     };
   },
   methods: {
@@ -1883,6 +1899,7 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _MessagesHistory__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./MessagesHistory */ "./resources/js/components/MessagesHistory.vue");
 /* harmony import */ var _MessageComposer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./MessageComposer */ "./resources/js/components/MessageComposer.vue");
+//
 //
 //
 //
@@ -1940,6 +1957,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -1975,6 +1995,10 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     contact: {
@@ -2000,18 +2024,6 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Conversation__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Conversation */ "./resources/js/components/Conversation.vue");
 /* harmony import */ var _ContactList__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ContactList */ "./resources/js/components/ContactList.vue");
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -6502,6 +6514,17 @@ __webpack_require__.r(__webpack_exports__);
 }));
 //# sourceMappingURL=bootstrap.js.map
 
+
+/***/ }),
+
+/***/ "./node_modules/counterup2/dist/index.js":
+/*!***********************************************!*\
+  !*** ./node_modules/counterup2/dist/index.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+!function(t,e){ true?module.exports=e():undefined}(window,function(){return function(t){var e={};function n(r){if(e[r])return e[r].exports;var o=e[r]={i:r,l:!1,exports:{}};return t[r].call(o.exports,o,o.exports,n),o.l=!0,o.exports}return n.m=t,n.c=e,n.d=function(t,e,r){n.o(t,e)||Object.defineProperty(t,e,{enumerable:!0,get:r})},n.r=function(t){"undefined"!=typeof Symbol&&Symbol.toStringTag&&Object.defineProperty(t,Symbol.toStringTag,{value:"Module"}),Object.defineProperty(t,"__esModule",{value:!0})},n.t=function(t,e){if(1&e&&(t=n(t)),8&e)return t;if(4&e&&"object"==typeof t&&t&&t.__esModule)return t;var r=Object.create(null);if(n.r(r),Object.defineProperty(r,"default",{enumerable:!0,value:t}),2&e&&"string"!=typeof t)for(var o in t)n.d(r,o,function(e){return t[e]}.bind(null,o));return r},n.n=function(t){var e=t&&t.__esModule?function(){return t.default}:function(){return t};return n.d(e,"a",e),e},n.o=function(t,e){return Object.prototype.hasOwnProperty.call(t,e)},n.p="",n(n.s=0)}([function(t,e,n){"use strict";n.r(e),n.d(e,"divideNumbers",function(){return o}),n.d(e,"hasComma",function(){return i}),n.d(e,"isFloat",function(){return u}),n.d(e,"decimalPlaces",function(){return l});e.default=function(t){var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{},n=e.action,i=void 0===n?"start":n,u=e.duration,l=void 0===u?1e3:u,a=e.delay,c=void 0===a?16:a,d=e.lang,f=void 0===d?void 0:d;if("stop"!==i){if(r(t),/[0-9]/.test(t.innerHTML)){var s=o(t.innerHTML,{duration:l||t.getAttribute("data-duration"),lang:f||document.querySelector("html").getAttribute("lang")||void 0,delay:c||t.getAttribute("data-delay")});t._countUpOrigInnerHTML=t.innerHTML,t.innerHTML=s[0],t.style.visibility="visible",t.countUpTimeout=setTimeout(function e(){t.innerHTML=s.shift(),s.length?(clearTimeout(t.countUpTimeout),t.countUpTimeout=setTimeout(e,c)):t._countUpOrigInnerHTML=void 0},c)}}else r(t)};var r=function(t){clearTimeout(t.countUpTimeout),t._countUpOrigInnerHTML&&(t.innerHTML=t._countUpOrigInnerHTML,t._countUpOrigInnerHTML=void 0),t.style.visibility=""},o=function(t){for(var e=arguments.length>1&&void 0!==arguments[1]?arguments[1]:{},n=e.duration,r=void 0===n?1e3:n,o=e.delay,i=void 0===o?16:o,u=e.lang,l=void 0===u?void 0:u,a=r/i,c=t.toString().split(/(<[^>]+>|[0-9.][,.0-9]*[0-9]*)/),d=[],f=0;f<a;f++)d.push("");for(var s=0;s<c.length;s++)if(/([0-9.][,.0-9]*[0-9]*)/.test(c[s])&&!/<[^>]+>/.test(c[s])){var p=c[s],v=/[0-9]+,[0-9]+/.test(p);p=p.replace(/,/g,"");for(var g=/^[0-9]+\.[0-9]+$/.test(p),y=g?(p.split(".")[1]||[]).length:0,b=d.length-1,m=a;m>=1;m--){var T=parseInt(p/a*m,10);g&&(T=parseFloat(p/a*m).toFixed(y),T=parseFloat(T).toLocaleString(l)),v&&(T=T.toLocaleString(l)),d[b--]+=T}}else for(var M=0;M<a;M++)d[M]+=c[s];return d[d.length]=t.toString(),d},i=function(t){return/[0-9]+,[0-9]+/.test(t)},u=function(t){return/^[0-9]+\.[0-9]+$/.test(t)},l=function(t){return u(t)?(t.split(".")[1]||[]).length:0}}])});
 
 /***/ }),
 
@@ -37999,20 +38022,17 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
+  return _c("div", { staticClass: "messages-inbox" }, [
+    _vm._m(0),
+    _vm._v(" "),
     _c(
-      "div",
-      { staticClass: "col-12" },
+      "ul",
       _vm._l(_vm.contacts, function(contact, index) {
         return _c(
           "li",
           {
             key: contact.id,
-            class: { selected: index == _vm.selected },
-            staticStyle: {
-              "border-bottom": "1px solid #000000",
-              cursor: "pointer"
-            },
+            class: { "active-message": index == _vm.selected },
             on: {
               click: function($event) {
                 return _vm.selectContact(index, contact)
@@ -38020,9 +38040,19 @@ var render = function() {
             }
           },
           [
-            _vm._v("\n            " + _vm._s(contact.name) + "\n            "),
-            _c("br"),
-            _vm._v("\n            " + _vm._s(contact.email) + "\n        ")
+            _c("a", { attrs: { href: "#" } }, [
+              _vm._m(1, true),
+              _vm._v(" "),
+              _c("div", { staticClass: "message-by" }, [
+                _c("div", { staticClass: "message-by-headline" }, [
+                  _c("h5", [_vm._v(_vm._s(contact.name))]),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("@ дней назад")])
+                ]),
+                _vm._v(" "),
+                _c("p", [_vm._v("Последнее сообщение!")])
+              ])
+            ])
           ]
         )
       }),
@@ -38030,7 +38060,37 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "messages-headline" }, [
+      _c("div", { staticClass: "input-with-icon" }, [
+        _c("input", {
+          attrs: {
+            id: "autocomplete-input",
+            type: "text",
+            placeholder: "Search"
+          }
+        }),
+        _vm._v(" "),
+        _c("i", { staticClass: "icon-material-outline-search" })
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "message-avatar" }, [
+      _c("i", { staticClass: "status-icon status-online" }),
+      _c("img", {
+        attrs: { src: "/images/user-avatar-placeholder.png", alt: "" }
+      })
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -38052,28 +38112,33 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "row" }, [
-    _c(
-      "div",
-      { staticClass: "col-12", staticStyle: { width: "100%" } },
-      [
-        _c("h4", [
-          _vm._v(
-            " " +
-              _vm._s(_vm.contact ? "Беседа с " + _vm.contact.name : "") +
-              " "
-          )
-        ]),
+  return _c(
+    "div",
+    { staticClass: "message-content" },
+    [
+      _c("div", { staticClass: "messages-headline" }, [
+        _c("h4", [_vm._v(_vm._s(_vm.contact ? _vm.contact.name : ""))]),
         _vm._v(" "),
-        _c("MessagesHistory", {
-          attrs: { contact: _vm.contact, messages: _vm.messages }
-        }),
-        _vm._v(" "),
-        _c("MessageComposer", { on: { send: _vm.sendMessage } })
-      ],
-      1
-    )
-  ])
+        _vm.contact
+          ? _c("a", { staticClass: "message-action", attrs: { href: "#" } }, [
+              _c("i", { staticClass: "icon-feather-trash-2" }),
+              _vm._v(" Удалить диалог")
+            ])
+          : _vm._e()
+      ]),
+      _vm._v(" "),
+      _vm.contact
+        ? _c("MessagesHistory", {
+            attrs: { contact: _vm.contact, messages: _vm.messages }
+          })
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.contact
+        ? _c("MessageComposer", { on: { send: _vm.sendMessage } })
+        : _vm._e()
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -38097,36 +38162,39 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("textarea", {
-    directives: [
-      {
-        name: "model",
-        rawName: "v-model",
-        value: _vm.message,
-        expression: "message"
-      }
-    ],
-    staticClass: "form-control col-12",
-    attrs: { placeholder: "Введите сообщение..." },
-    domProps: { value: _vm.message },
-    on: {
-      keydown: function($event) {
-        if (
-          !$event.type.indexOf("key") &&
-          _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-        ) {
-          return null
+  return _c("div", { staticClass: "message-reply" }, [
+    _c("textarea", {
+      directives: [
+        {
+          name: "model",
+          rawName: "v-model",
+          value: _vm.message,
+          expression: "message"
         }
-        return _vm.send($event)
+      ],
+      attrs: {
+        cols: "1",
+        rows: "1",
+        placeholder: "Введите сообщение...",
+        "data-autoresize": ""
       },
-      input: function($event) {
-        if ($event.target.composing) {
-          return
+      domProps: { value: _vm.message },
+      on: {
+        input: function($event) {
+          if ($event.target.composing) {
+            return
+          }
+          _vm.message = $event.target.value
         }
-        _vm.message = $event.target.value
       }
-    }
-  })
+    }),
+    _vm._v(" "),
+    _c(
+      "button",
+      { staticClass: "button ripple-effect", on: { click: _vm.send } },
+      [_vm._v("Отправить")]
+    )
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -38150,29 +38218,45 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.contact
-    ? _c(
-        "ul",
-        _vm._l(_vm.messages, function(message) {
-          return _c(
-            "li",
-            {
-              key: message.id,
-              class:
-                "col-6 " +
-                (message.to_id == _vm.contact.id
-                  ? "float-right text-right"
-                  : "float-left text-left"),
-              staticStyle: { clear: "both" }
-            },
-            [_vm._v("\n        " + _vm._s(message.text) + "\n    ")]
-          )
-        }),
-        0
+  return _c(
+    "div",
+    { staticClass: "message-content-inner" },
+    _vm._l(_vm.messages, function(message) {
+      return _c(
+        "div",
+        {
+          key: message.id,
+          class:
+            "message-bubble " + (message.to_id == _vm.contact.id ? "me" : "")
+        },
+        [
+          _c("div", { staticClass: "message-bubble-inner" }, [
+            _vm._m(0, true),
+            _vm._v(" "),
+            _c("div", { staticClass: "message-text" }, [
+              _c("p", [_vm._v(_vm._s(message.text))])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "clearfix" })
+        ]
       )
-    : _vm._e()
+    }),
+    0
+  )
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "message-avatar" }, [
+      _c("img", {
+        attrs: { src: "/images/user-avatar-placeholder.png", alt: "" }
+      })
+    ])
+  }
+]
 render._withStripped = true
 
 
@@ -38194,46 +38278,23 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-md-12" }, [
-        _c("div", { staticClass: "card" }, [
-          _c("div", { staticClass: "card-header" }, [_vm._v("Сообщения")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "card-body row" }, [
-            _c(
-              "div",
-              { staticClass: "col-8" },
-              [
-                _c("Conversation", {
-                  attrs: {
-                    contact: _vm.selectedContact,
-                    messages: _vm.messages
-                  },
-                  on: { new: _vm.saveNewMessage }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              {
-                staticClass: "col-4",
-                staticStyle: { "border-left": "1px solid #d8d8d8" }
-              },
-              [
-                _c("ContactList", {
-                  attrs: { contacts: _vm.contacts },
-                  on: { selected: _vm.startConversationWith }
-                })
-              ],
-              1
-            )
-          ])
-        ])
-      ])
-    ])
+  return _c("div", { staticClass: "messages-container margin-top-0" }, [
+    _c(
+      "div",
+      { staticClass: "messages-container-inner" },
+      [
+        _c("ContactList", {
+          attrs: { contacts: _vm.contacts },
+          on: { selected: _vm.startConversationWith }
+        }),
+        _vm._v(" "),
+        _c("Conversation", {
+          attrs: { contact: _vm.selectedContact, messages: _vm.messages },
+          on: { new: _vm.saveNewMessage }
+        })
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = []
@@ -50383,9 +50444,13 @@ module.exports = function(module) {
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
   \*****************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var counterup2__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! counterup2 */ "./node_modules/counterup2/dist/index.js");
+/* harmony import */ var counterup2__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(counterup2__WEBPACK_IMPORTED_MODULE_0__);
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
@@ -50411,9 +50476,24 @@ Vue.component('messenger', __webpack_require__(/*! ./components/Messenger.vue */
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
+
+
 window.onload = function () {
   var app = new Vue({
-    el: '#app'
+    el: '#wrapper',
+    mounted: function mounted() {
+      var bundleScript = document.createElement('script');
+      bundleScript.setAttribute('src', '/js/custom.js');
+      document.body.appendChild(bundleScript);
+      var el = document.querySelector('.fun-fact h4');
+      $('.fun-fact h4, .counter').each(function (index, el) {
+        counterup2__WEBPACK_IMPORTED_MODULE_0___default()(el, {
+          duration: 500,
+          delay: 5
+        });
+      });
+      console.log('Boom');
+    }
   });
 };
 
