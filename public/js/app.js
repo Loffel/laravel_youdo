@@ -50479,6 +50479,20 @@ Vue.component('messenger', __webpack_require__(/*! ./components/Messenger.vue */
 
 
 window.onload = function () {
+  function typeElementSwticher(el) {
+    var show = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+
+    if (show) {
+      $(el).parent().show();
+      $(el).prop('required', true);
+    } else {
+      $(el).parent().hide();
+      $(el).prop('required', false);
+    }
+
+    return true;
+  }
+
   var app = new Vue({
     el: '#wrapper',
     mounted: function mounted() {
@@ -50491,6 +50505,24 @@ window.onload = function () {
           duration: 500,
           delay: 5
         });
+      });
+      $('input.account-type-radio').change(function () {
+        var inputID = $(this).attr('id');
+        var typeInput = $('input[name="type"]');
+
+        if (inputID == 'freelancer-radio') {
+          typeInput.val(2);
+          typeElementSwticher($('input[name="ogrn"]'));
+          typeElementSwticher($('input[name="legal_address"]'));
+          typeElementSwticher($('input[name="address"]'));
+          typeElementSwticher($('input[name="phone"]'));
+        } else {
+          typeInput.val(1);
+          typeElementSwticher($('input[name="ogrn"]'), false);
+          typeElementSwticher($('input[name="legal_address"]'), false);
+          typeElementSwticher($('input[name="address"]'), false);
+          typeElementSwticher($('input[name="phone"]'), false);
+        }
       });
       console.log('Boom');
     }

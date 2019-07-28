@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Validation\Rule;
 
 class RegisterController extends Controller
 {
@@ -48,11 +49,22 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
+        $validator = Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'type' => ['required', Rule::in(['1', '2'])]
+        ],[
+            'type.*' => 'Не выбран тип аккаунта.',
+            'password.min' => 'Пароль должен быть не менее 8 символов.',
+            'password.confirmed' => 'Пароли не совпадают.'
         ]);
+        
+        $validator->sometimes(['ogrn', 'legal_address', 'address', 'phone'], 'required', function($input){
+            return $input->type == 2;
+        });
+
+        return $validator; 
     }
 
     /**

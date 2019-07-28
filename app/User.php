@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'ogrn', 'type', 'phone', 'legal_address', 'address',
+        'name', 'email', 'password', 'ogrn', 'type', 'phone', 'legal_address', 'address', 'avatar', 'about'
     ];
 
     /**
@@ -43,6 +43,13 @@ class User extends Authenticatable
         else if($this->type == 2) $name = 'Исполнитель';
 
         return $name;
+    }
+
+    public function getAvatar(){
+        $avatar = 'images/user-avatar-placeholder.png';
+        if($this->avatar != NULL) $avatar = $this->avatar;
+
+        return asset($avatar);
     }
 
     public function tasks(){

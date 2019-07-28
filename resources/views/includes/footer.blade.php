@@ -26,23 +26,23 @@
 								<div class="footer-row-inner">
 									<ul class="footer-social-links">
 										<li>
-											<a href="#" title="Facebook" data-tippy-placement="bottom" data-tippy-theme="light">
-												<i class="icon-brand-facebook-f"></i>
+											<a href="#" title="ВКонтакте" data-tippy-placement="bottom" data-tippy-theme="light">
+												<i class="icon-brand-vk"></i>
 											</a>
 										</li>
 										<li>
-											<a href="#" title="Twitter" data-tippy-placement="bottom" data-tippy-theme="light">
-												<i class="icon-brand-twitter"></i>
+											<a href="#" title="Одноклассники" data-tippy-placement="bottom" data-tippy-theme="light">
+												<i class="icon-brand-odnoklassniki"></i>
 											</a>
 										</li>
 										<li>
-											<a href="#" title="Google Plus" data-tippy-placement="bottom" data-tippy-theme="light">
-												<i class="icon-brand-google-plus-g"></i>
+											<a href="#" title="Telegram" data-tippy-placement="bottom" data-tippy-theme="light">
+												<i class="icon-brand-telegram-plane"></i>
 											</a>
 										</li>
 										<li>
-											<a href="#" title="LinkedIn" data-tippy-placement="bottom" data-tippy-theme="light">
-												<i class="icon-brand-linkedin-in"></i>
+											<a href="#" title="WhatsApp" data-tippy-placement="bottom" data-tippy-theme="light">
+												<i class="icon-brand-whatsapp"></i>
 											</a>
 										</li>
 									</ul>
@@ -68,12 +68,12 @@
 				<!-- Links -->
 				<div class="col-xl-2 col-lg-2 col-md-3">
 					<div class="footer-links">
-						<h3>For Candidates</h3>
+						<h3>Задания</h3>
 						<ul>
-							<li><a href="#"><span>Browse Jobs</span></a></li>
-							<li><a href="#"><span>Add Resume</span></a></li>
-							<li><a href="#"><span>Job Alerts</span></a></li>
-							<li><a href="#"><span>My Bookmarks</span></a></li>
+							<li><a href="#"><span>Все задания</span></a></li>
+							@auth
+							<li><a href="#"><span>Создать задание</span></a></li>
+							@endauth
 						</ul>
 					</div>
 				</div>
@@ -81,12 +81,14 @@
 				<!-- Links -->
 				<div class="col-xl-2 col-lg-2 col-md-3">
 					<div class="footer-links">
-						<h3>For Employers</h3>
+						<h3>Блог</h3>
 						<ul>
-							<li><a href="#"><span>Browse Candidates</span></a></li>
-							<li><a href="#"><span>Post a Job</span></a></li>
-							<li><a href="#"><span>Post a Task</span></a></li>
-							<li><a href="#"><span>Plans & Pricing</span></a></li>
+							<li><a href="#"><span>Все посты</span></a></li>
+							@auth
+								@if(Auth::user()->is_admin)
+									<li><a href="#"><span>Создать пост</span></a></li>
+								@endif
+							@endauth
 						</ul>
 					</div>
 				</div>
@@ -94,11 +96,11 @@
 				<!-- Links -->
 				<div class="col-xl-2 col-lg-2 col-md-3">
 					<div class="footer-links">
-						<h3>Helpful Links</h3>
+						<h3>О сайте</h3>
 						<ul>
-							<li><a href="#"><span>Contact</span></a></li>
-							<li><a href="#"><span>Privacy Policy</span></a></li>
-							<li><a href="#"><span>Terms of z</span></a></li>
+							<li><a href="#"><span>Контакты</span></a></li>
+							<li><a href="#"><span>Соглашение об использовании сайта</span></a></li>
+							<li><a href="#"><span>Правила обработки и защиты информации о пользователях</span></a></li>
 						</ul>
 					</div>
 				</div>
@@ -106,22 +108,25 @@
 				<!-- Links -->
 				<div class="col-xl-2 col-lg-2 col-md-3">
 					<div class="footer-links">
-						<h3>Account</h3>
+						<h3>Аккаунт</h3>
 						<ul>
-							<li><a href="#"><span>Log In</span></a></li>
-							<li><a href="#"><span>My Account</span></a></li>
+							@guest
+							<li><a href="{{ route('login') }}"><span>Вход</span></a></li>
+							<li><a href="{{ route('register') }}"><span>Регистрация</span></a></li>
+							@else
+							<li><a href="{{ route('profile.show', Auth::user()->id) }}"><span>Мой профиль</span></a></li>
+							@endguest
 						</ul>
 					</div>
 				</div>
 
 				<!-- Newsletter -->
 				<div class="col-xl-4 col-lg-4 col-md-12">
-					<h3><i class="icon-feather-mail"></i> Sign Up For a Newsletter</h3>
-					<p>Weekly breaking news, analysis and cutting edge advices on job searching.</p>
-					<form action="#" method="get" class="newsletter">
-						<input type="text" name="fname" placeholder="Enter your email address">
-						<button type="submit"><i class="icon-feather-arrow-right"></i></button>
-					</form>
+					<h3><i class="icon-material-outline-access-time"></i> Контакты</h3>
+					<p><i class="icon-feather-phone"></i> +7 (999) 999-99-99 <br>
+						<i class="icon-feather-calendar"></i> 10:00 — 18:00 <br>
+						<i class="icon-feather-mail"></i> info@site.ru
+					</p>
 				</div>
 			</div>
 		</div>
@@ -133,7 +138,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-xl-12">
-					© 2019 <strong>Laravel_YouDo</strong>. All Rights Reserved.
+					© 2019 <strong>Laravel_YouDo</strong>. Все права защищены.
 				</div>
 			</div>
 		</div>

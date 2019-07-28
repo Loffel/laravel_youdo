@@ -49,6 +49,11 @@
                                         <div class="submit-field">
                                             <h5>Контент</h5>
                                             <textarea cols="30" rows="5" name="content" class="with-border">{{ $post->content }}</textarea>
+                                            <div class="uploadButton margin-top-30">
+                                                <input class="uploadButton-input" type="file" accept="image/*" name="cover" id="upload">
+                                                <label class="uploadButton-button ripple-effect" for="upload">Загрузить обложку</label>
+                                                <span class="uploadButton-file-name">Данная картинка будет использована в качестве обложки поста.</span>
+                                            </div>
                                         </div>
                                     </div>
 

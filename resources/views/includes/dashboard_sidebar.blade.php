@@ -9,41 +9,37 @@
                         <span class="hamburger-inner"></span>
                     </span>
                 </span>
-                <span class="trigger-title">Dashboard Navigation</span>
+                <span class="trigger-title">Навигация</span>
             </a>
             
             <!-- Navigation -->
             <div class="dashboard-nav">
                 <div class="dashboard-nav-inner">
 
-                    <ul data-submenu-title="Start">
-                        <li><a href="dashboard.html"><i class="icon-material-outline-dashboard"></i> Dashboard</a></li>
-                        <li><a href="dashboard-messages.html"><i class="icon-material-outline-question-answer"></i> Messages <span class="nav-tag">2</span></a></li>
-                        <li><a href="dashboard-bookmarks.html"><i class="icon-material-outline-star-border"></i> Bookmarks</a></li>
-                        <li><a href="dashboard-reviews.html"><i class="icon-material-outline-rate-review"></i> Reviews</a></li>
+                    <ul data-submenu-title="Основное">
+                        <li class="{{ (Route::currentRouteName() == 'home') ? 'active':'' }}"><a href="{{ route('home') }}"><i class="icon-material-outline-dashboard"></i> Панель управления</a></li>
+                        <li class="{{ (Route::currentRouteName() == 'messenger.index') ? 'active':'' }}"><a href="{{ route('messenger.index') }}"><i class="icon-material-outline-question-answer"></i> Сообщения <span class="nav-tag">?</span></a></li>
+                        {{-- <li><a href="dashboard-bookmarks.html"><i class="icon-material-outline-star-border"></i> Bookmarks</a></li> --}}
+                        <li><a href="#"><i class="icon-material-outline-rate-review"></i> Отзывы</a></li>
                     </ul>
                     
-                    <ul data-submenu-title="Organize and Manage">
-                        <li><a href="#"><i class="icon-material-outline-business-center"></i> Jobs</a>
+                    <ul data-submenu-title="Управление заданиями">
+                        <li class="{{ (Route::currentRouteName() == 'tasks.create') ? 'active-submenu':'' }}"><a href="#"><i class="icon-material-outline-assignment"></i> Задания</a>
                             <ul>
-                                <li><a href="dashboard-manage-jobs.html">Manage Jobs <span class="nav-tag">3</span></a></li>
-                                <li><a href="dashboard-manage-candidates.html">Manage Candidates</a></li>
-                                <li><a href="dashboard-post-a-job.html">Post a Job</a></li>
-                            </ul>	
-                        </li>
-                        <li class="active-submenu"><a href="#"><i class="icon-material-outline-assignment"></i> Tasks</a>
-                            <ul>
-                                <li><a href="dashboard-manage-tasks.html">Manage Tasks <span class="nav-tag">2</span></a></li>
-                                <li><a href="dashboard-manage-bidders.html">Manage Bidders</a></li>
-                                <li><a href="dashboard-my-active-bids.html">My Active Bids <span class="nav-tag">4</span></a></li>
-                                <li><a href="dashboard-post-a-task.html">Post a Task</a></li>
+                                <li><a href="#">Мои задания <span class="nav-tag">2</span></a></li>
+                                @if(Auth::user()->type == 1)
+                                <li><a href="#">Управление заявками</a></li>
+                                <li><a href="#">Создать задание</a></li>
+                                @else
+                                <li><a href="#">Мои заявки <span class="nav-tag">4</span></a></li>
+                                @endif
                             </ul>	
                         </li>
                     </ul>
 
-                    <ul data-submenu-title="Account">
-                        <li><a href="dashboard-settings.html"><i class="icon-material-outline-settings"></i> Settings</a></li>
-                        <li><a href="index-logged-out.html"><i class="icon-material-outline-power-settings-new"></i> Logout</a></li>
+                    <ul data-submenu-title="Аккаунт">
+                        <li class="{{ (Route::currentRouteName() == 'profile.settings.show') ? 'active':'' }}"><a href="{{ route('profile.settings.show') }}"><i class="icon-material-outline-settings"></i> Настройки</a></li>
+                        <li><a href="{{ route('logout') }}"><i class="icon-material-outline-power-settings-new"></i> Выйти</a></li>
                     </ul>
                     
                 </div>

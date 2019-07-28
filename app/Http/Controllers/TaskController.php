@@ -9,6 +9,11 @@ use App\Proposal;
 
 class TaskController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('auth', ['except' => ['index', 'show']]);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -28,6 +33,9 @@ class TaskController extends Controller
      */
     public function create()
     {
+        if(Auth::user()->type != 1) 
+            return redirect()->back();
+
         return view('tasks.create');
     }
 

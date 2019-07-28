@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Intervention\Image\Facades\Image;
 use App\Post;
 
 class PostController extends Controller
@@ -38,10 +39,18 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
+        $coverImage = NULL;
+        if($request->hasFile('cover')){
+            $coverImage = $request->file('cover')->store('images/blog', 'public');
+            $image = Image::make(public_path('storage/'.$coverImage))->fit(800, 500);
+            $image->save();
+        }
+
         $post = Post::create(array(
             'title' => $request->title,
             'content' => $request->content,
-            'user_id' => Auth::user()->id
+            'user_id' => Auth::user()->id,
+            'cover' => $coverImage
         ));
 
         return redirect()->route('posts.show', $post->id);
@@ -56,7 +65,10 @@ class PostController extends Controller
     public function show($id)
     {
         $post = Post::findOrFail($id);
-        return view('posts.show', array('post' => $post));
+        $previousPost = Post::where('id', '<', $id)->orderBy('id', 'desc')->first();
+        $nextPost = Post::where('id', '>', $id)->orderBy('id', 'asc')->first();
+
+        return view('posts.show', array('post' => $post, 'previousPost' => $previousPost, 'nextPost' => $nextPost));
     }
 
      /**

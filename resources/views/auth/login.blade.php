@@ -16,6 +16,18 @@
                 <!-- Form -->
                 <form action="{{ route('login') }}" method="post" id="login-form">
                     @csrf
+                    @error('email')
+                        <div class="notification error closeable">
+                            <p>{{ $message }}</p>
+                            <a class="close"></a>
+                        </div>
+                    @enderror
+                    @error('password')
+                        <div class="notification error closeable">
+                            <p>{{ $message }}</p>
+                            <a class="close"></a>
+                        </div>
+                    @enderror
                     <div class="input-with-icon-left">
                         <i class="icon-material-baseline-mail-outline"></i>
                         <input type="text" class="input-text with-border" name="email" id="email" placeholder="Email" value="{{ old('email') }}" autocomplete="email" autofocus required/>
@@ -23,13 +35,13 @@
 
                     <div class="input-with-icon-left">
                         <i class="icon-material-outline-lock"></i>
-                        <input type="password" class="input-text with-border" name="password" id="password" placeholder="Пароль" autocomplete="current-password" required/>
+                        <input type="password" class="input-text with-border" name="password" id="password-login" placeholder="Пароль" autocomplete="current-password" required/>
                     </div>
                     <div class="checkbox col-12">
-                        <input type="checkbox" id="remember" name="remember" {{ old('remember') ? 'checked' : '' }}>
+                        <input type="checkbox" id="remember-login" name="remember" {{ old('remember') ? 'checked' : '' }}>
                         <label for="remember"><span class="checkbox-icon"></span> Запомнить меня</label>
                     </div>
-                    <a href="#" class="forgot-password">Забыли пароль?</a>
+                    <a href="{{ route('password.request') }}" class="forgot-password">Забыли пароль?</a>
                 </form>
                 
                 <!-- Button -->

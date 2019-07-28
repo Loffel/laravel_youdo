@@ -23,7 +23,7 @@
     
             <!-- Row -->
             <div class="row">
-                <form action="{{ route('posts.store') }}" method="POST">
+                <form action="{{ route('posts.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <!-- Dashboard Box -->
                     <div class="col-xl-12">
@@ -40,13 +40,18 @@
                                     <div class="col-xl-12">
                                         <div class="submit-field">
                                             <h5>Заголовок</h5>
-                                            <input type="text" class="with-border" name="title" placeholder="e.g. build me a website" required>
+                                            <input type="text" class="with-border" name="title" placeholder="Введите заголовок поста..." required>
                                         </div>
                                     </div>
                                     <div class="col-xl-12">
                                         <div class="submit-field">
                                             <h5>Контент</h5>
                                             <textarea cols="30" rows="5" name="content" class="with-border"></textarea>
+                                            <div class="uploadButton margin-top-30">
+                                                <input class="uploadButton-input" type="file" accept="image/*" name="cover" id="upload">
+                                                <label class="uploadButton-button ripple-effect" for="upload">Загрузить обложку</label>
+                                                <span class="uploadButton-file-name">Данная картинка будет использована в качестве обложки поста.</span>
+                                            </div>
                                         </div>
                                     </div>
 

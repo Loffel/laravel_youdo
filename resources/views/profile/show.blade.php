@@ -7,12 +7,11 @@
 			<div class="col-md-12">
 				<div class="single-page-header-inner">
 					<div class="left-side">
-						<div class="header-image freelancer-avatar"><img src="{{ asset('images/user-avatar-big-02.jpg')}}" alt=""></div>
+						<div class="header-image freelancer-avatar"><img src="{{ $user->getAvatar() }}" alt=""></div>
 						<div class="header-details">
 							<h3>{{ $user->name }} <span>{{ $user->getTypeName() }}</span></h3>
 							<ul>
 								<li><div class="star-rating" data-rating="5.0"></div></li>
-                                <li><img class="flag" src="{{ asset('images/flags/de.svg')}}" alt=""> Germany</li>
                                 @if($user->type == 2 && $user->is_verified)
                                 <li><div class="verified-badge-with-title">Проверен</div></li>
                                 @endif
@@ -91,47 +90,11 @@
 				
 				<!-- Profile Overview -->
 				<div class="profile-overview">
-					<div class="overview-item"><strong>$35</strong><span>Lorem ipsum</span></div>
-					<div class="overview-item"><strong>53</strong><span>Заданий выполнено</span></div>
-					<div class="overview-item"><strong>22</strong><span>Lorem ipsum</span></div>
+					<div class="overview-item"><strong>0</strong><span>Заданий выполнено</span></div>
 				</div>
 
 				<!-- Button -->
 				<a href="#small-dialog" class="apply-now-button popup-with-zoom-anim margin-bottom-50">Предложить задание <i class="icon-material-outline-arrow-right-alt"></i></a>
-
-				<!-- Freelancer Indicators -->
-				<div class="sidebar-widget">
-					<div class="freelancer-indicators">
-
-						<!-- Indicator -->
-						<div class="indicator">
-							<strong>88%</strong>
-							<div class="indicator-bar" data-indicator-percentage="88"><span></span></div>
-							<span>Job Success</span>
-						</div>
-
-						<!-- Indicator -->
-						<div class="indicator">
-							<strong>100%</strong>
-							<div class="indicator-bar" data-indicator-percentage="100"><span></span></div>
-							<span>Recommendation</span>
-						</div>
-						
-						<!-- Indicator -->
-						<div class="indicator">
-							<strong>90%</strong>
-							<div class="indicator-bar" data-indicator-percentage="90"><span></span></div>
-							<span>On Time</span>
-						</div>	
-											
-						<!-- Indicator -->
-						<div class="indicator">
-							<strong>80%</strong>
-							<div class="indicator-bar" data-indicator-percentage="80"><span></span></div>
-							<span>On Budget</span>
-						</div>
-					</div>
-				</div>
 				
 				<!-- Widget -->
 				<div class="sidebar-widget">
@@ -142,23 +105,7 @@
 							<li><a href="#" title="Twitter" data-tippy-placement="top"><i class="icon-brand-twitter"></i></a></li>
 							<li><a href="#" title="Behance" data-tippy-placement="top"><i class="icon-brand-behance"></i></a></li>
 							<li><a href="#" title="GitHub" data-tippy-placement="top"><i class="icon-brand-github"></i></a></li>
-						
 						</ul>
-					</div>
-				</div>
-
-				<!-- Widget -->
-				<div class="sidebar-widget">
-					<h3>Skills</h3>
-					<div class="task-tags">
-						<span>iOS</span>
-						<span>Android</span>
-						<span>mobile apps</span>
-						<span>design</span>
-						<span>Python</span>
-						<span>Flask</span>
-						<span>PHP</span>
-						<span>WordPress</span>
 					</div>
 				</div>
 

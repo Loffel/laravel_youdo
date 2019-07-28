@@ -26,5 +26,4 @@ mix.js('resources/js/app.js', 'public/js')
     //     'resources/js/scripts/tippy.all.min.js',
     //     'resources/js/scripts/custom.js'
     // ], 'public/js/bundle.min.js')
-    .js('resources/js/counterup.min.js', 'public/js')
     .sass('resources/sass/app.scss', 'public/css');

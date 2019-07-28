@@ -26,7 +26,7 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
     Route::get('/users/activate/{user_id}', 'AdminController@activateUser')->name('activate_user');
 });
 
-Route::prefix('tasks')->middleware('auth')->name('tasks.')->group(function(){
+Route::prefix('tasks')->name('tasks.')->group(function(){
     Route::get('/', 'TaskController@index')->name('index');
     Route::get('/new', 'TaskController@create')->name('create');
     Route::post('/new', 'TaskController@store')->name('store');
@@ -62,5 +62,7 @@ Route::prefix('messenger')->middleware('auth')->name('messenger.')->group(functi
 });
 
 Route::prefix('profile')->name('profile.')->group(function(){
+    Route::get('/settings', 'ProfileController@settingsShow')->middleware('auth')->name('settings.show');
+    Route::post('/settings', 'ProfileController@settingsUpdate')->middleware('auth')->name('settings.update');
     Route::get('/{id}', 'ProfileController@show')->name('show');
 });

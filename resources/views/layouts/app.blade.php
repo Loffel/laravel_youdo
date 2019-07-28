@@ -24,7 +24,12 @@
         @yield('intro')
         @yield('content')
 
-        @if(Route::currentRouteName() != 'tasks.edit' && Route::currentRouteName() != 'tasks.create' && Route::currentRouteName() != 'messenger.index' && Route::currentRouteName() != 'admin.index')
+        @if(Route::currentRouteName() != 'tasks.edit' &&
+        Route::currentRouteName() != 'tasks.create' &&
+        Route::currentRouteName() != 'messenger.index' &&
+        Route::currentRouteName() != 'admin.index' &&
+        Route::currentRouteName() != 'profile.settings.show' &&
+        Route::currentRouteName() != 'home')
         @include('includes/footer')
         @endif
         

@@ -29,6 +29,17 @@ Vue.component('messenger', require('./components/Messenger.vue').default);
 import counterUp from 'counterup2'
 
  window.onload = function(){
+    function typeElementSwticher(el, show = true){
+      if(show){
+        $(el).parent().show();
+        $(el).prop('required', true);
+      }else{
+        $(el).parent().hide();
+        $(el).prop('required', false);
+      }
+      return true;
+    }
+
     const app = new Vue({
         el: '#wrapper',
         mounted(){
@@ -37,14 +48,32 @@ import counterUp from 'counterup2'
           document.body.appendChild(bundleScript)
 
           const el = document.querySelector( '.fun-fact h4' )
-
           $('.fun-fact h4, .counter').each(function(index, el){
             counterUp(el, {
               duration: 500,
               delay: 5,
             });
           });
-          
+
+          $('input.account-type-radio').change(function(){
+            let inputID = $(this).attr('id');
+            let typeInput = $('input[name="type"]');
+
+            if(inputID == 'freelancer-radio'){
+              typeInput.val(2);
+              typeElementSwticher($('input[name="ogrn"]'));
+              typeElementSwticher($('input[name="legal_address"]'));
+              typeElementSwticher($('input[name="address"]'));
+              typeElementSwticher($('input[name="phone"]'));
+            }
+            else{
+              typeInput.val(1);
+              typeElementSwticher($('input[name="ogrn"]'), false);
+              typeElementSwticher($('input[name="legal_address"]'), false);
+              typeElementSwticher($('input[name="address"]'), false);
+              typeElementSwticher($('input[name="phone"]'), false);
+            }
+          });
 
           console.log('Boom');
         }

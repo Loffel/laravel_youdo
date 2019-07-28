@@ -14,8 +14,6 @@
 							<ul>
 								<li><a href="{{ route('profile.show', $task->user->id) }}"><i class="icon-material-outline-business"></i> {{ $task->user->name }}</a></li>
 								<li><div class="star-rating" data-rating="5.0"></div></li>
-								<li><img class="flag" src="{{asset('images/flags/de.svg')}}" alt=""> Germany</li>
-								<li><div class="verified-badge-with-title">Verified</div></li>
 							</ul>
 						</div>
 					</div>
@@ -51,15 +49,53 @@
 					<h3><i class="icon-material-outline-group"></i> Предложения</h3>
 				</div>
 				<ul class="boxed-list-ul">
-                    @if($userProposal === NULL)
-                        @foreach($task->proposals as $proposal)
+                    @auth
+                        @if($userProposal === NULL)
+                            @foreach($task->proposals as $proposal)
+                            <li>
+                                <div class="bid">
+                                    <!-- Avatar -->
+                                    <div class="bids-avatar">
+                                        <div class="freelancer-avatar">
+                                            <div class="verified-badge"></div>
+                                            <a href="{{ route('profile.show', $proposal->user->id) }}"><img src="{{ asset('images/user-avatar-big-01.jpg')}}" alt=""></a>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Content -->
+                                    <div class="bids-content">
+                                        <!-- Name -->
+                                        <div class="freelancer-name">
+                                            <h4><a href="{{ route('profile.show', $proposal->user->id) }}">{{ $proposal->user->name }} <img class="flag" src="{{asset('images/flags/gb.svg')}}" alt="" title="United Kingdom" data-tippy-placement="top"></a></h4>
+                                            <span class="not-rated">{{ $proposal->description }}</span>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Bid -->
+                                    <div class="bids-bid">
+                                        <div class="bid-rate">
+                                            @if($task->proposal_id == $proposal->id)
+                                            <div class="rate">₽{{ $proposal->price }}</div>
+                                            <span>Выбран исполнителем!</span>
+                                            @else
+                                            <a href="{{ route('tasks.select_proposal.view', array($task->id, $proposal->id)) }}" class="move-on-hover">
+                                                <div class="rate">₽{{ $proposal->price }}</div>
+                                                <span>Выбрать исполнителем</span>
+                                            </a>
+                                            @endif
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            @endforeach
+                        @else
                         <li>
                             <div class="bid">
                                 <!-- Avatar -->
                                 <div class="bids-avatar">
                                     <div class="freelancer-avatar">
                                         <div class="verified-badge"></div>
-                                        <a href="{{ route('profile.show', $proposal->user->id) }}"><img src="{{ asset('images/user-avatar-big-01.jpg')}}" alt=""></a>
+                                        <a href="#"><img src="{{ asset('images/user-avatar-big-01.jpg')}}" alt=""></a>
                                     </div>
                                 </div>
                                 
@@ -67,57 +103,25 @@
                                 <div class="bids-content">
                                     <!-- Name -->
                                     <div class="freelancer-name">
-                                        <h4><a href="{{ route('profile.show', $proposal->user->id) }}">{{ $proposal->user->name }} <img class="flag" src="{{asset('images/flags/gb.svg')}}" alt="" title="United Kingdom" data-tippy-placement="top"></a></h4>
-                                        <span class="not-rated">{{ $proposal->description }}</span>
+                                        <h4><a href="#">Вы <img class="flag" src="{{asset('images/flags/gb.svg')}}" alt="" title="United Kingdom" data-tippy-placement="top"></a></h4>
+                                        <span class="not-rated">{{ $userProposal->description }}</span>
                                     </div>
                                 </div>
                                 
                                 <!-- Bid -->
                                 <div class="bids-bid">
                                     <div class="bid-rate">
-                                        @if($task->proposal_id == $proposal->id)
-                                        <div class="rate">₽{{ $proposal->price }}</div>
-                                        <span>Выбран исполнителем!</span>
-                                        @else
-                                        <a href="{{ route('tasks.select_proposal.view', array($task->id, $proposal->id)) }}" class="move-on-hover">
-                                            <div class="rate">₽{{ $proposal->price }}</div>
-                                            <span>Выбрать исполнителем</span>
-                                        </a>
-                                        @endif
+                                        <div class="rate">₽{{ $userProposal->price }}</div>
                                     </div>
                                 </div>
                             </div>
                         </li>
-                        @endforeach
+                        @endif
                     @else
-                    <li>
-                        <div class="bid">
-                            <!-- Avatar -->
-                            <div class="bids-avatar">
-                                <div class="freelancer-avatar">
-                                    <div class="verified-badge"></div>
-                                    <a href="#"><img src="{{ asset('images/user-avatar-big-01.jpg')}}" alt=""></a>
-                                </div>
-                            </div>
-                            
-                            <!-- Content -->
-                            <div class="bids-content">
-                                <!-- Name -->
-                                <div class="freelancer-name">
-                                    <h4><a href="#">Вы <img class="flag" src="{{asset('images/flags/gb.svg')}}" alt="" title="United Kingdom" data-tippy-placement="top"></a></h4>
-                                    <span class="not-rated">{{ $userProposal->description }}</span>
-                                </div>
-                            </div>
-                            
-                            <!-- Bid -->
-                            <div class="bids-bid">
-                                <div class="bid-rate">
-                                    <div class="rate">₽{{ $userProposal->price }}</div>
-                                </div>
-                            </div>
-                        </div>
-                    </li>
-                    @endif
+                    <div class="col-12 margin-top-25">
+                        <h3><a href="{{ route('login') }}">Авторизуйтесь</a> для просмотра предложений</h3>
+                    </div>
+                    @endauth
 				</ul>
 			</div>
 
@@ -129,46 +133,81 @@
 
 				<div class="countdown green margin-bottom-35">Будет завершено {{ $task->date_end->diffForHumans() }}</div>
 
-                @if($task->user->id != Auth::user()->id)
-                    @if($userProposal === NULL)
-                    <div class="sidebar-widget">
-                        <div class="bidding-widget">
-                            <div class="bidding-headline"><h3>Оставить предложение</h3></div>
-                            <div class="bidding-inner">
-                                <form action="{{ route('proposals.store') }}" method="POST">
-                                        @csrf
-                                    <!-- Headline -->
-                                    <span class="bidding-detail">Установите вашу <strong>цену</strong></span>
-
-                                    <!-- Price Slider -->
-                                    <div class="bidding-value">₽<span id="biddingVal"></span></div>
-                                    <input class="bidding-slider" name="price" type="text" value="" data-slider-handle="custom" data-slider-currency="₽" data-slider-min="0" data-slider-max="50000" data-slider-value="auto" data-slider-step="500" data-slider-tooltip="hide" />
-                                    
-                                    <!-- Headline -->
-                                    <span class="bidding-detail margin-top-30">Укажите <strong>комментарий</strong></span>
-
-                                    <!-- Fields -->
-                                    <div class="bidding-field">
-                                        <textarea class="with-border" name="description" id="description" rows="3"></textarea>
-                                    </div>
-
-                                    @if($task->proposal_id !== NULL)
-                                    <button id="snackbar-place-bid" title="Исполнитель выбран" data-tippy-placement="top" class="button ripple-effect move-on-hover full-width margin-top-30" disabled><span>Отправить</span></button>
-                                    @else
-                                    <button type="submit" id="snackbar-place-bid" class="button ripple-effect move-on-hover full-width margin-top-30"><span>Отправить</span></button>
-                                    @endif
-                                </form>
-                            </div>
-                            <div class="bidding-signup">Нет аккаунта? <a href="#" class="register-tab sign-in popup-with-zoom-anim">Создайте!</a></div>
-                        </div>
-                    </div>
-                    @else
-                        @if($task->proposal_id == $userProposal->id)
+                @auth
+                    @if($task->user->id != Auth::user()->id)
+                        @if($userProposal === NULL)
                         <div class="sidebar-widget">
                             <div class="bidding-widget">
-                                <div class="bidding-headline"><h3>Вы выбраны исполнителем!</h3></div>
+                                <div class="bidding-headline"><h3>Оставить предложение</h3></div>
                                 <div class="bidding-inner">
-                                    <span class="bidding-detail">Задание <strong>выполнено</strong>?</span>
+                                    <form action="{{ route('proposals.store') }}" method="POST">
+                                            @csrf
+                                        <!-- Headline -->
+                                        <span class="bidding-detail">Установите вашу <strong>цену</strong></span>
+
+                                        <!-- Price Slider -->
+                                        <div class="bidding-value">₽<span id="biddingVal"></span></div>
+                                        <input class="bidding-slider" name="price" type="text" value="" data-slider-handle="custom" data-slider-currency="₽" data-slider-min="0" data-slider-max="50000" data-slider-value="auto" data-slider-step="500" data-slider-tooltip="hide" />
+                                        
+                                        <!-- Headline -->
+                                        <span class="bidding-detail margin-top-30">Укажите <strong>комментарий</strong></span>
+
+                                        <!-- Fields -->
+                                        <div class="bidding-field">
+                                            <textarea class="with-border" name="description" id="description" rows="3"></textarea>
+                                        </div>
+
+                                        @if($task->proposal_id !== NULL)
+                                        <button id="snackbar-place-bid" title="Исполнитель выбран" data-tippy-placement="top" class="button ripple-effect move-on-hover full-width margin-top-30" disabled><span>Отправить</span></button>
+                                        @else
+                                        <button type="submit" id="snackbar-place-bid" class="button ripple-effect move-on-hover full-width margin-top-30"><span>Отправить</span></button>
+                                        @endif
+                                    </form>
+                                </div>
+                                <div class="bidding-signup">Нет аккаунта? <a href="#" class="register-tab sign-in popup-with-zoom-anim">Создайте!</a></div>
+                            </div>
+                        </div>
+                        @else
+                            @if($task->proposal_id == $userProposal->id)
+                            <div class="sidebar-widget">
+                                <div class="bidding-widget">
+                                    <div class="bidding-headline"><h3>Вы выбраны исполнителем!</h3></div>
+                                    <div class="bidding-inner">
+                                        <span class="bidding-detail">Задание <strong>выполнено</strong>?</span>
+                                        <div class="bidding-fields">
+                                            <div class="bidding-field">
+                                                <a href="#" class="button ripple-effect move-on-hover">Да</a>
+                                            </div>
+                                            <div class="bidding-field">
+                                                <a href="#" class="button ripple-effect move-on-hover">Нет</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @endif
+                        @endif
+                    @else
+                        <div class="sidebar-widget">
+                            <div class="bidding-widget">
+                                <div class="bidding-headline"><h3>Управление заданием</h3></div>
+                                <div class="bidding-inner">
+                                    <span class="bidding-detail">Действия с <strong>заданием</strong></span>
+
+                                    <div class="bidding-fields">
+                                        <div class="bidding-field">
+                                            <a href="{{ route('tasks.edit', $task->id) }}" class="button ripple-effect move-on-hover">Редактировать</a>
+                                        </div>
+                                        <div class="bidding-field">
+                                            <form action="{{ route('tasks.delete', $task->id) }}" method="POST" class="float-right">
+                                                @csrf
+                                                {{ method_field('DELETE') }}
+                                                <button type="submit" class="button dark ripple-effect move-on-hover">Удалить</button>
+                                            </form>
+                                        </div>
+                                    </div>
+
+                                    <span class="bidding-detail margin-top-30">Задание <strong>выполнено?</strong></span>
                                     <div class="bidding-fields">
                                         <div class="bidding-field">
                                             <a href="#" class="button ripple-effect move-on-hover">Да</a>
@@ -180,52 +219,43 @@
                                 </div>
                             </div>
                         </div>
-                        @endif
                     @endif
-                @else
-                    <div class="sidebar-widget">
-                        <div class="bidding-widget">
-                            <div class="bidding-headline"><h3>Управление заданием</h3></div>
-                            <div class="bidding-inner">
-                                <span class="bidding-detail">Действия с <strong>заданием</strong></span>
+                @endauth
 
-                                <div class="bidding-fields">
-                                    <div class="bidding-field">
-                                        <a href="{{ route('tasks.edit', $task->id) }}" class="button ripple-effect move-on-hover">Редактировать</a>
-                                    </div>
-                                    <div class="bidding-field">
-                                        <form action="{{ route('tasks.delete', $task->id) }}" method="POST" class="float-right">
-                                            @csrf
-                                            {{ method_field('DELETE') }}
-                                            <button type="submit" class="button dark ripple-effect move-on-hover">Удалить</button>
-                                        </form>
-                                    </div>
-                                </div>
-
-                                <span class="bidding-detail margin-top-30">Задание <strong>выполнено?</strong></span>
-                                <div class="bidding-fields">
-                                    <div class="bidding-field">
-                                        <a href="#" class="button ripple-effect move-on-hover">Да</a>
-                                    </div>
-                                    <div class="bidding-field">
-                                        <a href="#" class="button ripple-effect move-on-hover">Нет</a>
-                                    </div>
-                                </div>
-                            </div>
+                <div class="sidebar-widget">
+                    <div class="job-overview">
+                        <div class="job-overview-headline">О закупке</div>
+                        <div class="job-overview-inner">
+                            <ul>
+                                <li>
+                                    <i class="icon-material-outline-info"></i>
+                                    <span>Номер</span>
+                                    <h5><a target="_blank" href="http://zakupki.gov.ru/epz/order/quicksearch/search.html?searchString=0172200000419000085&strictEqual=false&showLotsInfoHidden=false&fz44=on&fz223=on&af=on&ca=on&pc=on&pa=on&priceFrom=&priceTo=&currencyId=1&agencyTitle=&agencyCode=&agencyFz94id=&agencyFz223id=&agencyInn=&regions=&publishDateFrom=&publishDateTo=&sortBy=UPDATE_DATE&updateDateFrom=&updateDateTo=">0172105000219000085</a></h5>
+                                </li>
+                                <li>
+                                    <i class="icon-material-outline-local-atm"></i>
+                                    <span>Цена</span>
+                                    <h5>₽2,500,070</h5>
+                                </li>
+                                <li>
+                                    <i class="icon-material-outline-business-center"></i>
+                                    <span>Наименование объекта закупки</span>
+                                    <h5>43.99.90.190: Работы строительные с пециализированные прочие, не включенные в другие группировки;</h5>
+                                </li>
+                                <li>
+                                    <i class="icon-material-outline-note-add"></i>
+                                    <span>Разместил</span>
+                                    <h5>АДМИНИСТРАЦИЯ МОСКОВСКОГО РАЙОНА САНКТ-ПЕТЕРБУРГА</h5>
+                                </li>
+                            </ul>
                         </div>
                     </div>
-                @endif
+                </div>
 
 				<!-- Sidebar Widget -->
 				<div class="sidebar-widget">
-					<h3>Добавить в закладки / Поделиться</h3>
+					<h3>Поделиться</h3>
 
-					<!-- Bookmark Button -->
-					<button class="bookmark-button margin-bottom-25">
-						<span class="bookmark-icon"></span>
-						<span class="bookmark-text">В закладки</span>
-						<span class="bookmarked-text">В закладках</span>
-					</button>
 
 					<!-- Copy URL -->
 					<div class="copy-url">
@@ -237,7 +267,7 @@
 					<div class="share-buttons margin-top-25">
 						<div class="share-buttons-trigger"><i class="icon-feather-share-2"></i></div>
 						<div class="share-buttons-content">
-							<span>Интересно? <strong>Поделись!</strong></span>
+							<span>Понравилось? <strong>Поделись!</strong></span>
 							<ul class="share-buttons-icons">
 								<li><a href="#" data-button-color="#3b5998" title="Share on Facebook" data-tippy-placement="top"><i class="icon-brand-facebook-f"></i></a></li>
 								<li><a href="#" data-button-color="#1da1f2" title="Share on Twitter" data-tippy-placement="top"><i class="icon-brand-twitter"></i></a></li>

@@ -20,22 +20,26 @@
 				</div>
 					
 				<!-- Form -->
-                <form action="{{ route('login') }}" method="post" id="login-form">
+                <form action="{{ route('login') }}" method="post" id="login-form-popup">
                     @csrf
 					<div class="input-with-icon-left">
 						<i class="icon-material-baseline-mail-outline"></i>
-						<input type="text" class="input-text with-border" name="email" id="email" placeholder="Email" required/>
+						<input type="text" class="input-text with-border" name="email" id="email-login-popup" placeholder="Email" value="{{ old('email') }}" autocomplete="email" autofocus required/>
 					</div>
 
 					<div class="input-with-icon-left">
 						<i class="icon-material-outline-lock"></i>
-						<input type="password" class="input-text with-border" name="password" id="password" placeholder="Пароль" required/>
+						<input type="password" class="input-text with-border" name="password" id="password-login-popup" placeholder="Пароль" autocomplete="current-password" required/>
 					</div>
-					<a href="#" class="forgot-password">Забыли пароль?</a>
+					<div class="checkbox col-12">
+						<input type="checkbox" id="remember-login-popup" name="remember" {{ old('remember') ? 'checked' : '' }}>
+						<label for="remember"><span class="checkbox-icon"></span> Запомнить меня</label>
+					</div>
+					<a href="{{ route('password.request') }}" class="forgot-password">Забыли пароль?</a>
 				</form>
 				
 				<!-- Button -->
-				<button class="button full-width button-sliding-icon ripple-effect" type="submit" form="login-form">Войти <i class="icon-material-outline-arrow-right-alt"></i></button>
+				<button class="button full-width button-sliding-icon ripple-effect" type="submit" form="login-form-popup">Войти <i class="icon-material-outline-arrow-right-alt"></i></button>
 				
 				<!-- Social Login -->
 				<!-- <div class="social-login-separator"><span>or</span></div>
@@ -68,25 +72,52 @@
 				</div>
 					
 				<!-- Form -->
-				<form method="post" id="register-account-form">
+				<form action="{{ route('register') }}" method="post" id="register-account-form-popup">
+					@csrf
+					<input type="hidden" name="type" value="-1">
+                    <div class="input-with-icon-left">
+                        <i class="icon-feather-user"></i>
+                        <input type="text" class="input-text with-border" name="name" id="name-register-popup" placeholder="Имя" required/>
+                    </div>
+
 					<div class="input-with-icon-left">
 						<i class="icon-material-baseline-mail-outline"></i>
-						<input type="text" class="input-text with-border" name="email" id="emailaddress-register" placeholder="Email" required/>
+						<input type="text" class="input-text with-border" name="email" id="email-register-popup" placeholder="Email" required/>
 					</div>
 
-					<div class="input-with-icon-left" title="Should be at least 8 characters long" data-tippy-placement="bottom">
+					<div class="input-with-icon-left" style="display: none;">
+						<i class="icon-material-outline-assignment"></i>
+						<input type="text" class="input-text with-border" name="ogrn" id="ogrn-register-popup" placeholder="ОГРН"/>
+					</div>
+
+					<div class="input-with-icon-left" style="display: none;">
+						<i class="icon-material-outline-location-city"></i>
+						<input type="text" class="input-text with-border" name="legal_address" id="legal_address-register-popup" placeholder="Юр. адрес"/>
+					</div>
+					
+					<div class="input-with-icon-left" style="display: none;">
+						<i class="icon-material-outline-location-on"></i>
+						<input type="text" class="input-text with-border" name="address" id="address-register-popup" placeholder="Физ. адрес"/>
+					</div>
+					
+					<div class="input-with-icon-left" style="display: none;">
+						<i class="icon-feather-phone"></i>
+						<input type="text" class="input-text with-border" name="phone" id="phone-register-popup" placeholder="Телефон"/>
+					</div>
+
+					<div class="input-with-icon-left" title="Минимум 8 символов" data-tippy-placement="bottom">
 						<i class="icon-material-outline-lock"></i>
-						<input type="password" class="input-text with-border" name="password-register" id="password-register" placeholder="Пароль" required/>
+						<input type="password" class="input-text with-border" name="password" id="password-register-popup" placeholder="Пароль" required/>
 					</div>
 
 					<div class="input-with-icon-left">
 						<i class="icon-material-outline-lock"></i>
-						<input type="password" class="input-text with-border" name="password-repeat-register" id="password-repeat-register" placeholder="Повторите пароль" required/>
+						<input type="password" class="input-text with-border" name="password-repeat" id="password-repeat-register-popup" placeholder="Повторите пароль" required/>
 					</div>
 				</form>
 				
 				<!-- Button -->
-				<button class="margin-top-10 button full-width button-sliding-icon ripple-effect" type="submit" form="register-account-form">Регистрация <i class="icon-material-outline-arrow-right-alt"></i></button>
+				<button class="margin-top-10 button full-width button-sliding-icon ripple-effect" type="submit" form="register-account-form-popup">Регистрация <i class="icon-material-outline-arrow-right-alt"></i></button>
 				
                 <!-- Social Login -->
                 <!--

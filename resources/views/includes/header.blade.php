@@ -16,19 +16,27 @@
 				<nav id="navigation">
 					<ul id="responsive">
 
-						<li><a href="#" style="padding-top:7px!important;">Главная</a></li>
+						<li><a href="{{ url('/') }}" style="padding-top:7px!important;">Главная</a></li>
 
 						<li><a href="#">Задания</a>
 							<ul class="dropdown-nav">
 								<li><a href="{{ route('tasks.index') }}">Все задания</a></li>
-								<li><a href="{{ route('tasks.create') }}">Создать задание</a></li>
+								@auth
+									@if(Auth::user()->type == 1)
+									<li><a href="{{ route('tasks.create') }}">Создать задание</a></li>
+									@endif
+								@endauth
 							</ul>
 						</li>
 
 						<li><a href="#">Блог</a>
 							<ul class="dropdown-nav">
 								<li><a href="{{ route('posts.index') }}">Все посты</a></li>
-								<li><a href="{{ route('posts.create') }}">Создать пост</a></li>
+								@auth
+									@if(Auth::user()->is_admin)
+									<li><a href="{{ route('posts.create') }}">Создать пост</a></li>
+									@endif
+								@endauth
 							</ul>
 						</li>
 
@@ -197,7 +205,7 @@
 					<!-- Messages -->
 					<div class="header-notifications user-menu">
 						<div class="header-notifications-trigger">
-							<a href="#"><div class="user-avatar status-online"><img src="{{ asset('images/user-avatar-small-01.jpg')}}" alt=""></div></a>
+							<a href="#"><div class="user-avatar status-online"><img src="{{ Auth::user()->getAvatar() }}" alt=""></div></a>
 						</div>
 
 						<!-- Dropdown -->
@@ -208,7 +216,7 @@
 
 								<!-- User Name / Avatar -->
 								<div class="user-details">
-									<div class="user-avatar status-online"><img src="{{ asset('images/user-avatar-small-01.jpg')}}" alt=""></div>
+									<div class="user-avatar status-online"><img src="{{ Auth::user()->getAvatar() }}" alt=""></div>
 									<div class="user-name">
 										{{ Auth::user()->name }} <span>{{ Auth::user()->getTypeName() }}</span>
 									</div>

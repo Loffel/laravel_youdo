@@ -40,7 +40,7 @@
                                     <div class="col-xl-12">
                                         <div class="submit-field">
                                             <h5>Название задания</h5>
-                                            <input type="text" class="with-border" name="title" placeholder="e.g. build me a website" required>
+                                            <input type="text" class="with-border" name="title" placeholder="Введите название задания..." required>
                                         </div>
                                     </div>
 
