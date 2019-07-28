@@ -22,7 +22,6 @@ class TaskController extends Controller
     public function index()
     {
         $tasks = Task::paginate(5);
-
         return view('tasks.index', array('tasks' => $tasks));
     }
 
