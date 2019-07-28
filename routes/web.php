@@ -41,8 +41,8 @@ Route::prefix('tasks')->name('tasks.')->group(function(){
 
 Route::prefix('posts')->name('posts.')->group(function(){
     Route::get('/', 'PostController@index')->name('index');
-    Route::get('new', 'PostController@create')->middleware('auth')->name('create');
-    Route::post('new', 'PostController@store')->middleware('auth')->name('store');
+    Route::get('new', 'PostController@create')->name('create');
+    Route::post('new', 'PostController@store')->name('store');
     Route::get('/{id}', 'PostController@show')->name('show');
     Route::get('/edit/{id}', 'PostController@edit')->name('edit');
     Route::patch('/edit/{id}', 'PostController@update')->name('update');
