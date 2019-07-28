@@ -27,7 +27,7 @@
         @if(Route::currentRouteName() != 'tasks.edit' &&
         Route::currentRouteName() != 'tasks.create' &&
         Route::currentRouteName() != 'posts.create' &&
-        Route::currentRouteName() != 'posts.create' &&
+        Route::currentRouteName() != 'posts.edit' &&
         Route::currentRouteName() != 'messenger.index' &&
         Route::currentRouteName() != 'admin.index' &&
         Route::currentRouteName() != 'profile.settings.show' &&
