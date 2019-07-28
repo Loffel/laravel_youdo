@@ -21,15 +21,16 @@ CREATE TABLE IF NOT EXISTS `messages` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Дамп данных таблицы laravel_youdo.messages: ~0 rows (приблизительно)
+-- Дамп данных таблицы laravel_youdo.messages: ~2 rows (приблизительно)
 DELETE FROM `messages`;
 /*!40000 ALTER TABLE `messages` DISABLE KEYS */;
 INSERT INTO `messages` (`id`, `from_id`, `to_id`, `text`, `created_at`, `updated_at`) VALUES
 	(1, 1, 2, '123123123', NULL, NULL),
 	(2, 1, 2, 'Test', '2019-07-21 22:31:01', '2019-07-21 22:31:01'),
-	(3, 2, 1, 'ASdf', '2019-07-21 22:35:51', '2019-07-21 22:35:51');
+	(3, 2, 1, 'ASdf', '2019-07-21 22:35:51', '2019-07-21 22:35:51'),
+	(4, 1, 2, 'HHH', '2019-07-26 20:34:39', '2019-07-26 20:34:39');
 /*!40000 ALTER TABLE `messages` ENABLE KEYS */;
 
 -- Дамп структуры для таблица laravel_youdo.migrations
@@ -39,9 +40,9 @@ CREATE TABLE IF NOT EXISTS `migrations` (
   `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `batch` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Дамп данных таблицы laravel_youdo.migrations: ~10 rows (приблизительно)
+-- Дамп данных таблицы laravel_youdo.migrations: ~15 rows (приблизительно)
 DELETE FROM `migrations`;
 /*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
@@ -56,7 +57,10 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 	(18, '2019_07_11_152341_add_proposal_id_to_tasks_table', 7),
 	(19, '2019_07_11_222915_add_status_field_to_proposals_table', 8),
 	(20, '2019_07_16_175055_create_posts_table', 9),
-	(21, '2019_07_21_121532_create_messages_table', 10);
+	(21, '2019_07_21_121532_create_messages_table', 10),
+	(22, '2019_07_28_082656_add_avatar_column_to_users_table', 11),
+	(23, '2019_07_28_082857_add_cover_column_to_posts_table', 12),
+	(24, '2019_07_28_123138_add_about_field_to_users_table', 13);
 /*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
 
 -- Дамп структуры для таблица laravel_youdo.password_resets
@@ -82,16 +86,18 @@ CREATE TABLE IF NOT EXISTS `posts` (
   `user_id` bigint(20) unsigned NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
+  `cover` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `posts_user_id_foreign` (`user_id`),
   CONSTRAINT `posts_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Дамп данных таблицы laravel_youdo.posts: ~0 rows (приблизительно)
+-- Дамп данных таблицы laravel_youdo.posts: ~2 rows (приблизительно)
 DELETE FROM `posts`;
 /*!40000 ALTER TABLE `posts` DISABLE KEYS */;
-INSERT INTO `posts` (`id`, `title`, `content`, `user_id`, `created_at`, `updated_at`) VALUES
-	(1, 'Тестовый пост', 'Тестовый контент 123', 1, '2019-07-16 19:13:40', '2019-07-21 23:13:57');
+INSERT INTO `posts` (`id`, `title`, `content`, `user_id`, `created_at`, `updated_at`, `cover`) VALUES
+	(1, 'Тестовый пост', 'Тестовый контент 1234', 1, '2019-07-16 19:13:40', '2019-07-26 15:06:50', 'images/blog/BIoMWXo6iF0B69Z3wpoy9CNVwg6UamerHiXpaImi.jpeg'),
+	(4, 'Тест изображения', '12345', 1, '2019-07-28 10:16:54', '2019-07-28 10:16:54', 'images/blog/BIoMWXo6iF0B69Z3wpoy9CNVwg6UamerHiXpaImi.jpeg');
 /*!40000 ALTER TABLE `posts` ENABLE KEYS */;
 
 -- Дамп структуры для таблица laravel_youdo.proposals
@@ -143,7 +149,7 @@ DELETE FROM `tasks`;
 /*!40000 ALTER TABLE `tasks` DISABLE KEYS */;
 INSERT INTO `tasks` (`id`, `title`, `description`, `price`, `date_end`, `user_id`, `proposal_id`, `created_at`, `updated_at`) VALUES
 	(1, 'Тестовое задание', 'Описание задания', 10000, '2019-07-12 13:00:00', 1, NULL, '2019-07-09 22:24:35', '2019-07-10 21:09:51'),
-	(3, 'Тестовое задание1', 'Описание задания1', 10000, '2019-07-12 13:00:00', 1, 1, '2019-07-09 22:24:35', '2019-07-21 12:10:19');
+	(3, 'Тестовое задание1', 'Описание задания1', 10000, '2019-07-30 01:07:00', 1, 1, '2019-07-09 23:24:35', '2019-07-26 16:13:05');
 /*!40000 ALTER TABLE `tasks` ENABLE KEYS */;
 
 -- Дамп структуры для таблица laravel_youdo.users
@@ -152,7 +158,9 @@ CREATE TABLE IF NOT EXISTS `users` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `avatar` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `type` tinyint(4) NOT NULL,
+  `about` text COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `email_verified_at` timestamp NULL DEFAULT NULL,
   `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
@@ -168,12 +176,12 @@ CREATE TABLE IF NOT EXISTS `users` (
   UNIQUE KEY `users_email_unique` (`email`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Дамп данных таблицы laravel_youdo.users: ~1 rows (приблизительно)
+-- Дамп данных таблицы laravel_youdo.users: ~2 rows (приблизительно)
 DELETE FROM `users`;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` (`id`, `name`, `email`, `type`, `email_verified_at`, `password`, `remember_token`, `is_admin`, `is_verified`, `ogrn`, `phone`, `legal_address`, `address`, `created_at`, `updated_at`) VALUES
-	(1, 'User', 'test@mail.ru', 2, NULL, '$2y$10$L/4bqUfnkff/DkVo6N4ONOEfc6Vl4NuKTIdRdno.K9IKEu5GoCFBu', '0fJtW37zY3w8n1E5nkhVOpMXWd4awkjZz7L6LdUOuM0zs2EyzuiLJhWG6jTJ', 1, 0, '12345678', '+79991234567', 'Москва', 'Москва', '2019-07-08 20:50:46', '2019-07-08 21:31:18'),
-	(2, 'User2', 'test2@mail.ru', 1, NULL, '$2y$10$CQ7NvIFXz3IjgVAZz4VzEO5QLzF2RokLzhTqXrV3x38bs0pjXQ1eu', 'T4308ptC0x0YwOEoIL9xnHymGKLhzcZREXwes0A6WVqvbtik2dxRd5cJ8H0a', 0, 0, NULL, NULL, NULL, NULL, '2019-07-11 18:59:35', '2019-07-11 18:59:35');
+INSERT INTO `users` (`id`, `name`, `email`, `avatar`, `type`, `about`, `email_verified_at`, `password`, `remember_token`, `is_admin`, `is_verified`, `ogrn`, `phone`, `legal_address`, `address`, `created_at`, `updated_at`) VALUES
+	(1, 'User', 'test@mail.ru', NULL, 2, 'Какой-то текст обо мне...', NULL, '$2y$10$XPL/GQKDIXs2FeaUEDCU9eZUb.rqfuPhdMK4J04w2W1513/bNl.Zy', '0fJtW37zY3w8n1E5nkhVOpMXWd4awkjZz7L6LdUOuM0zs2EyzuiLJhWG6jTJ', 1, 0, '12345678', '+79991234567', 'Москва', 'Москва', '2019-07-08 20:50:46', '2019-07-28 16:55:20'),
+	(2, 'User2', 'test2@mail.ru', NULL, 1, NULL, NULL, '$2y$10$CQ7NvIFXz3IjgVAZz4VzEO5QLzF2RokLzhTqXrV3x38bs0pjXQ1eu', 'tZ1AyIal99y8kHDWYqoOL9EqEEDxEwyVpBLuB2R6wepFUdLEj1ga8Cgk7iiK', 0, 0, NULL, NULL, NULL, NULL, '2019-07-11 18:59:35', '2019-07-11 18:59:35');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 
 /*!40101 SET SQL_MODE=IFNULL(@OLD_SQL_MODE, '') */;
