@@ -25,22 +25,22 @@
                 <div class="fun-facts-container">
                     <div class="fun-fact" data-fun-fact-color="#36bd78">
                         <div class="fun-fact-text">
-                            <span>???</span>
-                            <h4>22</h4>
-                        </div>
-                        <div class="fun-fact-icon"><i class="icon-material-outline-gavel"></i></div>
-                    </div>
-                    <div class="fun-fact" data-fun-fact-color="#b81b7f">
-                        <div class="fun-fact-text">
-                            <span>???</span>
-                            <h4>4</h4>
+                            <span>Задания</span>
+                            <h4>{{ $tasks }}</h4>
                         </div>
                         <div class="fun-fact-icon"><i class="icon-material-outline-business-center"></i></div>
                     </div>
+                    <div class="fun-fact" data-fun-fact-color="#b81b7f">
+                        <div class="fun-fact-text">
+                            <span>Завершенные задания</span>
+                            <h4>{{ $completedTasks }}</h4>
+                        </div>
+                        <div class="fun-fact-icon"><i class="icon-material-outline-gavel"></i></div>
+                    </div>
                     <div class="fun-fact" data-fun-fact-color="#efa80f">
                         <div class="fun-fact-text">
-                            <span>???</span>
-                            <h4>28</h4>
+                            <span>Тикеты</span>
+                            <h4>0</h4>
                         </div>
                         <div class="fun-fact-icon"><i class="icon-material-outline-rate-review"></i></div>
                     </div>
@@ -48,8 +48,8 @@
                     <!-- Last one has to be hidden below 1600px, sorry :( -->
                     <div class="fun-fact" data-fun-fact-color="#2a41e6">
                         <div class="fun-fact-text">
-                            <span>???</span>
-                            <h4>987</h4>
+                            <span>Пользователи</span>
+                            <h4>{{ $users }}</h4>
                         </div>
                         <div class="fun-fact-icon"><i class="icon-feather-trending-up"></i></div>
                     </div>
