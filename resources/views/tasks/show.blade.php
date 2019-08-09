@@ -131,7 +131,11 @@
 		<div class="col-xl-4 col-lg-4">
 			<div class="sidebar-container">
 
-				<div class="countdown green margin-bottom-35">Будет завершено {{ $task->date_end->diffForHumans() }}</div>
+                @if(now()->diffInMinutes($task->date_end, false) >= 0)
+                <div class="countdown green margin-bottom-35">Будет завершено {{ $task->date_end->diffForHumans() }}</div>
+                @else
+                <div class="countdown yellow margin-bottom-35">Было завершено {{ $task->date_end->diffForHumans() }}</div>
+                @endif
 
                 @auth
                     @if($task->user->id != Auth::user()->id)
