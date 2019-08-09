@@ -50524,6 +50524,15 @@ window.onload = function () {
           typeElementSwticher($('input[name="phone"]'), false);
         }
       });
+      $('label[for="remember"]').click(function () {
+        var rememberMe = $(this).parent().find('input#remember-login-popup');
+
+        if (rememberMe.prop('checked')) {
+          rememberMe.prop('checked', false);
+        } else {
+          rememberMe.prop('checked', true);
+        }
+      });
       console.log('Boom');
     }
   });

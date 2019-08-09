@@ -75,6 +75,15 @@ import counterUp from 'counterup2'
             }
           });
 
+          $('label[for="remember"]').click(function(){
+            let rememberMe = $(this).parent().find('input#remember-login-popup');
+            if(rememberMe.prop('checked')){
+              rememberMe.prop('checked', false);
+            }else{
+              rememberMe.prop('checked', true);
+            }
+          });
+
           console.log('Boom');
         }
     });
