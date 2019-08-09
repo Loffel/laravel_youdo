@@ -100,13 +100,13 @@
                                     <strong>Выплата №2</strong>
                                         <ul>
                                             <li><span class="unpaid">Неоплачено</span></li>
-                                            <li>Order: #326</li>
-                                            <li>Date: 25/07/2019</li>
+                                            <li>Номер: #326</li>
+                                            <li>Дата: 25/07/2019</li>
                                         </ul>
                                     </div>
                                     <!-- Buttons -->
                                     <div class="buttons-to-right">
-                                        <a href="#" class="button">??</a>
+                                        <a href="#" class="button">Запросить выплату</a>
                                     </div>
                                 </li>
                                 <li>
@@ -114,8 +114,8 @@
                                     <strong>Выплата №1</strong>
                                         <ul>
                                             <li><span class="paid">Оплачено</span></li>
-                                            <li>Order: #264</li>
-                                            <li>Date: 10/07/2019</li>
+                                            <li>Номер: #264</li>
+                                            <li>Дата: 10/07/2019</li>
                                         </ul>
                                     </div>
                                     <!-- Buttons -->
@@ -131,38 +131,7 @@
             </div>
             <!-- Row / End -->
 
-            <!-- Footer -->
-            <div class="dashboard-footer-spacer"></div>
-            <div class="small-footer margin-top-15">
-                <div class="small-footer-copyrights">
-                    © 2018 <strong>Hireo</strong>. All Rights Reserved.
-                </div>
-                <ul class="footer-social-links">
-                    <li>
-                        <a href="#" title="Facebook" data-tippy-placement="top">
-                            <i class="icon-brand-facebook-f"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" title="Twitter" data-tippy-placement="top">
-                            <i class="icon-brand-twitter"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" title="Google Plus" data-tippy-placement="top">
-                            <i class="icon-brand-google-plus-g"></i>
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#" title="LinkedIn" data-tippy-placement="top">
-                            <i class="icon-brand-linkedin-in"></i>
-                        </a>
-                    </li>
-                </ul>
-                <div class="clearfix"></div>
-            </div>
-            <!-- Footer / End -->
-
+            @include('includes/dashboard_footer')
         </div>
     </div>
     <!-- Dashboard Content / End -->
