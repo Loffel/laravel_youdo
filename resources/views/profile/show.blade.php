@@ -178,8 +178,8 @@
 
 					<div class="uploadButton margin-top-25">
 						<input class="uploadButton-input" type="file" accept="image/*, application/pdf" id="upload" multiple/>
-						<label class="uploadButton-button ripple-effect" for="upload">Add Attachments</label>
-						<span class="uploadButton-file-name">Расширения: zip, pdf, png, jpg <br> Максимальный размер файла: 50 МБ.</span>
+						<label class="uploadButton-button ripple-effect" for="upload">Прикрепить файл</label>
+						<span class="uploadButton-file-name">Расширения: pdf, png, jpg <br> Максимальный размер файла: 50 МБ.</span>
 					</div>
 
 				</form>
@@ -188,42 +188,6 @@
 				<button class="button margin-top-35 full-width button-sliding-icon ripple-effect" type="submit">Отправить предложение <i class="icon-material-outline-arrow-right-alt"></i></button>
 
 			</div>
-			<!-- Login -->
-			<div class="popup-tab-content" id="loginn">
-				
-				<!-- Welcome Text -->
-				<div class="welcome-text">
-					<h3>Discuss Your Project With Tom</h3>
-				</div>
-					
-				<!-- Form -->
-				<form method="post" id="make-an-offer-form">
-
-					<div class="input-with-icon-left">
-						<i class="icon-material-outline-account-circle"></i>
-						<input type="text" class="input-text with-border" name="name2" id="name2" placeholder="First and Last Name" required/>
-					</div>
-
-					<div class="input-with-icon-left">
-						<i class="icon-material-baseline-mail-outline"></i>
-						<input type="text" class="input-text with-border" name="emailaddress2" id="emailaddress2" placeholder="Email Address" required/>
-					</div>
-
-					<textarea name="textarea" cols="10" placeholder="Message" class="with-border"></textarea>
-
-					<div class="uploadButton margin-top-25">
-						<input class="uploadButton-input" type="file" accept="image/*, application/pdf" id="upload-cv" multiple/>
-						<label class="uploadButton-button" for="upload-cv">Add Attachments</label>
-						<span class="uploadButton-file-name">Allowed file types: zip, pdf, png, jpg <br> Max. files size: 50 MB.</span>
-					</div>
-
-				</form>
-				
-				<!-- Button -->
-				<button class="button full-width button-sliding-icon ripple-effect" type="submit" form="make-an-offer-form">Make an Offer <i class="icon-material-outline-arrow-right-alt"></i></button>
-
-			</div>
-
 		</div>
 	</div>
 </div>
