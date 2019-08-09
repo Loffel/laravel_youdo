@@ -99,7 +99,22 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Post::findOrFail($id)->update($request->all());
+        $post = Post::findOrFail($id);
+        $coverImage = NULL;
+        if($request->hasFile('cover')){
+            $coverImage = $request->file('cover')->store('images/blog', 'public');
+            $image = Image::make(public_path('storage/'.$coverImage))->fit(800, 500);
+            $image->save();
+
+            $post->update(array(
+                'cover' => $coverImage
+            ));
+        }
+
+        $post->update(array(
+            'title' => $request->title,
+            'content' => $request->content
+        ));
 
         return redirect()->route('posts.show', $id);
     }

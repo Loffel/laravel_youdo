@@ -23,7 +23,7 @@
     
             <!-- Row -->
             <div class="row">
-                <form action="{{ route('posts.update', $post->id) }}" method="POST">
+                <form action="{{ route('posts.update', $post->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     {{ method_field('PATCH') }}
                     <!-- Dashboard Box -->
