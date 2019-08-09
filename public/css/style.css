@@ -2155,6 +2155,7 @@ em.mm-counter+a.mm-fullsubopen+span {
 
 @media (max-width: 480px) {
 	.hide-on-mobile { display: none; }
+	#logo img { border: none; max-width: 50px; height: auto; }
 }
 
 
