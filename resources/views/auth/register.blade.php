@@ -40,40 +40,40 @@
                     <input type="hidden" name="type" value="-1">
                     <div class="input-with-icon-left">
                         <i class="icon-feather-user"></i>
-                        <input type="text" class="input-text with-border" name="name" id="name-register" placeholder="Имя" required/>
+                        <input type="text" class="input-text with-border" name="name" id="name-register" value="{{old('name')}}" placeholder="Имя" required/>
                     </div>
 
                     <div class="input-with-icon-left">
                         <i class="icon-material-baseline-mail-outline"></i>
-                        <input type="text" class="input-text with-border" name="email" id="email-register" placeholder="Email" required/>
+                        <input type="text" class="input-text with-border" name="email" id="email-register" placeholder="Email" value="{{old('email')}}" required/>
                     </div>
 
                     <div class="input-with-icon-left" style="display: none;">
                         <i class="icon-material-outline-assignment"></i>
-                        <input type="text" class="input-text with-border" name="ogrn" id="ogrn-register" placeholder="ОГРН"/>
+                        <input type="text" class="input-text with-border" name="ogrn" id="ogrn-register" value="{{old('ogrn')}}" placeholder="ОГРН"/>
                     </div>
                     
                     <div class="input-with-icon-left" style="display: none;">
                         <i class="icon-material-outline-location-city"></i>
-                        <input type="text" class="input-text with-border" name="legal_address" id="legal_address-register" placeholder="Юр. адрес"/>
+                        <input type="text" class="input-text with-border" name="legal_address" id="legal_address-register" value="{{old('legal_address')}}" placeholder="Юр. адрес"/>
                     </div>
                     
                     <div class="input-with-icon-left" style="display: none;">
                         <i class="icon-material-outline-location-on"></i>
-                        <input type="text" class="input-text with-border" name="address" id="address-register" placeholder="Физ. адрес"/>
+                        <input type="text" class="input-text with-border" name="address" id="address-register" value="{{old('address')}}" placeholder="Физ. адрес"/>
                     </div>
                     
                     <div class="input-with-icon-left" style="display: none;">
                         <i class="icon-feather-phone"></i>
-                        <input type="text" class="input-text with-border" name="phone" id="phone-register" placeholder="Телефон"/>
+                        <input type="text" class="input-text with-border" name="phone" id="phone-register" value="{{old('phone')}}" placeholder="Телефон"/>
                     </div>
 
-                    <div class="input-with-icon-left" title="Минимум 8 символов" data-tippy-placement="bottom">
+                    <div class="input-with-icon-left" title="Минимум 8 символов" data-tippy-placement="right">
                         <i class="icon-material-outline-lock"></i>
                         <input type="password" class="input-text with-border" name="password" id="password-register" placeholder="Пароль" required/>
                     </div>
 
-                    <div class="input-with-icon-left">
+                    <div class="input-with-icon-left" title="Минимум 8 символов" data-tippy-placement="right">
                         <i class="icon-material-outline-lock"></i>
                         <input type="password" class="input-text with-border" name="password-repeat" id="password-repeat-register" placeholder="Повторите пароль" required/>
                     </div>

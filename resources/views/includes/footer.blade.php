@@ -138,7 +138,7 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-xl-12">
-					© 2019 <strong>Laravel_YouDo</strong>. Все права защищены.
+					© 2019 <strong>Fydw</strong>. Все права защищены.
 				</div>
 			</div>
 		</div>

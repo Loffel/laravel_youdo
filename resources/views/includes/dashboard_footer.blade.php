@@ -2,7 +2,7 @@
 <div class="dashboard-footer-spacer"></div>
 <div class="small-footer margin-top-15">
     <div class="small-footer-copyrights">
-        © 2018 <strong>Hireo</strong>. All Rights Reserved.
+        © 2019 <strong>Fydw</strong>. Все права защищены.
     </div>
     <ul class="footer-social-links">
         <li>
