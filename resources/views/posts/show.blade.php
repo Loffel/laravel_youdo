@@ -90,6 +90,32 @@
 
 		<div class="col-xl-4 col-lg-4 content-left-offset">
 			<div class="sidebar-container">
+
+				@auth
+					@if(Auth::user()->is_admin)
+					<div class="sidebar-widget">
+						<div class="bidding-widget">
+							<div class="bidding-headline"><h3>Управление постом</h3></div>
+							<div class="bidding-inner">
+								<span class="bidding-detail">Действия с <strong>постом</strong></span>
+
+								<div class="bidding-fields">
+									<div class="bidding-field">
+										<a href="{{ route('posts.edit', $post->id) }}" class="button ripple-effect move-on-hover">Редактировать</a>
+									</div>
+									<div class="bidding-field">
+										<form action="{{ route('posts.delete', $post->id) }}" method="POST" class="float-right">
+											@csrf
+											{{ method_field('DELETE') }}
+											<button type="submit" class="button dark ripple-effect move-on-hover">Удалить</button>
+										</form>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					@endif
+				@endauth
 				<!-- Widget -->
 				<div class="sidebar-widget">
 					<h3>Поделиться в соц. сетях</h3>
