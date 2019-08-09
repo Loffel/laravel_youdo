@@ -78,8 +78,8 @@
 						<div class="header-notifications-dropdown">
 
 							<div class="header-notifications-headline">
-								<h4>Notifications</h4>
-								<button class="mark-as-read ripple-effect-dark" title="Mark all as read" data-tippy-placement="left">
+								<h4>Уведомления</h4>
+								<button class="mark-as-read ripple-effect-dark" title="Пометить как прочитанные" data-tippy-placement="left">
 									<i class="icon-feather-check-square"></i>
 								</button>
 							</div>
@@ -144,7 +144,7 @@
 						<div class="header-notifications-dropdown">
 
 							<div class="header-notifications-headline">
-								<h4>Messages</h4>
+								<h4>Сообщения</h4>
 								<button class="mark-as-read ripple-effect-dark" title="Mark all as read" data-tippy-placement="left">
 									<i class="icon-feather-check-square"></i>
 								</button>
@@ -224,6 +224,7 @@
 						</div>
 						
 						<ul class="user-menu-small-nav">
+							<li><a href="{{ route('profile.show', Auth::user()->id) }}"><i class="icon-material-outline-account-circle"></i> Мой профиль</a></li>
 							<li><a href="{{ route('home') }}"><i class="icon-material-outline-dashboard"></i> Панель управления</a></li>
 							<li><a href="#"><i class="icon-material-outline-settings"></i> Настройки</a></li>
 							<li><a href="{{ route('logout') }}" href="index-logged-out.html" onclick="event.preventDefault();document.getElementById('logout-form-lara').submit();"><i class="icon-material-outline-power-settings-new"></i> Выйти</a></li>
