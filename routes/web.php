@@ -66,3 +66,9 @@ Route::prefix('profile')->name('profile.')->group(function(){
     Route::post('/settings', 'ProfileController@settingsUpdate')->middleware('auth')->name('settings.update');
     Route::get('/{id}', 'ProfileController@show')->name('show');
 });
+
+Route::prefix('reviews')->middleware('auth')->name('reviews.')->group(function(){
+    Route::get('/', 'ReviewController@index')->name('index');
+    Route::post('/new', 'ReviewController@store')->name('store');
+    Route::patch('/', 'ReviewController@update')->name('update');
+});

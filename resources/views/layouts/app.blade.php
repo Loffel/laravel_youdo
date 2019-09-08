@@ -31,7 +31,8 @@
         Route::currentRouteName() != 'messenger.index' &&
         Route::currentRouteName() != 'admin.index' &&
         Route::currentRouteName() != 'profile.settings.show' &&
-        Route::currentRouteName() != 'home')
+        Route::currentRouteName() != 'home' &&
+        Route::currentRouteName() != 'reviews.index')
         @include('includes/footer')
         @endif
         

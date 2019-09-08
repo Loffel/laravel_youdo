@@ -22,6 +22,10 @@ class Proposal extends Model
         return $this->belongsTo('App\Task');
     }
 
+    public function review(){
+        return $this->hasOne('App\Review');
+    }
+
     /**
      * Статусы
      * 

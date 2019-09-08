@@ -27,6 +27,10 @@ class Task extends Model
         return $this->hasMany('App\Proposal');
     }
 
+    public function review(){
+        return $this->hasOne('App\Review');
+    }
+
     public function selectProposal($id){
         $this->proposal_id = $id;
         $this->save();

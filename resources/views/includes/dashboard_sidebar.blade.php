@@ -20,7 +20,7 @@
                         <li class="{{ (Route::currentRouteName() == 'home') ? 'active':'' }}"><a href="{{ route('home') }}"><i class="icon-material-outline-dashboard"></i> Панель управления</a></li>
                         <li class="{{ (Route::currentRouteName() == 'messenger.index') ? 'active':'' }}"><a href="{{ route('messenger.index') }}"><i class="icon-material-outline-question-answer"></i> Сообщения <span class="nav-tag">0</span></a></li>
                         {{-- <li><a href="dashboard-bookmarks.html"><i class="icon-material-outline-star-border"></i> Bookmarks</a></li> --}}
-                        <li><a href="#"><i class="icon-material-outline-rate-review"></i> Отзывы</a></li>
+                        <li class="{{ (Route::currentRouteName() == 'reviews.index') ? 'active':'' }}"><a href="{{ route('reviews.index') }}"><i class="icon-material-outline-rate-review"></i> Отзывы</a></li>
                     </ul>
                     
                     <ul data-submenu-title="Управление заданиями">
