@@ -24,8 +24,10 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
+        "bootstrap-datepicker": "^1.9.0",
         "counterup2": "^1.0.4",
         "laravel-echo": "^1.5.4",
-        "pusher-js": "^4.4.0"
+        "pusher-js": "^4.4.0",
+        "vue-bootstrap-datetimepicker": "^5.0.1"
     }
 }

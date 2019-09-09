@@ -41,7 +41,7 @@
 					</div>
 
 					<div class="payment-tab-content">
-						<p>You will be redirected to PayPal to complete payment.</p>
+						<p>Вы будете перенаправлены на PayPal для завершения платежа.</p>
 					</div>
 				</div>
 
@@ -113,9 +113,9 @@
 				</div>
 				<div class="boxed-widget-inner">
 					<ul>
-						<li>Задание <span>₽@money($taskPrice)</span></li>
-						<li>Комиссия (10%) <span>₽@money($taskPrice*0.1)</span></li>
-						<li class="total-costs">Итого <span>₽@money($taskPrice + $taskPrice*0.1)</span></li>
+						<li>Задание "{{ $taskTitle }}" <span>₽@money($proposalPrice)</span></li>
+						<li>Комиссия (10%) <span>₽@money($proposalPrice*0.1)</span></li>
+						<li class="total-costs">Итого <span>₽@money($proposalPrice + $proposalPrice*0.1)</span></li>
 					</ul>
 				</div>
 			</div>

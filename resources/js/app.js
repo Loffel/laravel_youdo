@@ -26,7 +26,7 @@ Vue.component('messenger', require('./components/Messenger.vue').default);
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-import counterUp from 'counterup2'
+import counterUp from 'counterup2';
 
  window.onload = function(){
     function typeElementSwticher(el, show = true){
@@ -112,6 +112,38 @@ import counterUp from 'counterup2'
             $("#small-dialog-1").find("input#adequacy-radio-" + adequacy).prop('checked', true);
             $("#small-dialog-1").find("#comment").val(comment);
             $("#small-dialog-1").find("#review_id").val(ID);
+          });
+
+          $("a#proposalEdit").on('click', function(){
+            var ID = $(this).data("id");
+            var maxPrice = $(this).data("price");
+            var curPrice = $(this).data("current-price");
+            var desc = $(this).data("desc");
+
+            $("#small-dialog").find("#proposal_id").val(ID);
+            // $("#small-dialog").find(".bidding-slider").data('slider-max', maxPrice);
+            // $("#small-dialog").find(".bidding-slider").val(curPrice);
+            $("#small-dialog").find("#description").val(desc);
+          });
+
+          $("a#openAccept").on('click', function(){
+            var ID = $(this).data("id"),
+                price = $(this).data("price"),
+                actionLink = $(this).data("url"),
+                userName = $(this).data("user-name");
+
+            $("#small-dialog-1").find("h3#username").text("Принять предложение от " + userName);
+            $("#small-dialog-1").find("#proposal_id").val(ID);
+            $("#small-dialog-1").find("form#terms").attr('action', actionLink);
+            $("#small-dialog-1").find("#price").html(price.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,') + ' руб.');
+          });
+          
+          $("a#openDM").on('click', function(){
+            var userID = $(this).data("user-id"),
+                userName = $(this).data("user-name");
+
+            $("#small-dialog-2").find("h3#username").text("Сообщение для " + userName);
+            $("#small-dialog-2").find("input#contact_id").val(userID);
           });
 
           console.log('Boom');

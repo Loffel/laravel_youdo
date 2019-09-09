@@ -26,14 +26,14 @@
                 <div class="fun-fact" data-fun-fact-color="#b81b7f">
                     <div class="fun-fact-text">
                         <span>Заданий выполнено</span>
-                        <h4>0</h4>
+                        <h4>{{ $tasksCount }}</h4>
                     </div>
                     <div class="fun-fact-icon"><i class="icon-material-outline-business-center"></i></div>
                 </div>
                 <div class="fun-fact" data-fun-fact-color="#efa80f">
                     <div class="fun-fact-text">
                         <span>Отзывов</span>
-                        <h4>0</h4>
+                        <h4>{{ $reviewsCount }}</h4>
                     </div>
                     <div class="fun-fact-icon"><i class="icon-material-outline-rate-review"></i></div>
                 </div>

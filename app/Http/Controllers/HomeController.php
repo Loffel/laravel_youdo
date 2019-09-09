@@ -23,7 +23,17 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $tasksCount = 0;
+        $reviewsCount = 0;
+
+        $user = auth()->user();
+
+        if($user->type == 1) $tasksCount = $user->tasks->count();
+        else $tasksCount = $user->proposals->where('status', 4)->count();
+
+        $reviewsCount = $user->reviews()->count();
+
+        return view('home', array('tasksCount' => $tasksCount, 'reviewsCount' => $reviewsCount));
     }
 
     public function welcome(){

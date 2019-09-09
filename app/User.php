@@ -6,6 +6,9 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+use App\Task;
+use App\Review;
+
 class User extends Authenticatable
 {
     use Notifiable;
@@ -50,6 +53,36 @@ class User extends Authenticatable
         if($this->avatar != NULL) $avatar = $this->avatar;
 
         return asset($avatar);
+    }
+
+    public function getScoreAVG(){
+
+        $reviews = $this->reviews();
+
+        $avg = 0;
+
+        foreach($reviews as $review){
+            $avg += $review->getAVG();
+        }
+
+        $avg = round($avg / $reviews->count(), 1);
+
+        return $avg;
+    }
+
+    public function reviews(){
+        if($this->type == 1){
+            $proposals = $this->proposals->whereIn('status', array(4, 6));
+            
+            $reviews = Review::whereIn('proposal_id', $proposals)->get();
+        }else{
+            $proposals = $this->proposals->whereIn('status', array(4, 6));
+            $tasks = Task::whereIn('proposal_id', $proposals)->get();
+
+            $reviews = Review::whereIn('task_id', $tasks)->get();
+        }
+
+        return $reviews;
     }
 
     public function tasks(){

@@ -25,6 +25,20 @@ class TaskController extends Controller
         return view('tasks.index', array('tasks' => $tasks));
     }
 
+    public function dashboard(){
+        $tasks = auth()->user()->tasks()->paginate(4);
+
+        return view('tasks.dashboard', array('tasks' => $tasks));
+    }
+
+    public function proposals($id){
+        $task = auth()->user()->tasks->where('id', $id)->first();
+
+        if(!isset($task)) return redirect()->back();
+
+        return view('tasks.proposals', array('task' => $task));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -123,8 +137,8 @@ class TaskController extends Controller
     }
 
     public function selectProposalView($task_id, $prop_id){
-        $taskPrice = Task::findOrFail($task_id)->price;
-        return view('tasks.select_proposal', array('task_id' => $task_id, 'prop_id' => $prop_id, 'taskPrice' => $taskPrice));
+        $proposalPrice = Proposal::findOrFail($prop_id)->price;
+        return view('tasks.select_proposal', array('task_id' => $task_id, 'prop_id' => $prop_id, 'proposalPrice' => $proposalPrice, 'taskTitle' => Task::find($task_id)->first()->title));
     }
 
     public function selectProposalStore(Request $request){

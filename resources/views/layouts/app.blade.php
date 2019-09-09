@@ -32,7 +32,10 @@
         Route::currentRouteName() != 'admin.index' &&
         Route::currentRouteName() != 'profile.settings.show' &&
         Route::currentRouteName() != 'home' &&
-        Route::currentRouteName() != 'reviews.index')
+        Route::currentRouteName() != 'reviews.index' &&
+        Route::currentRouteName() != 'tasks.dashboard' &&
+        Route::currentRouteName() != 'proposals.dashboard' &&
+        Route::currentRouteName() != 'tasks.proposals')
         @include('includes/footer')
         @endif
         

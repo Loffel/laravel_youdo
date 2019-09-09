@@ -55,6 +55,8 @@ class MessengerController extends Controller
             'text' => $request->text
         ]);
 
+        if(app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName() != "messenger.index") return redirect()->back()->with('success', 'Сообщение успешно отправлено!');
+
         return response()->json($message);
     }
 }

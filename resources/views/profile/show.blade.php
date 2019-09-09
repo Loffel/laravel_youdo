@@ -11,7 +11,7 @@
 						<div class="header-details">
 							<h3>{{ $user->name }} <span>{{ $user->getTypeName() }}</span></h3>
 							<ul>
-								<li><div class="star-rating" data-rating="5.0"></div></li>
+								<li><div class="star-rating" data-rating="{{ $user->getScoreAVG() }}"></div></li>
                                 @if($user->type == 2 && $user->is_verified)
                                 <li><div class="verified-badge-with-title">Проверен</div></li>
                                 @endif
@@ -45,21 +45,23 @@
 					<h3><i class="icon-material-outline-thumb-up"></i> Отзывы</h3>
 				</div>
 				<ul class="boxed-list-ul">
+					@foreach($user->reviews() as $review)
 					<li>
 						<div class="boxed-list-item">
 							<!-- Content -->
 							<div class="item-content">
-								<h4>API разработчик <span>Фрилансер</span></h4>
+								<h4>{{ $review->task->title }} <span>{{ $review->task == NULL ? 'Исполнитель':'Заказчик' }}</span></h4>
 								<div class="item-details margin-top-10">
-									<div class="star-rating" data-rating="5.0"></div>
-									<div class="detail-item"><i class="icon-material-outline-date-range"></i> Август 2019</div>
+									<div class="star-rating" data-rating="{{ $review->getAVG() }}"></div>
+									<div class="detail-item"><i class="icon-material-outline-date-range"></i>{{ $review->created_at->isoFormat('MMMM Y') }}</div>
 								</div>
 								<div class="item-description">
-									<p>Отличный программист - полностью выполнил задание, очень профессионально.</p>
+									<p>{{ $review->comment }}</p>
 								</div>
 							</div>
 						</div>
 					</li>
+					@endforeach
 				</ul>
 
 				<!-- Pagination -->
@@ -88,7 +90,7 @@
 				
 				<!-- Profile Overview -->
 				<div class="profile-overview">
-					<div class="overview-item"><strong>0</strong><span>{{($user->type == 1) ? 'Заданий создано': 'Заданий выполнено'}}</span></div>
+					<div class="overview-item"><strong>{{ ($user->type == 1) ? $user->tasks->count():$user->proposals->where('status', 4)->count() }}</strong><span>{{($user->type == 1) ? 'Заданий создано': 'Заданий выполнено'}}</span></div>
 				</div>
 
 				@if($user->type == 2)

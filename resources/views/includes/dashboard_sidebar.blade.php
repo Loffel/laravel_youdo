@@ -24,14 +24,17 @@
                     </ul>
                     
                     <ul data-submenu-title="Управление заданиями">
-                        <li class="{{ (Route::currentRouteName() == 'tasks.create') ? 'active-submenu':'' }}"><a href="#"><i class="icon-material-outline-assignment"></i> Задания</a>
+                        <li class="{{ (Route::currentRouteName() == 'tasks.create' || Route::currentRouteName() == 'proposals.dashboard' || Route::currentRouteName() == 'tasks.dashboard' || Route::currentRouteName() == 'tasks.proposals') ? 'active-submenu':'' }}"><a href="#"><i class="icon-material-outline-assignment"></i> Задания</a>
                             <ul>
-                                <li><a href="#">Мои задания <span class="nav-tag">2</span></a></li>
+                                @php
+                                    if(auth()->user()->type == 1) $tasksCount = auth()->user()->tasks->count();
+                                    else $tasksCount = auth()->user()->proposals()->whereBetween('status', array(1, 6))->count();
+                                @endphp
+                                <li class="{{ (Route::currentRouteName() == 'tasks.dashboard') ? 'active':'' }}"><a href="{{ route('tasks.dashboard') }}">Мои задания <span class="nav-tag">{{ $tasksCount }}</span></a></li>
                                 @if(Auth::user()->type == 1)
-                                <li><a href="#">Управление заявками</a></li>
-                                <li><a href="#">Создать задание</a></li>
+                                <li class="{{ (Route::currentRouteName() == 'tasks.create') ? 'active':'' }}"><a href="{{ route('tasks.create') }}">Создать задание</a></li>
                                 @else
-                                <li><a href="#">Мои заявки <span class="nav-tag">4</span></a></li>
+                                <li class="{{ (Route::currentRouteName() == 'proposals.dashboard') ? 'active':'' }}"><a href="{{ route('proposals.dashboard') }}">Мои предложения <span class="nav-tag">{{ auth()->user()->proposals->count() }}</span></a></li>
                                 @endif
                             </ul>	
                         </li>

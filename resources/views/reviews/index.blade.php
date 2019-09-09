@@ -125,6 +125,7 @@
                 <!-- Form -->
                 <form method="post" action="{{ route('reviews.update') }}" id="change-review-form">
                     @csrf
+                    {{ method_field('PATCH') }}
                     <input type="hidden" id="review_id" name="review_id" value="">
                     <div class="feedback-yes-no">
                         <strong>Вежливость</strong>
@@ -179,7 +180,7 @@
                 </form>
                 
                 <!-- Button -->
-                <button class="button full-width button-sliding-icon ripple-effect" type="submit" form="change-review-form">Save Changes <i class="icon-material-outline-arrow-right-alt"></i></button>
+                <button class="button full-width button-sliding-icon ripple-effect" type="submit" form="change-review-form">Сохранить изменения <i class="icon-material-outline-arrow-right-alt"></i></button>
 
             </div>
 

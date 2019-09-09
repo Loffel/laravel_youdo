@@ -35,6 +35,8 @@ Route::prefix('tasks')->name('tasks.')->group(function(){
     Route::patch('/edit/{id}', 'TaskController@update')->name('update');
     Route::delete('/delete/{id}', 'TaskController@destroy')->name('delete');
 
+    Route::get('/home', 'TaskController@dashboard')->name('dashboard');
+    Route::get('/home/proposals/{id}', 'TaskController@proposals')->name('proposals');
     Route::get('/proposal/{task_id}/{prop_id}', 'TaskController@selectProposalView')->name('select_proposal.view');
     Route::post('/proposal/accepted', 'TaskController@selectProposalStore')->name('select_proposal.store');
 });
@@ -51,6 +53,9 @@ Route::prefix('posts')->name('posts.')->group(function(){
 
 Route::prefix('proposals')->middleware('auth')->name('proposals.')->group(function(){
     Route::post('/new', 'ProposalController@store')->name('store');
+    Route::get('/', 'ProposalController@dashboard')->name('dashboard');
+    Route::patch('/update', 'ProposalController@update')->name('update');
+    Route::get('/delete/{id}', 'ProposalController@destroy')->name('delete');
 });
 
 Route::prefix('messenger')->middleware('auth')->name('messenger.')->group(function(){

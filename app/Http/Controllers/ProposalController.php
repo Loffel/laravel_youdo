@@ -18,6 +18,12 @@ class ProposalController extends Controller
         //
     }
 
+    public function dashboard(){
+        $proposals = auth()->user()->proposals()->where('status', '>', 0)->paginate(4);
+
+        return view('proposals.dashboard', array('proposals' => $proposals));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -75,9 +81,20 @@ class ProposalController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $proposal = Proposal::find($request->proposal_id);
+
+        if($proposal != NULL){
+            if($proposal->user_id == auth()->user()->id){
+                $proposal->update(array(
+                    'description' => $request->description,
+                    'price' => $request->price
+                ));
+                return redirect()->back()->with('success', 'Предложение успешно удалено!');
+            }
+        }
+        return redirect()->back()->with('error', 'Произошла ошибка!');
     }
 
     /**
@@ -88,6 +105,14 @@ class ProposalController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $proposal = Proposal::find($id);
+
+        if($proposal != NULL){
+            if($proposal->user_id == auth()->user()->id){
+                $proposal->delete();
+                return redirect()->back()->with('success', 'Предложение успешно удалено!');
+            }
+        }
+        return redirect()->back()->with('error', 'Произошла ошибка!');
     }
 }
