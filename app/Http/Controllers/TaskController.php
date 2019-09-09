@@ -26,7 +26,13 @@ class TaskController extends Controller
     }
 
     public function dashboard(){
-        $tasks = auth()->user()->tasks()->paginate(4);
+        if(auth()->user()->type == 1)
+            $tasks = auth()->user()->tasks()->paginate(4);
+        else {
+            $proposals = auth()->user()->proposals()->whereBetween('status', array(1, 6))->get();
+
+            $tasks = Task::whereIn('proposal_id', $proposals)->get();
+        }
 
         return view('tasks.dashboard', array('tasks' => $tasks));
     }

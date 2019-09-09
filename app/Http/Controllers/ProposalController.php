@@ -21,7 +21,7 @@ class ProposalController extends Controller
     }
 
     public function dashboard(){
-        $proposals = auth()->user()->proposals()->where('status', '>', 0)->paginate(4);
+        $proposals = auth()->user()->proposals()->paginate(4);
 
         return view('proposals.dashboard', array('proposals' => $proposals));
     }
