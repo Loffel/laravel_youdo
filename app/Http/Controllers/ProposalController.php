@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\NewProposal;
 use App\Proposal;
+use App\Task;
 
 class ProposalController extends Controller
 {
@@ -42,12 +44,18 @@ class ProposalController extends Controller
      */
     public function store(Request $request)
     {
+        $task = Task::find($request->task_id);
+
+        if($task == NULL) return redirect()->back();
+
         $proposal = Proposal::create(array(
             'description' => $request->description,
             'price' => $request->price,
             'user_id' => Auth::user()->id,
             'task_id' => $request->task_id
         ));
+
+        $task->user->notify(new NewProposal($task, $proposal));
 
         return redirect()->route('tasks.show', $request->task_id);
     }

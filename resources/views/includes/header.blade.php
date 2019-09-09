@@ -71,7 +71,7 @@
 
 						<!-- Trigger -->
 						<div class="header-notifications-trigger">
-							<a href="#"><i class="icon-feather-bell"></i><span>4</span></a>
+							<a href="#"><i class="icon-feather-bell"></i><span>{{ auth()->user()->unreadNotifications->count() }}</span></a>
 						</div>
 
 						<!-- Dropdown -->
@@ -87,45 +87,26 @@
 							<div class="header-notifications-content">
 								<div class="header-notifications-scroll" data-simplebar>
 									<ul>
-										<!-- Notification -->
+										@foreach(auth()->user()->unreadNotifications as $notification)
 										<li class="notifications-not-read">
-											<a href="dashboard-manage-candidates.html">
-												<span class="notification-icon"><i class="icon-material-outline-group"></i></span>
+											<a href="#">
+												<span class="notification-icon">
+													@if($notification->type == "App\Notifications\UserSelected")
+													<i class=" icon-material-outline-group"></i>
+													@elseif($notification->type == "App\Notifications\NewProposal")
+                                        			<i class="icon-material-outline-gavel"></i>
+													@endif
+												</span>
 												<span class="notification-text">
-													<strong>Michael Shannah</strong> applied for a job <span class="color">Full Stack Software Engineer</span>
+													@if($notification->type == "App\Notifications\UserSelected")
+													<strong>Вы</strong> были выбраны исполнителем задания <strong>{{ $notification->data["task_title"] }}</strong>
+													@elseif($notification->type == "App\Notifications\NewProposal")
+													<strong>{{ $notification->data["user_name"] }}</strong> оставил предложение к вашему заданию <strong>{{ $notification->data["task_title"] }}</strong>
+													@endif
 												</span>
 											</a>
 										</li>
-
-										<!-- Notification -->
-										<li>
-											<a href="dashboard-manage-bidders.html">
-												<span class="notification-icon"><i class=" icon-material-outline-gavel"></i></span>
-												<span class="notification-text">
-													<strong>Gilbert Allanis</strong> placed a bid on your <span class="color">iOS App Development</span> project
-												</span>
-											</a>
-										</li>
-
-										<!-- Notification -->
-										<li>
-											<a href="dashboard-manage-jobs.html">
-												<span class="notification-icon"><i class="icon-material-outline-autorenew"></i></span>
-												<span class="notification-text">
-													Your job listing <span class="color">Full Stack PHP Developer</span> is expiring.
-												</span>
-											</a>
-										</li>
-
-										<!-- Notification -->
-										<li>
-											<a href="dashboard-manage-candidates.html">
-												<span class="notification-icon"><i class="icon-material-outline-group"></i></span>
-												<span class="notification-text">
-													<strong>Sindy Forrest</strong> applied for a job <span class="color">Full Stack Software Engineer</span>
-												</span>
-											</a>
-										</li>
+										@endforeach
 									</ul>
 								</div>
 							</div>

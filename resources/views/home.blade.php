@@ -25,7 +25,7 @@
             <div class="fun-facts-container">
                 <div class="fun-fact" data-fun-fact-color="#b81b7f">
                     <div class="fun-fact-text">
-                        <span>Заданий выполнено</span>
+                        <span>{{ auth()->user()->type == 1 ? 'Заданий создано':'Заданий выполнено' }}</span>
                         <h4>{{ $tasksCount }}</h4>
                     </div>
                     <div class="fun-fact-icon"><i class="icon-material-outline-business-center"></i></div>
@@ -52,17 +52,29 @@
                         </div>
                         <div class="content">
                             <ul class="dashboard-box-list">
+                                @foreach(auth()->user()->unreadNotifications as $notification)
                                 <li>
-                                    <span class="notification-icon"><i class=" icon-material-outline-gavel"></i></span>
+                                    <span class="notification-icon">
+                                        @if($notification->type == "App\Notifications\UserSelected")
+                                        <i class="icon-material-outline-group"></i>
+                                        @elseif($notification->type == "App\Notifications\NewProposal")
+                                        <i class="icon-material-outline-gavel"></i>
+                                        @endif
+                                    </span>
                                     <span class="notification-text">
-                                        <strong>Пользователь</strong> оставил предложение к <a href="#">Название задания</a>
+                                        @if($notification->type == "App\Notifications\UserSelected")
+                                        <strong>Вы</strong> были выбраны исполнителем задания <a href="{{ route('tasks.show', $notification->data['task_id']) }}">{{ $notification->data["task_title"] }}</a>
+                                        @elseif($notification->type == "App\Notifications\NewProposal")
+                                        <a href="{{ route('profile.show', $notification->data['user_id']) }}">{{ $notification->data["user_name"] }}</a> оставил предложение к вашему заданию <a href="{{ route('tasks.show', $notification->data['task_id']) }}">{{ $notification->data["task_title"] }}</a>
+                                        @endif
                                     </span>
                                     <!-- Buttons -->
                                     <div class="buttons-to-right">
-                                        <a href="#" class="button ripple-effect ico" title="Отметить как прочитанное" data-tippy-placement="left"><i class="icon-feather-check-square"></i></a>
+                                        <a href="{{ route('notifications.markOne', $notification->id) }}" class="button ripple-effect ico" title="Отметить как прочитанное" data-tippy-placement="left"><i class="icon-feather-check-square"></i></a>
                                     </div>
                                 </li>
-                                <li>
+                                @endforeach
+                                {{-- <li>
                                     <span class="notification-icon"><i class="icon-material-outline-autorenew"></i></span>
                                     <span class="notification-text">
                                         Срок завершения вашего задания <a href="#">Название задания</a> истёк
@@ -81,7 +93,7 @@
                                     <div class="buttons-to-right">
                                         <a href="#" class="button ripple-effect ico" title="Отметить как прочитанное" data-tippy-placement="left"><i class="icon-feather-check-square"></i></a>
                                     </div>
-                                </li>
+                                </li> --}}
                             </ul>
                         </div>
                     </div>

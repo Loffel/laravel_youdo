@@ -39,7 +39,7 @@ class Task extends Model
         $proposal->status = $id;
         $proposal->save();
 
-        $this->user->notify(new UserSelected($this));
+        $proposal->user->notify(new UserSelected($this));
 
         return true;
     }
@@ -49,4 +49,9 @@ class Task extends Model
 
         return $proposal;
     }
+
+    public function setDateEndAttribute($value)
+{
+    $this->attributes['date_end'] = \Carbon\Carbon::createFromFormat('Y-m-d\TH:i',$value);;
+}
 }

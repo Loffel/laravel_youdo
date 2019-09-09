@@ -45,4 +45,16 @@ class HomeController extends Controller
 
         return view('welcome', array('tasks' => $tasks, 'posts' => $posts, 'tasksCount' => $tasksCount, 'executorsCount' => $executorsCount, 'clientsCount' => $clientsCount));
     }
+
+    public function markOne($id){
+        auth()->user()->unreadNotifications->where('id', $id)->markAsRead();
+
+        return redirect()->back();
+    }
+
+    public function markAll(){
+        auth()->user()->unreadNotifications->markAsRead();
+
+        return redirect()->back();
+    }
 }

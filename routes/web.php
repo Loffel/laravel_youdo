@@ -15,6 +15,10 @@ Auth::routes();
 
 Route::get('/', 'HomeController@welcome')->name('welcome');
 Route::get('/home', 'HomeController@index')->middleware('auth')->name('home');
+
+Route::get('/notifications/{id}', 'HomeController@markOne')->middleware('auth')->name('notifications.markOne');
+Route::get('/notifications', 'HomeController@markAll')->middleware('auth')->name('notifications.markAll');
+
 Route::get('/register-executor', function(){
     return view('auth.register-exec');
 });
@@ -35,7 +39,7 @@ Route::prefix('tasks')->name('tasks.')->group(function(){
     Route::patch('/edit/{id}', 'TaskController@update')->name('update');
     Route::delete('/delete/{id}', 'TaskController@destroy')->name('delete');
 
-    Route::get('/home', 'TaskController@dashboard')->name('dashboard');
+    Route::get('/home/tasks', 'TaskController@dashboard')->name('dashboard');
     Route::get('/home/proposals/{id}', 'TaskController@proposals')->name('proposals');
     Route::get('/proposal/{task_id}/{prop_id}', 'TaskController@selectProposalView')->name('select_proposal.view');
     Route::post('/proposal/accepted', 'TaskController@selectProposalStore')->name('select_proposal.store');

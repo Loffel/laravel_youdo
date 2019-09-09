@@ -95,7 +95,7 @@
                                 <div class="bids-avatar">
                                     <div class="freelancer-avatar">
                                         <div class="verified-badge"></div>
-                                        <a href="#"><img src="{{ asset('images/user-avatar-big-01.jpg')}}" alt=""></a>
+                                        <a href="#"><img src="{{ $userProposal->user->getAvatar() }}" alt=""></a>
                                     </div>
                                 </div>
                                 
@@ -103,7 +103,7 @@
                                 <div class="bids-content">
                                     <!-- Name -->
                                     <div class="freelancer-name">
-                                        <h4><a href="#">Вы <img class="flag" src="{{asset('images/flags/gb.svg')}}" alt="" title="United Kingdom" data-tippy-placement="top"></a></h4>
+                                        <h4><a href="#">Вы</a></h4>
                                         <span class="not-rated">{{ $userProposal->description }}</span>
                                     </div>
                                 </div>
@@ -145,7 +145,8 @@
                                 <div class="bidding-headline"><h3>Оставить предложение</h3></div>
                                 <div class="bidding-inner">
                                     <form action="{{ route('proposals.store') }}" method="POST">
-                                            @csrf
+                                        @csrf
+                                        <input type="hidden" name="task_id" value="{{ $task->id }}">
                                         <!-- Headline -->
                                         <span class="bidding-detail">Установите вашу <strong>цену</strong></span>
 

@@ -7,7 +7,7 @@ use Illuminate\Notifications\Notification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 
-class UserSelected extends Notification
+class NewProposal extends Notification
 {
     use Queueable;
 
@@ -16,10 +16,10 @@ class UserSelected extends Notification
      *
      * @return void
      */
-    public function __construct($task, $user)
+    public function __construct($task, $proposal)
     {
         $this->task = $task;
-        $this->user = $user;
+        $this->proposal = $proposal;
     }
 
     /**
@@ -42,16 +42,17 @@ class UserSelected extends Notification
     public function toMail($notifiable)
     {
         return (new MailMessage)
-                    ->subject('Вас выбрали исполнителем в задании!')
-                    ->line('Вы были выбраны исполнителем в задании "'.$this->task->title.'".')
-                    ->action('Посмотреть задание', route('tasks.show', $this->task->id))
+                    ->subject('К вашему заданию оставили новое предложение!')
+                    ->line($this->proposal->user->name.' оставил предложение к вашему заданию "'.$this->task->title.'".')
+                    ->action('Посмотреть предложения', route('tasks.show', $this->task->id))
                     ->line('Спасибо за использование нашего сайта!');
     }
 
     public function toDatabase($notifiable){
         return [
+            'user_name' => $this->proposal->user->name,
+            'user_id' => $this->proposal->user->id,
             'task_id' => $this->task->id,
-            'user_id' => $this->user->id,
             'task_title' => $this->task->title
         ];
     }
