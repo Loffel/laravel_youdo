@@ -50675,6 +50675,7 @@ window.onload = function () {
           rememberMe.prop('checked', true);
         }
       });
+      $("#header .left-side").css("width", "100%");
       console.log('Boom');
     }
   });

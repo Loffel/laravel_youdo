@@ -91,6 +91,7 @@ import counterUp from 'counterup2';
             }
           });
 
+          $("#header .left-side").css("width", "100%");
           console.log('Boom');
         }
     });
