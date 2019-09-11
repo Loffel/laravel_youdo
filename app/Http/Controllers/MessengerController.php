@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Proposal;
 use App\Task;
 use App\Message;
+use App\Events\NewMessage;
 
 class MessengerController extends Controller
 {
@@ -56,6 +57,8 @@ class MessengerController extends Controller
         ]);
 
         if(app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName() != "messenger.index") return redirect()->back()->with('success', 'Сообщение успешно отправлено!');
+
+        broadcast(new NewMessage($message));
 
         return response()->json($message);
     }

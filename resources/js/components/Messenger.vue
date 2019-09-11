@@ -12,6 +12,12 @@
     import ContactList from './ContactList';
 
     export default {
+        props: {
+            user: {
+                type: Object,
+                required: true
+            }
+        },
         data(){
             return {
                 selectedContact: null,
@@ -20,6 +26,11 @@
             };
         },
         mounted() {
+            Echo.private(`messages.${this.user.id}`)
+                .listen('NewMessage', (e) => {
+                    this.handleIncoming(e.message);
+                });
+            
             axios.get('/messenger/contacts')
                 .then((response) => {
                     console.log(response.data);
@@ -36,6 +47,14 @@
             },
             saveNewMessage(message){
                 this.messages.push(message);
+            },
+            handleIncoming(message){
+                if(this.selectedContact && message.from_id == this.selectedContact.id){
+                    this.saveNewMessage(message);
+                    return;
+                }
+
+                alert(message.text);
             }
         },
         components: {

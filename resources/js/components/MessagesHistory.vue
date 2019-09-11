@@ -1,5 +1,5 @@
 <template>
-    <div class="message-content-inner">			
+    <div class="message-content-inner" ref="history">			
         <div v-for="message in messages" :class="`message-bubble ${message.to_id == contact.id ? 'me':''}`" :key="message.id">
             <div class="message-bubble-inner">
                 <div class="message-avatar"><img src="/images/user-avatar-placeholder.png" alt="" /></div>
@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import { setTimeout } from 'timers';
     export default {
         props: {
             contact: {
@@ -19,6 +20,21 @@
             messages: {
                 type: Array,
                 required: true
+            }
+        },
+        methods: {
+            scrollToBottom() {
+                setTimeout(() => {
+                    this.$refs.history.scrollTop = this.$refs.history.scrollHeight - this.$refs.history.clientHeight;
+                }, 50);
+            }
+        },
+        watch: {
+            contact(contact){
+                this.scrollToBottom();
+            },
+            messages(messages){
+                this.scrollToBottom();
             }
         }
     }

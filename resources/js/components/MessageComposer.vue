@@ -1,6 +1,6 @@
 <template>
     <div class="message-reply">
-        <textarea v-model="message" cols="1" v-on:keydown.enter="send" rows="1" placeholder="Введите сообщение..." data-autoresize></textarea>
+        <textarea v-model="message" cols="1" @keydown.enter="send" rows="1" placeholder="Введите сообщение..." data-autoresize></textarea>
         <button v-on:click="send" class="button ripple-effect">Отправить</button>
     </div>
 </template>
