@@ -84,7 +84,6 @@
                                         @endif
                                     </ul>
                                     
-
                                     @if(auth()->user()->type == 1)
                                     <!-- Buttons -->
                                     <div class="buttons-to-right always-visible">
@@ -115,5 +114,4 @@
     </div>
     <!-- Dashboard Content / End -->
 </div>
-
 @endsection

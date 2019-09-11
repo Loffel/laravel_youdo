@@ -16,7 +16,7 @@ class MessengerController extends Controller
 
     public function getContacts(){
         $contacts = array();
-        if(Auth::user()->type == 1){
+        if(Auth::user()->type == 2){
             $tasks = Auth::user()->proposals->filter(function($proposal){
                 return $proposal->status > 0;
             })->pluck('task_id');

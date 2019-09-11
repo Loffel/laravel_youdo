@@ -24,7 +24,7 @@
                 <!-- Account Type -->
                 <div class="account-type">
                     <div>
-                        <input type="radio" name="account-type-radio" id="freelancer-radio" class="account-type-radio" checked/>
+                        <input type="radio" name="account-type-radio" id="freelancer-radio" class="account-type-radio"/>
                         <label for="freelancer-radio" class="ripple-effect-dark"><i class="icon-material-outline-account-circle"></i> Исполнитель</label>
                     </div>
 

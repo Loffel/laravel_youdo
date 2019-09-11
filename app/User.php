@@ -65,7 +65,8 @@ class User extends Authenticatable
             $avg += $review->getAVG();
         }
 
-        $avg = round($avg / $reviews->count(), 1);
+        if($reviews->count() != 0)
+            $avg = round($avg / $reviews->count(), 1);
 
         return $avg;
     }

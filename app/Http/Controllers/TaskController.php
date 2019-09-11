@@ -19,10 +19,28 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $tasks = Task::paginate(5);
-        return view('tasks.index', array('tasks' => $tasks));
+        $minPrice = 0;
+        $maxPrice = Task::max('price');
+
+        $tasks = Task::query();
+
+        $filters = array();
+
+        if($request->has('min_price')){
+            $tasks = Task::where('price', '>=', $request->min_price);
+            $filters['min_price'] = $request->min_price;
+        }
+
+        if($request->has('max_price')){
+            $tasks = Task::where('price', '<=', $request->max_price);
+            $filters['max_price'] = $request->max_price;
+        }
+        
+        $tasks = $tasks->paginate(1)->appends($filters);
+
+        return view('tasks.index', array('tasks' => $tasks, 'maxPrice' => $maxPrice, 'minPrice' => $minPrice, 'filters' => $filters));
     }
 
     public function dashboard(){

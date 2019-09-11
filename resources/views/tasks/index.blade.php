@@ -6,17 +6,23 @@
 	<div class="row">
 		<div class="col-xl-3 col-lg-4">
 			<div class="sidebar-container">
+				<form method="GET" action="{{ route('tasks.index') }}">
+					<input type="hidden" name="min_price" value="{{ $minPrice }}">
+					<input type="hidden" name="max_price" value="{{ $maxPrice }}">
+					<!-- Budget -->
+					<div class="sidebar-widget">
+						<h3>Бюджет</h3>
+						<div class="margin-top-55"></div>
 
-				<!-- Budget -->
-				<div class="sidebar-widget">
-					<h3>Бюджет</h3>
-					<div class="margin-top-55"></div>
+						<!-- Range Slider -->
+						<input class="range-slider" id="priceFilter" type="text" value="" data-slider-currency="₽" data-slider-min="{{ $minPrice }}" data-slider-max="{{ $maxPrice }}" data-slider-step="100" data-slider-value="[{{ (isset($filters['min_price'])) ? $filters['min_price']:$minPrice }},{{ (isset($filters['max_price'])) ? $filters['max_price']:$maxPrice }}]"/>
+						<div class="clearfix"></div>
+					</div>
 
-					<!-- Range Slider -->
-					<input class="range-slider" type="text" value="" data-slider-currency="₽" data-slider-min="10" data-slider-max="2500" data-slider-step="25" data-slider-value="[50,2500]"/>
-				</div>
-				<div class="clearfix"></div>
-
+					<div class="sidebar-widget">
+						<button style="width: 100%" class="button button-sliding-icon ripple-effect" type="submit">Искать <i class="icon-material-outline-arrow-right-alt"></i></button>
+					</div>
+				</form>
 			</div>
 		</div>
 		<div class="col-xl-9 col-lg-8 content-left-offset">
@@ -74,11 +80,13 @@
                 
                 
 				<!-- Pagination -->
-				{{ $tasks->links('paginator') }}
+				{{ $tasks->appends($filters)->links('paginator') }}
 			</div>
 			<!-- Tasks Container / End -->
 
 		</div>
 	</div>
 </div>
+
+<tasks-filters></tasks-filters>
 @endsection

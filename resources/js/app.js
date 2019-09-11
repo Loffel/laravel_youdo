@@ -19,6 +19,10 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i);
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default));
 Vue.component('messenger', require('./components/Messenger.vue').default);
+Vue.component('reviews-modal', require('./components/ReviewsModal.vue').default);
+Vue.component('proposals-modal', require('./components/ProposalsModal.vue').default);
+Vue.component('tasks-proposals-modal', require('./components/TasksProposalsModal.vue').default);
+Vue.component('tasks-filters', require('./components/TasksFilter.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -75,6 +79,9 @@ import counterUp from 'counterup2';
             }
           });
 
+          $('input.account-type-radio#freelancer-radio').trigger('change');
+          $('input.account-type-radio#freelancer-radio').prop('checked', true);
+
           $('label[for="remember"]').click(function(){
             let rememberMe = $(this).parent().find('input#remember-login-popup');
             if(rememberMe.prop('checked')){
@@ -82,68 +89,6 @@ import counterUp from 'counterup2';
             }else{
               rememberMe.prop('checked', true);
             }
-          });
-
-          $("a#reviewOpen").on('click', function(){
-              var taskElem = $(this).parent().find(".item-content h4");
-              var taskLink = taskElem.data("user-url");
-              var taskTitle = taskElem.html();
-              var userLink = taskElem.data("user-url");
-              var userName = taskElem.data("user-name");
-              var taskID = taskElem.data("task-id");
-
-              $("a#reviewName").attr("href", userLink);
-              $("a#reviewName").html(userName);
-              $("a#reviewTask").attr("href", taskLink);
-              $("a#reviewTask").html(taskTitle);
-              $("input#task_id").val(taskID);
-          });
-
-          $("a#reviewOpen.gray").on('click', function(){
-            var ratingElem = $(this).parent().find(".star-rating");
-            var courtesy = ratingElem.data("courtesy");
-            var ID = ratingElem.data("id");
-            var punctuality = ratingElem.data("punctuality");
-            var adequacy = ratingElem.data("adequacy");
-            var comment = $(this).parent().find(".item-description > p").text();
-
-            $("#small-dialog-1").find("input#courtesy-radio-" + courtesy).prop('checked', true);
-            $("#small-dialog-1").find("input#punctuality-radio-" + punctuality).prop('checked', true);
-            $("#small-dialog-1").find("input#adequacy-radio-" + adequacy).prop('checked', true);
-            $("#small-dialog-1").find("#comment").val(comment);
-            $("#small-dialog-1").find("#review_id").val(ID);
-          });
-
-          $("a#proposalEdit").on('click', function(){
-            var ID = $(this).data("id");
-            var maxPrice = $(this).data("price");
-            var curPrice = $(this).data("current-price");
-            var desc = $(this).data("desc");
-
-            $("#small-dialog").find("#proposal_id").val(ID);
-            // $("#small-dialog").find(".bidding-slider").data('slider-max', maxPrice);
-            // $("#small-dialog").find(".bidding-slider").val(curPrice);
-            $("#small-dialog").find("#description").val(desc);
-          });
-
-          $("a#openAccept").on('click', function(){
-            var ID = $(this).data("id"),
-                price = $(this).data("price"),
-                actionLink = $(this).data("url"),
-                userName = $(this).data("user-name");
-
-            $("#small-dialog-1").find("h3#username").text("Принять предложение от " + userName);
-            $("#small-dialog-1").find("#proposal_id").val(ID);
-            $("#small-dialog-1").find("form#terms").attr('action', actionLink);
-            $("#small-dialog-1").find("#price").html(price.toFixed(2).replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,') + ' руб.');
-          });
-          
-          $("a#openDM").on('click', function(){
-            var userID = $(this).data("user-id"),
-                userName = $(this).data("user-name");
-
-            $("#small-dialog-2").find("h3#username").text("Сообщение для " + userName);
-            $("#small-dialog-2").find("input#contact_id").val(userID);
           });
 
           console.log('Boom');

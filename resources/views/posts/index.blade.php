@@ -39,7 +39,7 @@
 					</div>
 					<!-- Blog Post Content -->
 					<div class="blog-post-content">
-						<span class="blog-post-date">{{ $post->created_at->isoFormat('d MMMM YYYY') }}</span>
+						<span class="blog-post-date">{{ $post->created_at->isoFormat('D MMMM YYYY') }}</span>
 						<h3>{{ $post->title }}</h3>
 						<p>{{ Str::limit($post->content, 100) }}</p>
 					</div>

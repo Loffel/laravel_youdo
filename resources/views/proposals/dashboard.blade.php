@@ -137,4 +137,5 @@
 </div>
 <!-- Edit Bid Popup / End -->
 
+<proposals-modal></proposals-modal>
 @endsection

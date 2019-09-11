@@ -275,4 +275,6 @@
     </div>
 </div>
 <!-- Leave a Review Popup / End -->
+
+<reviews-modal></reviews-modal>
 @endsection

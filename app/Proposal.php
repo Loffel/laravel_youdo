@@ -50,13 +50,13 @@ class Proposal extends Model
                 $status = 'В работе';
                 break;
             case 2:
-                $status = 'Готово, не принятно заказчиком';
+                $status = 'Готово, не принято заказчиком';
                 break;
             case 3:
-                $status = 'Приятно, не оплачено';
+                $status = 'Принято, не оплачено';
                 break;
             case 4:
-                $status = 'Приятно и оплачно';
+                $status = 'Принято и оплачено';
                 break;
             case 5:
                 $status = 'Арбитраж';

@@ -190,4 +190,5 @@
 </div>
 <!-- Send Direct Message Popup / End -->
 
+<tasks-proposals-modal></tasks-proposals-modal>
 @endsection

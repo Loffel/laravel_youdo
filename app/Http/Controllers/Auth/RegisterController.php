@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Validation\Rule;
+use Illuminate\Http\Request;
 
 class RegisterController extends Controller
 {
@@ -92,5 +93,24 @@ class RegisterController extends Controller
         }
 
         return User::create($dataArray);
+    }
+
+    public function register(Request $request) {
+        $validator = $this->validator($request->all());
+
+        if($validator->fails()){
+            return redirect()->route('register')->withErrors($validator)->withInput();
+        }
+
+        $validator->validate();
+    
+        $user = $this->create($request->all());
+    
+        event(new Registered($user));
+    
+        $this->guard()->login($user);
+    
+        return $this->registered($request, $user)
+                        ?: redirect($this->redirectPath());
     }
 }
