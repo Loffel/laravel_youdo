@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Foundation\Auth\RegistersUsers;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 
@@ -58,7 +59,8 @@ class RegisterController extends Controller
         ],[
             'type.*' => 'Не выбран тип аккаунта.',
             'password.min' => 'Пароль должен быть не менее 8 символов.',
-            'password.confirmed' => 'Пароли не совпадают.'
+            'password.confirmed' => 'Пароли не совпадают.',
+            'email.unique' => 'Данная электронная почта уже используется.'
         ]);
         
         $validator->sometimes(['ogrn', 'legal_address', 'address', 'phone'], 'required', function($input){
