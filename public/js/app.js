@@ -48385,13 +48385,16 @@ var render = function() {
           },
           [
             _c("a", { attrs: { href: "#" } }, [
-              _vm._m(1, true),
+              _c("div", { staticClass: "message-avatar" }, [
+                _c("i", { staticClass: "status-icon status-online" }),
+                _c("img", { attrs: { src: contact.avatar, alt: "" } })
+              ]),
               _vm._v(" "),
               _c("div", { staticClass: "message-by" }, [
                 _c("div", { staticClass: "message-by-headline" }, [
                   _c("h5", [_vm._v(_vm._s(contact.name))]),
                   _vm._v(" "),
-                  _c("span", [_vm._v("@ дней назад")])
+                  _c("span", [_vm._v(_vm._s(contact.diffForHumans))])
                 ]),
                 _vm._v(" "),
                 contact.lastMessage
@@ -48431,17 +48434,6 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("i", { staticClass: "icon-material-outline-search" })
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "message-avatar" }, [
-      _c("i", { staticClass: "status-icon status-online" }),
-      _c("img", {
-        attrs: { src: "/images/user-avatar-placeholder.png", alt: "" }
-      })
     ])
   }
 ]

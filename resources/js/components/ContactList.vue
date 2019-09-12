@@ -9,12 +9,12 @@
         <ul>
             <li v-for="contact in sortedContacts" :key="contact.id" @click="selectContact(contact)" :class="{'active-message': contact == selected, 'unread': contact.unread}">
                 <a href="#">
-                    <div class="message-avatar"><i class="status-icon status-online"></i><img src="/images/user-avatar-placeholder.png" alt="" /></div>
+                    <div class="message-avatar"><i class="status-icon status-online"></i><img :src="contact.avatar" alt="" /></div>
 
                     <div class="message-by">
                         <div class="message-by-headline">
                             <h5>{{ contact.name }}</h5>
-                            <span>@ дней назад</span>
+                            <span>{{ contact.diffForHumans }}</span>
                         </div>
                         <p v-if="contact.lastMessage">{{contact.lastMessage.from_id == contact.id ? contact.name + ': ' + contact.lastMessage.text : 'Вы: ' + contact.lastMessage.text}}</p>
                         <p v-else>Сообщений пока нет!</p>

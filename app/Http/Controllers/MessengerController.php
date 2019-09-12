@@ -63,6 +63,8 @@ class MessengerController extends Controller
             $lastMessage = Message::whereIn('id', $lastMessage)->first();
 
             $contact->lastMessage = $lastMessage ? $lastMessage:0;
+            $contact->avatar = $contact->getAvatar();
+            $contact->diffForHumans = $lastMessage ? $lastMessage->created_at->diffForHumans() : "";
 
             $contact->unread = $contactUnread ? $contactUnread->messages_count : 0;
 
