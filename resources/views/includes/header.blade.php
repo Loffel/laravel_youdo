@@ -60,7 +60,7 @@
 
 				@guest
 				<div class="header-widget">
-					<a href="{{ (Route::currentRouteName() != 'register' && Route::currentRouteName() != 'login') ? '#sign-in-dialog':'' }}" class="popup-with-zoom-anim log-in-button"><i class="icon-feather-log-in"></i> <span>Вход / Регистрация</span></a>
+					<a href="#sign-in-dialog" class="popup-with-zoom-anim log-in-button"><i class="icon-feather-log-in"></i> <span>Вход / Регистрация</span></a>
 				</div>
 				@else
 				<!--  User Notifications -->
