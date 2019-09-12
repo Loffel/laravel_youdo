@@ -29,20 +29,20 @@
 
 			<h3 class="page-title">Результат поиска</h3>
 
-			<div class="notify-box margin-top-15">
-				{{-- <div class="switch-container">
+			{{-- <div class="notify-box margin-top-15">
+				<div class="switch-container">
 					<label class="switch"><input type="checkbox"><span class="switch-button"></span><span class="switch-text">Turn on email alerts for this search</span></label>
-				</div> --}}
+				</div>
 
 				<div class="sort-by">
 					<span>Сортировать по:</span>
 					<select class="selectpicker hide-tick">
-						<a href="#"><option>Сначала новые</option></a>
+						<option>Сначала новые</option>
 						<option>Сначала старые</option>
 						<option>Случайно</option>
 					</select>
 				</div>
-			</div>
+			</div> --}}
 			
 			<!-- Tasks Container -->
 			<div class="tasks-list-container margin-top-35">

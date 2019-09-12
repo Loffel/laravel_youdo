@@ -60,7 +60,7 @@ class User extends Authenticatable
 
         $reviews = $this->reviews();
 
-        $avg = 0;
+        $avg = 0.1;
 
         foreach($reviews as $review){
             $avg += $review->getAVG();
