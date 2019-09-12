@@ -39,9 +39,9 @@ class TaskController extends Controller
         }
 
         if($request->has('sort')){
-            $tasks->sortBy('created_at', $request->sort);
+            $tasks->orderBy('created_at', $request->sort);
             $filters['sort'] = $request->sort;
-        }
+        }else $tasks->orderBy('created_at', 'desc');
         
         $tasks = $tasks->paginate(5)->appends($filters);
 
