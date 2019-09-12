@@ -29,16 +29,21 @@ class TaskController extends Controller
         $filters = array();
 
         if($request->has('min_price')){
-            $tasks = Task::where('price', '>=', $request->min_price);
+            $tasks->where('price', '>=', $request->min_price);
             $filters['min_price'] = $request->min_price;
         }
 
         if($request->has('max_price')){
-            $tasks = Task::where('price', '<=', $request->max_price);
+            $tasks->where('price', '<=', $request->max_price);
             $filters['max_price'] = $request->max_price;
         }
+
+        if($request->has('sort')){
+            $tasks->sortBy('created_at', $request->sort);
+            $filters['sort'] = $request->sort;
+        }
         
-        $tasks = $tasks->paginate(1)->appends($filters);
+        $tasks = $tasks->paginate(5)->appends($filters);
 
         return view('tasks.index', array('tasks' => $tasks, 'maxPrice' => $maxPrice, 'minPrice' => $minPrice, 'filters' => $filters));
     }

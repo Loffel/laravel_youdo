@@ -37,8 +37,7 @@
 				<div class="sort-by">
 					<span>Сортировать по:</span>
 					<select class="selectpicker hide-tick">
-						<option>Релевантности</option>
-						<option>Сначала новые</option>
+						<a href="#"><option>Сначала новые</option></a>
 						<option>Сначала старые</option>
 						<option>Случайно</option>
 					</select>

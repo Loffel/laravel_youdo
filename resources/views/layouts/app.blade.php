@@ -40,7 +40,9 @@
         @endif
         
         @guest
-            @include('includes/login_popup')    
+            @if(Route::currentRouteName() != 'register' && Route::currentRouteName() != 'login')
+            @include('includes/login_popup')
+            @endif
         @endguest
     </div>
     <script src="{{ asset('js/app.js') }}"></script>

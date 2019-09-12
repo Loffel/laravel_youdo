@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 use App\Task;
 use App\Review;
+use App\Proposal;
 
 class User extends Authenticatable
 {
@@ -73,8 +74,8 @@ class User extends Authenticatable
 
     public function reviews(){
         if($this->type == 1){
-            $proposals = $this->proposals->whereIn('status', array(4, 6));
-            
+            $tasks = $this->tasks->where('proposal_id', '!=', NULL);
+            $proposals = Proposal::whereIn('status', array(4,6))->whereIn('task_id', $tasks)->get();        
             $reviews = Review::whereIn('proposal_id', $proposals)->get();
         }else{
             $proposals = $this->proposals->whereIn('status', array(4, 6));

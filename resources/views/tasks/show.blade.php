@@ -10,10 +10,10 @@
 						<div class="header-image"><a href="#"><img src="{{ asset('images/browse-companies-02.png') }}" alt=""></a></div>
 						<div class="header-details">
 							<h3>{{ $task->title }}</h3>
-							<h5>О заказчике</h5>
+							<h5>О заказчике {{ $task->user->getScoreAVG() }}</h5>
 							<ul>
 								<li><a href="{{ route('profile.show', $task->user->id) }}"><i class="icon-material-outline-business"></i> {{ $task->user->name }}</a></li>
-								<li><div class="star-rating" data-rating="5.0"></div></li>
+								<li><div class="star-rating" data-rating="{{ $task->user->getScoreAVG() }}"></div></li>
 							</ul>
 						</div>
 					</div>

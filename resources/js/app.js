@@ -63,7 +63,7 @@ import counterUp from 'counterup2';
             let inputID = $(this).attr('id');
             let typeInput = $('input[name="type"]');
 
-            if(inputID == 'freelancer-radio'){
+            if(inputID == 'freelancer-radio' || inputID == 'freelancer-radio-popup'){
               typeInput.val(2);
               typeElementSwticher($('input[name="ogrn"]'));
               typeElementSwticher($('input[name="legal_address"]'));
@@ -80,7 +80,9 @@ import counterUp from 'counterup2';
           });
 
           $('input.account-type-radio#freelancer-radio').trigger('change');
+          $('input.account-type-radio#freelancer-radio-popup').trigger('change');
           $('input.account-type-radio#freelancer-radio').prop('checked', true);
+          $('input.account-type-radio#freelancer-radio-popup').prop('checked', true);
 
           $('label[for="remember"]').click(function(){
             let rememberMe = $(this).parent().find('input[name="remember"]');

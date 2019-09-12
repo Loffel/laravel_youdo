@@ -60877,7 +60877,7 @@ window.onload = function () {
         var inputID = $(this).attr('id');
         var typeInput = $('input[name="type"]');
 
-        if (inputID == 'freelancer-radio') {
+        if (inputID == 'freelancer-radio' || inputID == 'freelancer-radio-popup') {
           typeInput.val(2);
           typeElementSwticher($('input[name="ogrn"]'));
           typeElementSwticher($('input[name="legal_address"]'));
@@ -60892,7 +60892,9 @@ window.onload = function () {
         }
       });
       $('input.account-type-radio#freelancer-radio').trigger('change');
+      $('input.account-type-radio#freelancer-radio-popup').trigger('change');
       $('input.account-type-radio#freelancer-radio').prop('checked', true);
+      $('input.account-type-radio#freelancer-radio-popup').prop('checked', true);
       $('label[for="remember"]').click(function () {
         var rememberMe = $(this).parent().find('input[name="remember"]');
 

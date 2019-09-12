@@ -50,7 +50,7 @@
 						<div class="boxed-list-item">
 							<!-- Content -->
 							<div class="item-content">
-								<h4>{{ $review->task->title }} <span>{{ $review->task == NULL ? 'Исполнитель':'Заказчик' }}</span></h4>
+								<h4>{{ $review->task == NULL ? $review->proposal->task->title:$review->task->title }} <span>{{ $review->task == NULL ? 'Исполнитель':'Заказчик' }}</span></h4>
 								<div class="item-details margin-top-10">
 									<div class="star-rating" data-rating="{{ $review->getAVG() }}"></div>
 									<div class="detail-item"><i class="icon-material-outline-date-range"></i>{{ $review->created_at->isoFormat('MMMM Y') }}</div>

@@ -75,7 +75,7 @@
 
                     <div class="input-with-icon-left" title="Минимум 8 символов" data-tippy-placement="right">
                         <i class="icon-material-outline-lock"></i>
-                        <input type="password" class="input-text with-border" name="password-confirm" id="password-repeat-register" placeholder="Повторите пароль" required/>
+                        <input type="password" class="input-text with-border" name="password_confirmation" id="password-repeat-register" placeholder="Повторите пароль" required/>
                     </div>
                 </form>
                 

@@ -112,7 +112,7 @@
 
 					<div class="input-with-icon-left">
 						<i class="icon-material-outline-lock"></i>
-						<input type="password" class="input-text with-border" name="password-repeat" id="password-repeat-register-popup" placeholder="Повторите пароль" required/>
+						<input type="password" class="input-text with-border" name="password_confirmation" id="password-repeat-register-popup" placeholder="Повторите пароль" required/>
 					</div>
 				</form>
 				
