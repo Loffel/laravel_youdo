@@ -1866,6 +1866,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     contacts: {
@@ -1875,13 +1876,23 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      selected: -1
+      selected: this.contacts.length ? this.contacts[0] : null
     };
   },
   methods: {
-    selectContact: function selectContact(index, contact) {
-      this.selected = index;
+    selectContact: function selectContact(contact) {
+      this.selected = contact;
       this.$emit('selected', contact);
+    }
+  },
+  computed: {
+    sortedContacts: function sortedContacts() {
+      return _.sortBy(this.contacts, [function (contact) {
+        // if(contact == this.selected) {
+        //     return Infinity;
+        // }
+        return contact.unread;
+      }]).reverse();
     }
   }
 });
@@ -2084,6 +2095,7 @@ __webpack_require__.r(__webpack_exports__);
     startConversationWith: function startConversationWith(contact) {
       var _this2 = this;
 
+      this.updateUnread(contact, true);
       axios.get("/messenger/conversation/".concat(contact.id)).then(function (response) {
         _this2.messages = response.data;
         _this2.selectedContact = contact;
@@ -2091,6 +2103,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     saveNewMessage: function saveNewMessage(message) {
       this.messages.push(message);
+      this.selectedContact.lastMessage = message;
     },
     handleIncoming: function handleIncoming(message) {
       if (this.selectedContact && message.from_id == this.selectedContact.id) {
@@ -2098,7 +2111,22 @@ __webpack_require__.r(__webpack_exports__);
         return;
       }
 
-      alert(message.text);
+      this.updateUnread(message.from, false);
+      this.updateLastMessage(message);
+    },
+    updateUnread: function updateUnread(contact, reset) {
+      this.contacts = this.contacts.map(function (single) {
+        if (single.id != contact.id) return single;
+        if (reset) single.unread = 0;else single.unread += 1;
+        return single;
+      });
+    },
+    updateLastMessage: function updateLastMessage(message) {
+      this.contacts = this.contacts.map(function (single) {
+        if (single.id != message.from.id) return single;
+        single.lastMessage = message;
+        return single;
+      });
     }
   },
   components: {
@@ -6704,7 +6732,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, ".selected[data-v-0ee8d67a] {\n  background: #dfdfdf;\n}", ""]);
+exports.push([module.i, ".selected[data-v-0ee8d67a] {\n  background: #dfdfdf;\n}\nli.unread[data-v-0ee8d67a] {\n  background-color: #2a41e81f;\n}", ""]);
 
 // exports
 
@@ -48340,15 +48368,18 @@ var render = function() {
     _vm._v(" "),
     _c(
       "ul",
-      _vm._l(_vm.contacts, function(contact, index) {
+      _vm._l(_vm.sortedContacts, function(contact) {
         return _c(
           "li",
           {
             key: contact.id,
-            class: { "active-message": index == _vm.selected },
+            class: {
+              "active-message": contact == _vm.selected,
+              unread: contact.unread
+            },
             on: {
               click: function($event) {
-                return _vm.selectContact(index, contact)
+                return _vm.selectContact(contact)
               }
             }
           },
@@ -48363,7 +48394,17 @@ var render = function() {
                   _c("span", [_vm._v("@ дней назад")])
                 ]),
                 _vm._v(" "),
-                _c("p", [_vm._v("Последнее сообщение!")])
+                contact.lastMessage
+                  ? _c("p", [
+                      _vm._v(
+                        _vm._s(
+                          contact.lastMessage.from_id == contact.id
+                            ? contact.name + ": " + contact.lastMessage.text
+                            : "Вы: " + contact.lastMessage.text
+                        )
+                      )
+                    ])
+                  : _c("p", [_vm._v("Сообщений пока нет!")])
               ])
             ])
           ]
@@ -48384,7 +48425,7 @@ var staticRenderFns = [
           attrs: {
             id: "autocomplete-input",
             type: "text",
-            placeholder: "Search"
+            placeholder: "Поиск"
           }
         }),
         _vm._v(" "),
@@ -60853,7 +60894,7 @@ window.onload = function () {
       $('input.account-type-radio#freelancer-radio').trigger('change');
       $('input.account-type-radio#freelancer-radio').prop('checked', true);
       $('label[for="remember"]').click(function () {
-        var rememberMe = $(this).parent().find('input#remember-login-popup');
+        var rememberMe = $(this).parent().find('input[name="remember"]');
 
         if (rememberMe.prop('checked')) {
           rememberMe.prop('checked', false);

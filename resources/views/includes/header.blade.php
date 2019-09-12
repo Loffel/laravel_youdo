@@ -118,7 +118,7 @@
 					<!-- Messages -->
 					<div class="header-notifications">
 						<div class="header-notifications-trigger">
-							<a href="#"><i class="icon-feather-mail"></i><span>3</span></a>
+							<a href="#"><i class="icon-feather-mail"></i><span>{{ auth()->user()->unreadMessages()->count() }}</span></a>
 						</div>
 
 						<!-- Dropdown -->
@@ -126,7 +126,7 @@
 
 							<div class="header-notifications-headline">
 								<h4>Сообщения</h4>
-								<button class="mark-as-read ripple-effect-dark" title="Mark all as read" data-tippy-placement="left">
+								<button class="mark-as-read ripple-effect-dark" title="Пометить как прочитанные" data-tippy-placement="left">
 									<i class="icon-feather-check-square"></i>
 								</button>
 							</div>
@@ -134,41 +134,18 @@
 							<div class="header-notifications-content">
 								<div class="header-notifications-scroll" data-simplebar>
 									<ul>
-										<!-- Notification -->
+										@foreach(auth()->user()->unreadMessages()->take(5) as $message)
 										<li class="notifications-not-read">
-											<a href="dashboard-messages.html">
-												<span class="notification-avatar status-online"><img src="{{ asset('images/user-avatar-small-03.jpg')}}" alt=""></span>
+											<a href="{{ route('messenger.index') }}">
+												<span class="notification-avatar status-online"><img src="{{ $message->from->getAvatar() }}" alt=""></span>
 												<div class="notification-text">
-													<strong>David Peterson</strong>
-													<p class="notification-msg-text">Thanks for reaching out. I'm quite busy right now on many...</p>
-													<span class="color">4 hours ago</span>
+													<strong>{{ $message->from->name }}</strong>
+													<p class="notification-msg-text">{{ Str::limit($message->text, 58) }}</p>
+													<span class="color">{{ $message->created_at->diffForHumans() }}</span>
 												</div>
 											</a>
 										</li>
-
-										<!-- Notification -->
-										<li class="notifications-not-read">
-											<a href="dashboard-messages.html">
-												<span class="notification-avatar status-offline"><img src="{{asset('images/user-avatar-small-02.jpg')}}" alt=""></span>
-												<div class="notification-text">
-													<strong>Sindy Forest</strong>
-													<p class="notification-msg-text">Hi Tom! Hate to break it to you, but I'm actually on vacation until...</p>
-													<span class="color">Yesterday</span>
-												</div>
-											</a>
-										</li>
-
-										<!-- Notification -->
-										<li class="notifications-not-read">
-											<a href="dashboard-messages.html">
-												<span class="notification-avatar status-online"><img src="{{ asset('images/user-avatar-placeholder.png')}}" alt=""></span>
-												<div class="notification-text">
-													<strong>Marcin Kowalski</strong>
-													<p class="notification-msg-text">I received payment. Thanks for cooperation!</p>
-													<span class="color">Yesterday</span>
-												</div>
-											</a>
-										</li>
+										@endforeach
 									</ul>
 								</div>
 							</div>

@@ -39,6 +39,8 @@
         },
         methods: {
             startConversationWith(contact){
+                this.updateUnread(contact, true);
+
                 axios.get(`/messenger/conversation/${contact.id}`)
                     .then((response) => {
                         this.messages = response.data;
@@ -47,6 +49,7 @@
             },
             saveNewMessage(message){
                 this.messages.push(message);
+                this.selectedContact.lastMessage = message;
             },
             handleIncoming(message){
                 if(this.selectedContact && message.from_id == this.selectedContact.id){
@@ -54,7 +57,32 @@
                     return;
                 }
 
-                alert(message.text);
+                this.updateUnread(message.from, false);
+                this.updateLastMessage(message);
+            },
+            updateUnread(contact, reset){
+                this.contacts = this.contacts.map((single) => {
+                    if(single.id != contact.id)
+                        return single;
+
+                    if(reset)
+                        single.unread = 0;
+                    else single.unread += 1;
+
+
+
+                    return single;
+                });
+            },
+            updateLastMessage(message){
+                this.contacts = this.contacts.map((single) => {
+                    if(single.id != message.from.id)
+                        return single;
+
+                    single.lastMessage = message;
+
+                    return single;
+                });
             }
         },
         components: {

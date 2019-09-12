@@ -83,7 +83,7 @@ import counterUp from 'counterup2';
           $('input.account-type-radio#freelancer-radio').prop('checked', true);
 
           $('label[for="remember"]').click(function(){
-            let rememberMe = $(this).parent().find('input#remember-login-popup');
+            let rememberMe = $(this).parent().find('input[name="remember"]');
             if(rememberMe.prop('checked')){
               rememberMe.prop('checked', false);
             }else{

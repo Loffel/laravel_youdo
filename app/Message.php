@@ -11,4 +11,12 @@ class Message extends Model
         'to_id',
         'text'
     ];
+
+    public function from(){
+        return $this->hasOne('App\User', 'id', 'from_id');
+    }
+
+    public function to(){
+        return $this->hasOne('App\User', 'id', 'to_id');
+    }
 }

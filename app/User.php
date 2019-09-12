@@ -97,4 +97,12 @@ class User extends Authenticatable
     public function proposals(){
         return $this->hasMany('App\Proposal');
     }
+
+    public function messages(){
+        return $this->hasMany('App\Message', 'to_id', 'id');
+    }
+
+    public function unreadMessages(){
+        return $this->messages()->where('read', 0)->orderBy('id', 'desc')->get();
+    }
 }

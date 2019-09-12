@@ -40,11 +40,48 @@ class MessengerController extends Controller
             }
         }
 
+        $unreadContacts = Message::select(\DB::raw('from_id, count(from_id) as messages_count'))
+                                    ->where('to_id', auth()->user()->id)
+                                    ->where('read', false)
+                                    ->groupBy('from_id')
+                                    ->get();
+
+        $contacts = collect($contacts);
+        $contacts = $contacts->map(function($contact) use ($unreadContacts){
+            $contactUnread = $unreadContacts->where('from_id', $contact->id)->first();
+
+
+            $lastMessage = Message::select(\DB::raw('MAX(id)'))
+                                    ->where(array(
+                                        array('to_id', auth()->user()->id),
+                                        array('from_id', $contact->id)))
+                                    ->orWhere(array(
+                                        array('to_id', $contact->id),
+                                        array('from_id', auth()->user()->id)))
+                                    ->get();
+
+            $lastMessage = Message::whereIn('id', $lastMessage)->first();
+
+            $contact->lastMessage = $lastMessage ? $lastMessage:0;
+
+            $contact->unread = $contactUnread ? $contactUnread->messages_count : 0;
+
+            return $contact;
+        });
+
         return response()->json($contacts);
     }
 
     public function getMessages($id){
-        $messages = Message::where('from_id', $id)->orWhere('to_id', $id)->get();
+        Message::where('from_id', $id)->where('to_id', auth()->user()->id)->update(['read' => true]);
+
+        $messages = Message::where(function($q) use($id) {
+            $q->where('from_id', auth()->user()->id);
+            $q->where('to_id', $id);
+        })->orWhere(function($q) use($id) {
+            $q->where('from_id', $id);
+            $q->where('to_id', auth()->user()->id);
+        })->get();
 
         return response()->json($messages);
     }
