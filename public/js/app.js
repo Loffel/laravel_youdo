@@ -48394,7 +48394,15 @@ var render = function() {
                 _c("div", { staticClass: "message-by-headline" }, [
                   _c("h5", [_vm._v(_vm._s(contact.name))]),
                   _vm._v(" "),
-                  _c("span", [_vm._v(_vm._s(contact.diffForHumans))])
+                  _c("span", [
+                    _vm._v(
+                      _vm._s(
+                        contact.lastMessage
+                          ? contact.lastMessage.diffForHumans
+                          : ""
+                      )
+                    )
+                  ])
                 ]),
                 _vm._v(" "),
                 contact.lastMessage
@@ -48586,7 +48594,9 @@ var render = function() {
         },
         [
           _c("div", { staticClass: "message-bubble-inner" }, [
-            _vm._m(0, true),
+            _c("div", { staticClass: "message-avatar" }, [
+              _c("img", { attrs: { src: _vm.contact.avatar, alt: "" } })
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "message-text" }, [
               _c("p", [_vm._v(_vm._s(message.text))])
@@ -48600,18 +48610,7 @@ var render = function() {
     0
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "message-avatar" }, [
-      _c("img", {
-        attrs: { src: "/images/user-avatar-placeholder.png", alt: "" }
-      })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

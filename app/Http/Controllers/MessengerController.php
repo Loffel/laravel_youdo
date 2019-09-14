@@ -62,9 +62,12 @@ class MessengerController extends Controller
 
             $lastMessage = Message::whereIn('id', $lastMessage)->first();
 
-            $contact->lastMessage = $lastMessage ? $lastMessage:0;
+            $contact->lastMessage = $lastMessage ? $lastMessage : 0;
+
+            if($lastMessage) $contact->lastMessage->diffForHumans = $lastMessage->created_at->diffForHumans();
+
             $contact->avatar = $contact->getAvatar();
-            $contact->diffForHumans = $lastMessage ? $lastMessage->created_at->diffForHumans() : "";
+            // $contact->diffForHumans = $lastMessage ? $lastMessage->created_at->diffForHumans() : "";
 
             $contact->unread = $contactUnread ? $contactUnread->messages_count : 0;
 
@@ -94,6 +97,8 @@ class MessengerController extends Controller
             'to_id' => $request->contact_id,
             'text' => $request->text
         ]);
+
+        $message->diffForHumans = $message->created_at->diffForHumans();
 
         if(app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName() != "messenger.index") return redirect()->back()->with('success', 'Сообщение успешно отправлено!');
 

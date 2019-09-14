@@ -14,7 +14,7 @@
                     <div class="message-by">
                         <div class="message-by-headline">
                             <h5>{{ contact.name }}</h5>
-                            <span>{{ contact.diffForHumans }}</span>
+                            <span>{{ contact.lastMessage ? contact.lastMessage.diffForHumans : ''  }}</span>
                         </div>
                         <p v-if="contact.lastMessage">{{contact.lastMessage.from_id == contact.id ? contact.name + ': ' + contact.lastMessage.text : 'Вы: ' + contact.lastMessage.text}}</p>
                         <p v-else>Сообщений пока нет!</p>
