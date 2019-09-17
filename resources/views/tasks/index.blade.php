@@ -9,6 +9,7 @@
 				<form method="GET" action="{{ route('tasks.index') }}">
 					<input type="hidden" name="min_price" value="{{ $minPrice }}">
 					<input type="hidden" name="max_price" value="{{ $maxPrice }}">
+					<input type="hidden" name="sort" value="{{request('sort')}}">
 					<!-- Budget -->
 					<div class="sidebar-widget">
 						<h3>Бюджет</h3>
@@ -29,20 +30,18 @@
 
 			<h3 class="page-title">Результат поиска</h3>
 
-			{{-- <div class="notify-box margin-top-15">
-				<div class="switch-container">
-					<label class="switch"><input type="checkbox"><span class="switch-button"></span><span class="switch-text">Turn on email alerts for this search</span></label>
-				</div>
-
+			<div class="notify-box margin-top-15">
 				<div class="sort-by">
-					<span>Сортировать по:</span>
-					<select class="selectpicker hide-tick">
+					<span class="margin-right-5">Сортировать: </span>
+					<a class="margin-right-5" href="{{ route('tasks.index', array('min_price' => request('min_price'), 'max_price' => request('max_price'), 'sort' => 'desc') ) }}">Новые </a>/ 
+					<a class="margin-left-5" href="{{ route('tasks.index', array('min_price' => request('min_price'), 'max_price' => request('max_price'), 'sort' => 'asc') ) }}"> Старые</a>
+					{{--  <select class="hide-tick">
 						<option>Сначала новые</option>
 						<option>Сначала старые</option>
 						<option>Случайно</option>
-					</select>
+					</select>  --}}
 				</div>
-			</div> --}}
+			</div>
 			
 			<!-- Tasks Container -->
 			<div class="tasks-list-container margin-top-35">

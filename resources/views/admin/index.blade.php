@@ -86,7 +86,7 @@
                                             <td>{{ $user->phone }}</td>
                                             <td>{{ $user->legal_address }}</td>
                                             <td>{{ $user->address }}</td>
-                                            <td><a href="{{route('admin.activate_user', $user->id)}}">Активировать</a></td>
+                                            <td><a href="{{route('admin.activateUser', $user->id)}}">Активировать</a></td>
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -94,9 +94,9 @@
                             </div>
                         </div>
                     </div>
+                    {{ $unactive->appends(array('unactive' => $unactive->currentPage(), 'props' => $proposals->currentPage()))->links('paginator') }}
                 </div>
                 <!-- Row / End -->
-
                 <!-- Row -->
                 <div class="row">
                     <div class="col-xl-12 col-md-12">
@@ -124,7 +124,11 @@
                                             <td>{{ $proposal->description }}</td>
                                             <td>{{ $proposal->price }}</td>
                                             <td>{{ $proposal->getStatusText() }}</td>
-                                            <td>-</td>
+                                            <td>
+                                                @if($proposal->status == 3)
+                                                <a href="{{ route('admin.payoutProposal', $proposal->id) }}">Произвести выплату</a>
+                                                @endif
+                                            </td>
                                         </tr>
                                         @endforeach
                                     </tbody>
@@ -132,6 +136,7 @@
                             </div>
                         </div>
                     </div>
+                    {{ $proposals->appends(array('unactive' => $unactive->currentPage(), 'props' => $proposals->currentPage()))->links('paginator') }}
                 </div>
                 <!-- Row / End -->
     

@@ -42,9 +42,8 @@
 
                     <ul data-submenu-title="Аккаунт">
                         <li class="{{ (Route::currentRouteName() == 'profile.settings.show') ? 'active':'' }}"><a href="{{ route('profile.settings.show') }}"><i class="icon-material-outline-settings"></i> Настройки</a></li>
-                        <li><a href="{{ route('logout') }}"><i class="icon-material-outline-power-settings-new"></i> Выйти</a></li>
+                        <li><a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form-lara').submit();"><i class="icon-material-outline-power-settings-new"></i> Выйти</a></li>
                     </ul>
-                    
                 </div>
             </div>
             <!-- Navigation / End -->

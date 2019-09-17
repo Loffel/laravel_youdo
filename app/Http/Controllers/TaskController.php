@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Task;
 use App\Proposal;
+use App\Notifications\ProposalStatusChanged;
 
 class TaskController extends Controller
 {
@@ -43,7 +44,7 @@ class TaskController extends Controller
             $filters['sort'] = $request->sort;
         }else $tasks->orderBy('created_at', 'desc');
         
-        $tasks = $tasks->paginate(5)->appends($filters);
+        $tasks = $tasks->paginate(1)->appends($filters);
 
         return view('tasks.index', array('tasks' => $tasks, 'maxPrice' => $maxPrice, 'minPrice' => $minPrice, 'filters' => $filters));
     }
@@ -58,6 +59,34 @@ class TaskController extends Controller
         }
 
         return view('tasks.dashboard', array('tasks' => $tasks));
+    }
+
+    public function close(Request $request, $id){
+        $status = $request->status;
+        $statusFreelancer = array(2);
+        $statusEmployer = array(3, 5);
+
+        if(auth()->user()->type == 1) {
+            $statusCheck = in_array($status, $statusEmployer);
+            $task = auth()->user()->tasks->where('id', $id)->first();
+        }else {
+            $statusCheck = in_array($status, $statusFreelancer);
+            $task = auth()->user()->proposals->where('task_id', $id)->first()->task;
+        }
+
+        if(!$status || !$task || !$statusCheck) return redirect()->back();
+
+        $proposal = $task->getSelectedProposal();
+
+        if($proposal->status < $status){
+            $proposal->update(array(
+                'status' => $status
+            ));
+
+            if($status == 2) $task->user->notify(new ProposalStatusChanged($task, $task->user));
+            else $proposal->user->notify(new ProposalStatusChanged($task, $proposal->user));
+        }
+        return redirect()->route('tasks.show', $task->id);
     }
 
     public function proposals($id){
@@ -111,8 +140,10 @@ class TaskController extends Controller
         $task = Task::findOrFail($id);
         $userProposal = NULL;
 
-        if(Auth::check())
-            $userProposal = Proposal::where('task_id', $id)->where('user_id', Auth::user()->id)->first();
+        if(Auth::check()){
+            if(auth()->user()->type == 2)
+                $userProposal = Proposal::where('task_id', $id)->where('user_id', Auth::user()->id)->first();
+        }
         
         return view('tasks.show', array('task' => $task, 'userProposal' => $userProposal));
     }
@@ -130,7 +161,6 @@ class TaskController extends Controller
         if(Auth::user()->id != $task->user_id) redirect()->back();
 
         $dateEndString = $task->date_end->toDateTimeString();
-        $dateEndString = str_replace(' ', 'T', $dateEndString);
 
         return view('tasks.edit', array('task' => $task, 'dateEndString' => $dateEndString));
     }
@@ -166,6 +196,9 @@ class TaskController extends Controller
     }
 
     public function selectProposalView($task_id, $prop_id){
+
+        if(auth()->user()->tasks->where('id', $task_id)->first() == NULL || auth()->user()->type != 1) return redirect()->back();
+
         $proposalPrice = Proposal::findOrFail($prop_id)->price;
         return view('tasks.select_proposal', array('task_id' => $task_id, 'prop_id' => $prop_id, 'proposalPrice' => $proposalPrice, 'taskTitle' => Task::find($task_id)->first()->title));
     }

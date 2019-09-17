@@ -27,6 +27,11 @@ class MessengerController extends Controller
             foreach($tasks as $task){
                 array_push($contacts, $task->user);
             }
+
+            $otherMessages = Message::where('to_id', auth()->user()->id)->whereNotIn('from_id', $contacts)->get()->unique('from_id');
+            foreach($otherMessages as $message){
+                array_push($contacts, $message->from);
+            }
         }
         else{
             $proposals = Auth::user()->tasks->reject(function($task){
@@ -99,10 +104,10 @@ class MessengerController extends Controller
         ]);
 
         $message->diffForHumans = $message->created_at->diffForHumans();
+        
+        broadcast(new NewMessage($message));
 
         if(app('router')->getRoutes()->match(app('request')->create(url()->previous()))->getName() != "messenger.index") return redirect()->back()->with('success', 'Сообщение успешно отправлено!');
-
-        broadcast(new NewMessage($message));
 
         return response()->json($message);
     }

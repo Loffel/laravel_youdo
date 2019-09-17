@@ -11,7 +11,7 @@
             <!-- Dashboard Headline -->
             <div class="dashboard-headline">
                 <h3>Управление предложениями</h3>
-                <span class="margin-top-7">Предложения для <a href="#">{{ $task->title }}</a></span>
+                <span class="margin-top-7">Предложения для <a href="{{ route('tasks.show', $task->id) }}">{{ $task->title }}</a></span>
 
                 <!-- Breadcrumbs -->
                 <nav id="breadcrumbs" class="dark">
@@ -28,6 +28,12 @@
 
                 <!-- Dashboard Box -->
                 <div class="col-xl-12">
+                    @if(Session::has('success') || Session::has('error'))
+                    <div class="notification {{ Session::has('success') ? 'success':'error' }} closeable">
+                        <p>{{ Session::has('success') ? Session::get('success'):Session::get('error') }}</p>
+                        <a class="close"></a>
+                    </div>
+                    @endif
                     <div class="dashboard-box margin-top-0">
 
                         <!-- Headline -->
@@ -66,7 +72,11 @@
 
                                                 <!-- Rating -->
                                                 <div class="freelancer-rating">
+                                                    @if($proposal->user->getScoreAVG() != 0)
                                                     <div class="star-rating" data-rating="{{ $proposal->user->getScoreAVG() }}"></div>
+                                                    @else
+                                                    Нет рейтинга
+                                                    @endif
                                                 </div>
 
                                                 <!-- Bid Details -->

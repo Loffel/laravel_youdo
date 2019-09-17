@@ -64,7 +64,7 @@
                                             <div class="row">
                                                 <div class="col-xl-12">
                                                     <div class="input-with-icon">
-                                                        <input class="with-border" type="datetime-local" name="date_end" placeholder="" required>
+                                                        <date-end></date-end>
                                                     </div>
                                                 </div>
                                             </div>

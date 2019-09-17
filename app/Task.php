@@ -31,15 +31,29 @@ class Task extends Model
         return $this->hasOne('App\Review');
     }
 
+    public function payment(){
+        return $this->hasOne('App\Payment');
+    }
+
+    public function payout(){
+        return $this->hasOne('App\Payout');
+    }
+
     public function selectProposal($id){
         $this->proposal_id = $id;
         $this->save();
 
         $proposal = $this->getSelectedProposal();
-        $proposal->status = $id;
+        $proposal->status = 1;
         $proposal->save();
 
-        $proposal->user->notify(new UserSelected($this));
+        $payment = \App\Payment::create(array(
+            'user_id' => $this->user->id,
+            'task_id' => $this->id,
+            'amount' => $proposal->price
+        ));
+
+        $proposal->user->notify(new UserSelected($this, $proposal->user));
 
         return true;
     }
@@ -49,9 +63,4 @@ class Task extends Model
 
         return $proposal;
     }
-
-    public function setDateEndAttribute($value)
-{
-    $this->attributes['date_end'] = \Carbon\Carbon::createFromFormat('Y-m-d\TH:i',$value);;
-}
 }

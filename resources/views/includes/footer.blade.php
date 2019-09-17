@@ -1,3 +1,4 @@
+@if(request()->route()->getPrefix() != '/dashboard')
 <div id="footer">
 	
 	<!-- Footer Top Section -->
@@ -70,9 +71,9 @@
 					<div class="footer-links">
 						<h3>Задания</h3>
 						<ul>
-							<li><a href="#"><span>Все задания</span></a></li>
+							<li><a href="{{ route('tasks.index') }}"><span>Все задания</span></a></li>
 							@auth
-							<li><a href="#"><span>Создать задание</span></a></li>
+							<li><a href="{{ route('tasks.create') }}"><span>Создать задание</span></a></li>
 							@endauth
 						</ul>
 					</div>
@@ -83,10 +84,10 @@
 					<div class="footer-links">
 						<h3>Блог</h3>
 						<ul>
-							<li><a href="#"><span>Все посты</span></a></li>
+							<li><a href="{{ route('posts.index') }}"><span>Все посты</span></a></li>
 							@auth
 								@if(Auth::user()->is_admin)
-									<li><a href="#"><span>Создать пост</span></a></li>
+									<li><a href="{{ route('tasks.create') }}"><span>Создать пост</span></a></li>
 								@endif
 							@endauth
 						</ul>
@@ -146,3 +147,4 @@
 	<!-- Footer Copyrights / End -->
 
 </div>
+@endif

@@ -23,7 +23,7 @@ class ReviewController extends Controller
                 $proposal = $task->getSelectedProposal();
                 
                 if(isset($proposal)) {
-                    if($proposal->status == 4 || $proposal->status == 6)
+                    if($proposal->status >= 3)
                     array_push($filteredProposals, $proposal->id);
                 }
             }
@@ -31,7 +31,7 @@ class ReviewController extends Controller
             $items = auth()->user()->tasks()->whereIn('proposal_id', $filteredProposals)->paginate(4);
         }
         else {
-            $items = auth()->user()->proposals()->whereIn('status', array(4, 6))->paginate(4);
+            $items = auth()->user()->proposals()->where('status', '>=', 3)->paginate(4);
         }
 
         foreach($items as $item){

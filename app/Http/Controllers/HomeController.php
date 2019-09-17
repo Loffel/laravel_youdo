@@ -25,15 +25,36 @@ class HomeController extends Controller
     {
         $tasksCount = 0;
         $reviewsCount = 0;
+        $tasks = null;
 
         $user = auth()->user();
 
-        if($user->type == 1) $tasksCount = $user->tasks->count();
-        else $tasksCount = $user->proposals->where('status', 4)->count();
+        if($user->type == 1){
+            $tasksCount = $user->tasks->count();
+            
+            $tasks = $user->tasks->sortByDesc('createad_at')->take(5);
+        }else{
+            $tasksCount = $user->proposals->where('status', 4)->count();
+
+            $tasks = array();
+            foreach($user->proposals as $proposal){
+                $task = $proposal->task;
+                if($proposal->status == 4)
+                    array_push($tasks, $task);
+            }
+            $tasks = collect($tasks);
+            $tasks = $tasks->sortByDesc('createad_at')->take(5);
+        }
+        
+        $tasks = $tasks->map(function($task) use($user){
+            $task->pay = $user->type == 1 ? $task->payment:$task->payout;
+
+            return $task;
+        });
 
         $reviewsCount = $user->reviews()->count();
 
-        return view('home', array('tasksCount' => $tasksCount, 'reviewsCount' => $reviewsCount));
+        return view('home', array('tasksCount' => $tasksCount, 'reviewsCount' => $reviewsCount, 'tasks' => $tasks));
     }
 
     public function welcome(){
@@ -49,12 +70,20 @@ class HomeController extends Controller
     public function markOne($id){
         auth()->user()->unreadNotifications->where('id', $id)->markAsRead();
 
-        return redirect()->back();
+        return response()->json(array(
+            "message" => "ok"
+        ));
     }
 
     public function markAll(){
         auth()->user()->unreadNotifications->markAsRead();
 
-        return redirect()->back();
+        return response()->json(array(
+            "message" => "ok"
+        ));
+    }
+
+    public function contacts(){
+        return view('contacts');
     }
 }

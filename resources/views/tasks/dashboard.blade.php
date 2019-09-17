@@ -54,7 +54,7 @@
                                             <!-- Details -->
                                             <div class="job-listing-description">
                                                 @php
-                                                    $daysDiff = Carbon\Carbon::now()->diffInDays($task->created_at, false);
+                                                    $daysDiff = Carbon\Carbon::now()->diffInDays($task->date_end, false);
                                                 @endphp
                                                 <h3 class="job-listing-title"><a href="{{ route('tasks.show', $task->id) }}">{{ $task->title }}</a>
                                                     @if($daysDiff >= 0 && $daysDiff <= 1)

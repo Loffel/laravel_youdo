@@ -23,6 +23,8 @@ Vue.component('reviews-modal', require('./components/ReviewsModal.vue').default)
 Vue.component('proposals-modal', require('./components/ProposalsModal.vue').default);
 Vue.component('tasks-proposals-modal', require('./components/TasksProposalsModal.vue').default);
 Vue.component('tasks-filters', require('./components/TasksFilter.vue').default);
+Vue.component('contacts-maps', require('./components/ContactsMap.vue').default);
+Vue.component('date-end', require('./components/DateEndInput.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -31,6 +33,7 @@ Vue.component('tasks-filters', require('./components/TasksFilter.vue').default);
  */
 
 import counterUp from 'counterup2';
+import Axios from 'axios';
 
  window.onload = function(){
     function typeElementSwticher(el, show = true){
@@ -47,9 +50,10 @@ import counterUp from 'counterup2';
     const app = new Vue({
         el: '#wrapper',
         mounted(){
-          let bundleScript = document.createElement('script')
-          bundleScript.setAttribute('src', '/js/custom.js')
-          document.body.appendChild(bundleScript)
+          let bundleScript = document.createElement('script');
+          bundleScript.setAttribute('src', '/js/custom.js');
+          document.body.appendChild(bundleScript);
+          
 
           const el = document.querySelector( '.fun-fact h4' )
           $('.fun-fact h4, .counter').each(function(index, el){
@@ -106,6 +110,21 @@ import counterUp from 'counterup2';
           });
 
           $("#header .left-side").css("width", "100%");
+
+          $("a#notify-read").click(function(){
+            axios.get('/notifications/' + $(this).data("id"))
+                  .then((response) => {
+                    $(this).parent().parent().remove();
+                  });
+          });
+
+          $("button#notify-all").click(function(){
+            axios.get('/notifications').then((response) => {
+              $("ul#list-notifications").empty();
+            });
+          });
+          $('select').selectpicker();
+          $('select').selectpicker();
           console.log('Boom');
         }
     });

@@ -46,18 +46,18 @@
                     <div class="dashboard-box">
                         <div class="headline">
                             <h3><i class="icon-material-baseline-notifications-none"></i> Уведомления</h3>
-                            <button class="mark-as-read ripple-effect-dark" data-tippy-placement="left" title="Отметить все как прочитанные">
+                            <button id="notify-all" class="mark-as-read ripple-effect-dark" data-tippy-placement="left" title="Отметить все как прочитанные">
                                     <i class="icon-feather-check-square"></i>
                             </button>
                         </div>
                         <div class="content">
-                            <ul class="dashboard-box-list">
+                            <ul id="list-notifications" class="dashboard-box-list">
                                 @foreach(auth()->user()->unreadNotifications as $notification)
                                 <li>
                                     <span class="notification-icon">
                                         @if($notification->type == "App\Notifications\UserSelected")
                                         <i class="icon-material-outline-group"></i>
-                                        @elseif($notification->type == "App\Notifications\NewProposal")
+                                        @elseif($notification->type == "App\Notifications\NewProposal" || $notification->type == "App\Notifications\ProposalStatusChanged")
                                         <i class="icon-material-outline-gavel"></i>
                                         @endif
                                     </span>
@@ -66,34 +66,16 @@
                                         <strong>Вы</strong> были выбраны исполнителем задания <a href="{{ route('tasks.show', $notification->data['task_id']) }}">{{ $notification->data["task_title"] }}</a>
                                         @elseif($notification->type == "App\Notifications\NewProposal")
                                         <a href="{{ route('profile.show', $notification->data['user_id']) }}">{{ $notification->data["user_name"] }}</a> оставил предложение к вашему заданию <a href="{{ route('tasks.show', $notification->data['task_id']) }}">{{ $notification->data["task_title"] }}</a>
+                                        @elseif($notification->type == "App\Notifications\ProposalStatusChanged")
+                                        {{ $notification->data["message"] }}
                                         @endif
                                     </span>
                                     <!-- Buttons -->
                                     <div class="buttons-to-right">
-                                        <a href="{{ route('notifications.markOne', $notification->id) }}" class="button ripple-effect ico" title="Отметить как прочитанное" data-tippy-placement="left"><i class="icon-feather-check-square"></i></a>
+                                        <a href="#" id="notify-read" data-id="{{$notification->id}}" class="button ripple-effect ico" title="Отметить как прочитанное" data-tippy-placement="left"><i class="icon-feather-check-square"></i></a>
                                     </div>
                                 </li>
                                 @endforeach
-                                {{-- <li>
-                                    <span class="notification-icon"><i class="icon-material-outline-autorenew"></i></span>
-                                    <span class="notification-text">
-                                        Срок завершения вашего задания <a href="#">Название задания</a> истёк
-                                    </span>
-                                    <!-- Buttons -->
-                                    <div class="buttons-to-right">
-                                        <a href="#" class="button ripple-effect ico" title="Отметить как прочитанное" data-tippy-placement="left"><i class="icon-feather-check-square"></i></a>
-                                    </div>
-                                </li>
-                                <li>
-                                    <span class="notification-icon"><i class="icon-material-outline-rate-review"></i></span>
-                                    <span class="notification-text">
-                                        <strong>Пользователь</strong> оставил вам отзыв с рейтенгом <span class="star-rating no-stars" data-rating="5.0"></span> за работу над заданием <a href="#">Название задания</a>
-                                    </span>
-                                    <!-- Buttons -->
-                                    <div class="buttons-to-right">
-                                        <a href="#" class="button ripple-effect ico" title="Отметить как прочитанное" data-tippy-placement="left"><i class="icon-feather-check-square"></i></a>
-                                    </div>
-                                </li> --}}
                             </ul>
                         </div>
                     </div>
@@ -103,38 +85,31 @@
                 <div class="col-xl-6">
                     <div class="dashboard-box">
                         <div class="headline">
-                            <h3><i class="icon-material-outline-assignment"></i> Выплаты</h3>
+                            <h3><i class="icon-material-outline-assignment"></i> {{ auth()->user()->type == 1 ? 'Платежи':'Выплаты' }}</h3>
                         </div>
                         <div class="content">
                             <ul class="dashboard-box-list">
+                                @foreach($tasks as $task)
                                 <li>
                                     <div class="invoice-list-item">
-                                    <strong>Выплата №2</strong>
+                                    <strong>{{$task->title}}</strong>
                                         <ul>
-                                            <li><span class="unpaid">Неоплачено</span></li>
-                                            <li>Номер: #326</li>
-                                            <li>Дата: 25/07/2019</li>
-                                        </ul>
-                                    </div>
-                                    <!-- Buttons -->
-                                    <div class="buttons-to-right">
-                                        <a href="#" class="button">Запросить выплату</a>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="invoice-list-item">
-                                    <strong>Выплата №1</strong>
-                                        <ul>
+                                            @if($task->pay)
                                             <li><span class="paid">Оплачено</span></li>
-                                            <li>Номер: #264</li>
-                                            <li>Дата: 10/07/2019</li>
+                                            <li>Номер: {{ $task->pay->id }}</li>
+                                            <li>Дата: {{ $task->pay->created_at->format('d-m-Y') }}</li>
+                                            @else
+                                            <li><span class="unpaid">Неоплачено</span></li>
+                                            @endif
                                         </ul>
                                     </div>
                                     <!-- Buttons -->
-                                    <div class="buttons-to-right">
+                                    {{--  <div class="buttons-to-right">
+                                        <a href="#" class="button">Запросить выплату</a>
                                         <a href="#" class="button gray">Посмотреть чек</a>
-                                    </div>
+                                    </div>  --}}
                                 </li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>

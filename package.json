@@ -27,7 +27,10 @@
         "bootstrap-datepicker": "^1.9.0",
         "counterup2": "^1.0.4",
         "laravel-echo": "^1.5.4",
+        "luxon": "^1.17.3",
         "pusher-js": "^4.4.0",
-        "vue-bootstrap-datetimepicker": "^5.0.1"
+        "vue-bootstrap-datetimepicker": "^5.0.1",
+        "vue-datetime": "^1.0.0-beta.10",
+        "weekstart": "^1.0.0"
     }
 }

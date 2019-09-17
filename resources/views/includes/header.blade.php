@@ -93,8 +93,8 @@
 												<span class="notification-icon">
 													@if($notification->type == "App\Notifications\UserSelected")
 													<i class=" icon-material-outline-group"></i>
-													@elseif($notification->type == "App\Notifications\NewProposal")
-                                        			<i class="icon-material-outline-gavel"></i>
+													@elseif($notification->type == "App\Notifications\NewProposal" || $notification->type == "App\Notifications\ProposalStatusChanged")
+													<i class="icon-material-outline-gavel"></i>
 													@endif
 												</span>
 												<span class="notification-text">
@@ -102,6 +102,8 @@
 													<strong>Вы</strong> были выбраны исполнителем задания <strong>{{ $notification->data["task_title"] }}</strong>
 													@elseif($notification->type == "App\Notifications\NewProposal")
 													<strong>{{ $notification->data["user_name"] }}</strong> оставил предложение к вашему заданию <strong>{{ $notification->data["task_title"] }}</strong>
+													@elseif($notification->type == "App\Notifications\ProposalStatusChanged")
+													{{ $notification->data["message"] }}
 													@endif
 												</span>
 											</a>
@@ -184,8 +186,8 @@
 						<ul class="user-menu-small-nav">
 							<li><a href="{{ route('profile.show', Auth::user()->id) }}"><i class="icon-material-outline-account-circle"></i> Мой профиль</a></li>
 							<li><a href="{{ route('home') }}"><i class="icon-material-outline-dashboard"></i> Панель управления</a></li>
-							<li><a href="#"><i class="icon-material-outline-settings"></i> Настройки</a></li>
-							<li><a href="{{ route('logout') }}" href="index-logged-out.html" onclick="event.preventDefault();document.getElementById('logout-form-lara').submit();"><i class="icon-material-outline-power-settings-new"></i> Выйти</a></li>
+							<li><a href="{{ route('profile.settings.show') }}"><i class="icon-material-outline-settings"></i> Настройки</a></li>
+							<li><a href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form-lara').submit();"><i class="icon-material-outline-power-settings-new"></i> Выйти</a></li>
 						</ul>
 						<form id="logout-form-lara" action="{{ route('logout') }}" method="POST" style="display: none;">
 							@csrf

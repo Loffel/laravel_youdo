@@ -307,6 +307,10 @@
  .bidding-widget .button:hover {
      box-shadow: 0 4px 12px rgba(42,65,232,0.25);
 }
+
+.bidding-widget .button:disabled {
+    box-shadow: none;
+}
  .dialog-with-tabs .button {
      box-shadow: 0 4px 12px rgba(42,65,232,0.15);
 }

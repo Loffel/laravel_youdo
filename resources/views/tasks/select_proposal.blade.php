@@ -109,11 +109,11 @@
 			<!-- Summary -->
 			<div class="boxed-widget summary margin-top-0">
 				<div class="boxed-widget-headline">
-					<h3>Итого</h3>
+					<h3>Итого - "{{ $taskTitle }}"</h3>
 				</div>
 				<div class="boxed-widget-inner">
 					<ul>
-						<li>Задание "{{ $taskTitle }}" <span>₽@money($proposalPrice)</span></li>
+						<li>Стоимость предложения <span>₽@money($proposalPrice)</span></li>
 						<li>Комиссия (10%) <span>₽@money($proposalPrice*0.1)</span></li>
 						<li class="total-costs">Итого <span>₽@money($proposalPrice + $proposalPrice*0.1)</span></li>
 					</ul>

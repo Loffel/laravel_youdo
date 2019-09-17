@@ -60,7 +60,7 @@ class User extends Authenticatable
 
         $reviews = $this->reviews();
 
-        $avg = 0.1;
+        $avg = 0;
 
         foreach($reviews as $review){
             $avg += $review->getAVG();
@@ -105,5 +105,13 @@ class User extends Authenticatable
 
     public function unreadMessages(){
         return $this->messages()->where('read', 0)->orderBy('id', 'desc')->get();
+    }
+
+    public function payments(){
+        return $this->hasMany('App\Payment');
+    }
+
+    public function payouts(){
+        return $this->hasMany('App\Payment');
     }
 }

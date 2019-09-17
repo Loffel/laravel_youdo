@@ -11,7 +11,9 @@
 						<div class="header-details">
 							<h3>{{ $user->name }} <span>{{ $user->getTypeName() }}</span></h3>
 							<ul>
+								@if($user->getScoreAVG() != 0)
 								<li><div class="star-rating" data-rating="{{ $user->getScoreAVG() }}"></div></li>
+								@endif
                                 @if($user->type == 2 && $user->is_verified)
                                 <li><div class="verified-badge-with-title">Проверен</div></li>
                                 @endif
@@ -92,10 +94,11 @@
 				<div class="profile-overview">
 					<div class="overview-item"><strong>{{ ($user->type == 1) ? $user->tasks->count():$user->proposals->where('status', 4)->count() }}</strong><span>{{($user->type == 1) ? 'Заданий создано': 'Заданий выполнено'}}</span></div>
 				</div>
-
-				@if($user->type == 2)
-				<a href="#small-dialog" class="apply-now-button popup-with-zoom-anim margin-bottom-50">Предложить задание <i class="icon-material-outline-arrow-right-alt"></i></a>
-				@endif
+				@auth
+					@if($user->type == 2 && auth()->user()->type == 1 && auth()->user()->id != $user->id)
+					<a href="#small-dialog" class="apply-now-button popup-with-zoom-anim margin-bottom-50">Предложить задание <i class="icon-material-outline-arrow-right-alt"></i></a>
+					@endif
+				@endauth
 
 				<!-- Widget -->
 				<div class="sidebar-widget">
