@@ -50,7 +50,7 @@
 
                         <div class="content">
                             <ul class="dashboard-box-list">
-                                @foreach($task->proposals as $proposal)
+                                @foreach($task->proposals->sortByDesc('created_at') as $proposal)
                                 <li>
                                     <!-- Overview -->
                                     <div class="freelancer-overview manage-candidates">

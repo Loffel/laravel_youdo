@@ -106,14 +106,14 @@ import Axios from 'axios';
             }
           });
 
-          
-
           $("#header .left-side").css("width", "100%");
 
           $("a#notify-read").click(function(){
             axios.get('/notifications/' + $(this).data("id"))
                   .then((response) => {
-                    $(this).parent().parent().remove();
+                    if($(this).parent(".notifications-not-read").length == 0)
+                      $(this).parent().parent().remove();
+                    else $(this).parent().remove();
                   });
           });
 

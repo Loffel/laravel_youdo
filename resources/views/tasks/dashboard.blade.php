@@ -73,12 +73,21 @@
                                     </div>
                                     
                                     <!-- Task Details -->
-                                    
+                                    @php
+                                    $proposalIsDone = false;
+                                    if($task->getSelectedProposal() != null){
+                                        if($task->getSelectedProposal()->status == 4) $proposalIsDone = true;
+                                    }
+                                    @endphp
                                     <ul class="dashboard-task-info">
                                         @if(auth()->user()->type == 1)
-                                        <li><strong>{{ $task->proposals->count() }}</strong><span>Предложений</span></li>
-                                        <li><strong>@money($task->proposals()->avg('price')) руб.</strong><span>Средняя цена</span></li>
-                                        <li><strong>@money($task->price) руб.</strong><span>Бюджет</span></li>
+                                            @if($proposalIsDone)
+                                            <li>Задание выполнено</li>
+                                            @else
+                                            <li><strong>{{ $task->proposals->count() }}</strong><span>Предложений</span></li>
+                                            <li><strong>@money($task->proposals()->avg('price')) руб.</strong><span>Средняя цена</span></li>
+                                            <li><strong>@money($task->price) руб.</strong><span>Бюджет</span></li>
+                                            @endif
                                         @else
                                         <li><strong>@money($task->getSelectedProposal()->price) руб.</strong><span>Ваша цена</span></li>
                                         @endif
@@ -87,8 +96,10 @@
                                     @if(auth()->user()->type == 1)
                                     <!-- Buttons -->
                                     <div class="buttons-to-right always-visible">
+                                        @if(!$proposalIsDone)
                                         <a href="{{ route('tasks.proposals', $task->id) }}" class="button ripple-effect"><i class="icon-material-outline-supervisor-account"></i> Предложения <span class="button-info">{{ $task->proposals->count() }}</span></a>
                                         <a href="{{ route('tasks.edit', $task->id) }}" class="button gray ripple-effect ico" title="Редактировать" data-tippy-placement="top"><i class="icon-feather-edit"></i></a>
+                                        @endif
                                         <form action="{{ route('tasks.delete', $task->id) }}" method="post" style="display: inline">
                                             @csrf
                                             {{ method_field('DELETE') }}

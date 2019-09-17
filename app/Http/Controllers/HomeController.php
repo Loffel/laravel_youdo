@@ -32,7 +32,7 @@ class HomeController extends Controller
         if($user->type == 1){
             $tasksCount = $user->tasks->count();
             
-            $tasks = $user->tasks->sortByDesc('createad_at')->take(5);
+            $tasks = $user->tasks->sortByDesc('created_at')->take(5);
         }else{
             $tasksCount = $user->proposals->where('status', 4)->count();
 
@@ -43,7 +43,7 @@ class HomeController extends Controller
                     array_push($tasks, $task);
             }
             $tasks = collect($tasks);
-            $tasks = $tasks->sortByDesc('createad_at')->take(5);
+            $tasks = $tasks->sortByDesc('created_at')->take(5);
         }
         
         $tasks = $tasks->map(function($task) use($user){

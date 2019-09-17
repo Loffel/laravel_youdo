@@ -231,7 +231,7 @@
                                             </form>
                                         </div>
                                     </div>
-                                    @if($task->proposal_id !== NULL)
+                                    @if($task->proposal_id !== NULL && $task->getSelectedProposal()->status < 2)
                                     <span class="bidding-detail margin-top-30">Задание <strong>выполнено?</strong></span>
                                     <div class="bidding-fields">
                                         <div class="bidding-field">

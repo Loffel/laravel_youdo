@@ -70502,7 +70502,7 @@ window.onload = function () {
         var _this = this;
 
         axios.get('/notifications/' + $(this).data("id")).then(function (response) {
-          $(_this).parent().parent().remove();
+          if ($(_this).parent(".notifications-not-read").length == 0) $(_this).parent().parent().remove();else $(_this).parent().remove();
         });
       });
       $("button#notify-all").click(function () {

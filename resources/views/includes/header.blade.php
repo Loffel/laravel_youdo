@@ -79,17 +79,17 @@
 
 							<div class="header-notifications-headline">
 								<h4>Уведомления</h4>
-								<button class="mark-as-read ripple-effect-dark" title="Пометить как прочитанные" data-tippy-placement="left">
+								<button id="notify-all" class="mark-as-read ripple-effect-dark" title="Пометить как прочитанные" data-tippy-placement="left">
 									<i class="icon-feather-check-square"></i>
 								</button>
 							</div>
 
 							<div class="header-notifications-content">
 								<div class="header-notifications-scroll" data-simplebar>
-									<ul>
+									<ul id="list-notifications">
 										@foreach(auth()->user()->unreadNotifications as $notification)
 										<li class="notifications-not-read">
-											<a href="#">
+											<a data-id="{{ $notification->id }}" id="notify-read" href="#">
 												<span class="notification-icon">
 													@if($notification->type == "App\Notifications\UserSelected")
 													<i class=" icon-material-outline-group"></i>

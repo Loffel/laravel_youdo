@@ -25,7 +25,7 @@ class TaskController extends Controller
         $minPrice = 0;
         $maxPrice = Task::max('price');
 
-        $tasks = Task::query();
+        $tasks = Task::where('proposal_id', NULL);
 
         $filters = array();
 
@@ -54,11 +54,10 @@ class TaskController extends Controller
 
     public function dashboard(){
         if(auth()->user()->type == 1)
-            $tasks = auth()->user()->tasks()->paginate(4);
+            $tasks = auth()->user()->tasks()->orderBy('created_at', 'desc')->paginate(4);
         else {
-            $proposals = auth()->user()->proposals()->whereBetween('status', array(1, 6))->get();
-
-            $tasks = Task::whereIn('proposal_id', $proposals)->get();
+            $proposals = auth()->user()->proposals()->whereBetween('status', array(1, 6))->pluck('id');
+            $tasks = Task::whereIn('proposal_id', $proposals)->orderBy('created_at', 'desc')->get();
         }
 
         return view('tasks.dashboard', array('tasks' => $tasks));
