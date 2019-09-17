@@ -84,18 +84,18 @@ import Axios from 'axios';
           });
 
           var autocompletedType = $("form#register-account-form input[name='type']").val(),
-              autocompletedTypePopup = $("form#register-account-form input[name='type']").val(),
+              autocompletedTypePopup = $("form#register-account-form-popup input[name='type']").val(),
               inputID = "";
           
           if(autocompletedType == "1") inputID = "employer-radio";
           else inputID = "freelancer-radio";
-
-          if(autocompletedType != ""){
+          
+          if(inputID != ""){
             $('input.account-type-radio#' + inputID + '[name="account-type-radio"]').trigger('change');
             $('input.account-type-radio#' + inputID + '[name="account-type-radio"]').prop('checked', true);
           }
 
-          if(autocompletedTypePopup != ""){
+          if(inputID != ""){
             $('input.account-type-radio#' + inputID + '[name="account-type-radio-popup"]').trigger('change');
             $('input.account-type-radio#' + inputID + '[name="account-type-radio-popup"]').prop('checked', true);
           }
@@ -108,6 +108,8 @@ import Axios from 'axios';
               rememberMe.prop('checked', true);
             }
           });
+
+          
 
           $("#header .left-side").css("width", "100%");
 

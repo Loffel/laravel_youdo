@@ -74,7 +74,7 @@
 				<!-- Form -->
 				<form action="{{ route('register') }}" method="post" id="register-account-form-popup">
 					@csrf
-					<input type="hidden" name="type" value="-1">
+					<input type="hidden" name="type" value="">
                     <div class="input-with-icon-left">
                         <i class="icon-feather-user"></i>
                         <input type="text" class="input-text with-border" name="name" id="name-register-popup" placeholder="Имя" required/>

@@ -9,7 +9,7 @@
 				<form method="GET" action="{{ route('tasks.index') }}">
 					<input type="hidden" name="min_price" value="{{ $minPrice }}">
 					<input type="hidden" name="max_price" value="{{ $maxPrice }}">
-					<input type="hidden" name="sort" value="{{request('sort')}}">
+					<input type="hidden" name="sort" value="{{$filters['sort']}}">
 					<!-- Budget -->
 					<div class="sidebar-widget">
 						<h3>Бюджет</h3>
