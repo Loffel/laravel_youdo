@@ -93,9 +93,6 @@ import Axios from 'axios';
           if(inputID != ""){
             $('input.account-type-radio#' + inputID + '[name="account-type-radio"]').trigger('change');
             $('input.account-type-radio#' + inputID + '[name="account-type-radio"]').prop('checked', true);
-          }
-
-          if(inputID != ""){
             $('input.account-type-radio#' + inputID + '[name="account-type-radio-popup"]').trigger('change');
             $('input.account-type-radio#' + inputID + '[name="account-type-radio-popup"]').prop('checked', true);
           }
