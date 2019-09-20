@@ -34,7 +34,7 @@ class HomeController extends Controller
             
             $tasks = $user->tasks->sortByDesc('created_at')->take(5);
         }else{
-            $tasksCount = $user->proposals->where('status', 4)->count();
+            $tasksCount = $user->proposals->whereIn('status', array(3, 4))->count();
 
             $tasks = array();
             foreach($user->proposals as $proposal){
