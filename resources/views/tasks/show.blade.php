@@ -174,7 +174,7 @@
 
                                             <!-- Fields -->
                                             <div class="bidding-field">
-                                                <textarea class="with-border" name="description" id="description" rows="3"></textarea>
+                                                <textarea class="with-border" name="description" id="description" rows="3" required></textarea>
                                             </div>
 
                                             @if($task->proposal_id !== NULL)
