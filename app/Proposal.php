@@ -63,9 +63,6 @@ class Proposal extends Model
                 $status = 'Арбитраж';
                 break;
             case 6:
-                $status = 'Отменено исполнителем';
-                break;
-            case 7:
                 $status = 'Отменено заказчиком';
                 break;
             case 7:

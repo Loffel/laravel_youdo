@@ -59,4 +59,18 @@ class AdminController extends Controller
 
         return redirect()->back();
     }
+
+    public function refundProposal($proposal_id){
+        $proposal = Proposal::find($proposal_id);
+        $proposal->status = 7;
+        $proposal->save();
+
+        $payout = Payout::create(array(
+            'task_id' => $proposal->task->id,
+            'user_id' => $proposal->task->user->id,
+            'amount' => $proposal->price + $proposal->price * 0.1
+        ));
+
+        return redirect()->back();
+    }
 }

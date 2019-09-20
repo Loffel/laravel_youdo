@@ -204,7 +204,7 @@
                                                 <a href="{{ route('tasks.close', $task->id) }}?status=2" class="button ripple-effect move-on-hover">Да</a>
                                             </div>
                                             <div class="bidding-field">
-                                                <a href="#" class="button ripple-effect move-on-hover">Нет</a>
+                                                <a href="{{ route('tasks.close', $task->id) }}?status=5" class="button ripple-effect move-on-hover">Нет</a>
                                             </div>
                                         </div>
                                         @endif
@@ -232,7 +232,7 @@
                                             </form>
                                         </div>
                                     </div>
-                                    @if($task->proposal_id !== NULL && $task->getSelectedProposal()->status < 2)
+                                    @if($task->proposal_id !== NULL && $task->getSelectedProposal()->status < 3)
                                     <span class="bidding-detail margin-top-30">Задание <strong>выполнено?</strong></span>
                                     <div class="bidding-fields">
                                         <div class="bidding-field">

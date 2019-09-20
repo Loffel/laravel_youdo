@@ -117,7 +117,7 @@
                                             <th>Действие</th>
                                         </tr>
                                         @foreach($proposals as $proposal)
-                                        <tr>
+                                        <tr style="{{ $proposal->status == 5 ? 'background-color: #de5959': '' }}">
                                             <td>{{$proposal->id}}</td>
                                             <td><a href="{{ route('tasks.show', $proposal->task->id) }}">{{ $proposal->task->title }}</a></td>
                                             <td><a href="{{ route('profile.show', $proposal->user->id) }}">{{ $proposal->user->name }}</a></td>
@@ -127,6 +127,8 @@
                                             <td>
                                                 @if($proposal->status == 3)
                                                 <a href="{{ route('admin.payoutProposal', $proposal->id) }}">Произвести выплату</a>
+                                                @elseif($proposal->status == 5)
+                                                <a href="{{ route('admin.refundProposal', $proposal->id) }}">Вернуть деньги заказчику</a>
                                                 @endif
                                             </td>
                                         </tr>

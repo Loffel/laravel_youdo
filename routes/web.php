@@ -27,6 +27,7 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
     // Служебные
     Route::get('/users/activate/{user_id}', 'AdminController@activateUser')->name('activateUser');
     Route::get('/proposals/payout/{proposal_id}', 'AdminController@payoutProposal')->name('payoutProposal');
+    Route::get('/proposals/refund/{proposal_id}', 'AdminController@refundProposal')->name('refundProposal');
 });
 
 Route::prefix('dashboard')->middleware('auth')->group(function(){

@@ -65,7 +65,7 @@ class TaskController extends Controller
 
     public function close(Request $request, $id){
         $status = $request->status;
-        $statusFreelancer = array(2);
+        $statusFreelancer = array(2, 5);
         $statusEmployer = array(3, 5);
 
         if(auth()->user()->type == 1) {
