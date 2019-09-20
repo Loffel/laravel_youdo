@@ -39,7 +39,7 @@ class HomeController extends Controller
             $tasks = array();
             foreach($user->proposals as $proposal){
                 $task = $proposal->task;
-                if($proposal->status == 4)
+                if($proposal->status == 3 || $proposal->status == 4)
                     array_push($tasks, $task);
             }
             $tasks = collect($tasks);
