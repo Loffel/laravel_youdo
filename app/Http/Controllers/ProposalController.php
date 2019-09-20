@@ -45,8 +45,9 @@ class ProposalController extends Controller
     public function store(Request $request)
     {
         $task = Task::find($request->task_id);
+        $proposalExists = Proposal::where('user_id', Auth::user()->id)->where('task_id', $request->task_id)->first();
 
-        if($task == NULL) return redirect()->back();
+        if($task == NULL || $proposalExists) return redirect()->back();
 
         $proposal = Proposal::create(array(
             'description' => $request->description,
@@ -99,7 +100,7 @@ class ProposalController extends Controller
                     'description' => $request->description,
                     'price' => $request->price
                 ));
-                return redirect()->back()->with('success', 'Предложение успешно удалено!');
+                return redirect()->back()->with('success', 'Предложение успешно изменено!');
             }
         }
         return redirect()->back()->with('error', 'Произошла ошибка!');

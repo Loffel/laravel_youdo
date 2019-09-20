@@ -44,6 +44,12 @@ class MessengerController extends Controller
             foreach($proposals as $proposal){
                 array_push($contacts, $proposal->user);
             }
+
+            $contactsID = collect($contacts)->pluck('id');
+            $otherMessages = Message::where('from_id', auth()->user()->id)->whereNotIn('to_id', $contactsID)->get()->unique('to_id');
+            foreach($otherMessages as $message){
+                array_push($contacts, $message->to);
+            }
         }
 
         $unreadContacts = Message::select(\DB::raw('from_id, count(from_id) as messages_count'))

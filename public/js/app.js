@@ -70497,8 +70497,12 @@ window.onload = function () {
           $("ul#list-notifications").empty();
         });
       });
-      $('select').selectpicker();
-      $('select').selectpicker();
+      $("input#priceValue").change(function () {
+        $("input[name='price']").slider('setValue', $(this).val());
+      });
+      $("input[name='price']").on('slide', function (ev) {
+        $("input#priceValue").val(ev.value);
+      });
       console.log('Boom');
     }
   });

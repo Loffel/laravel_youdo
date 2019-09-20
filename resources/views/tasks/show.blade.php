@@ -165,8 +165,9 @@
                                             <span class="bidding-detail">Установите вашу <strong>цену</strong></span>
 
                                             <!-- Price Slider -->
-                                            <div class="bidding-value">₽<span id="biddingVal"></span></div>
-                                            <input class="bidding-slider" name="price" type="text" value="" data-slider-handle="custom" data-slider-currency="₽" data-slider-min="0" data-slider-max="{{ $task->price + $task->price * 0.5 }}" data-slider-value="auto" data-slider-step="500" data-slider-tooltip="hide" />
+                                            {{--  <div class="bidding-value">₽<span id="biddingVal"></span></div>  --}}
+                                            <div class="bidding-value"><input step="100" type="number" id="priceValue"></div>
+                                            <input class="bidding-slider" name="price" type="text" value="" data-slider-handle="custom" data-slider-currency="₽" data-slider-min="0" data-slider-max="50000" data-slider-value="auto" data-slider-step="100" data-slider-tooltip="hide" />
                                             
                                             <!-- Headline -->
                                             <span class="bidding-detail margin-top-30">Укажите <strong>комментарий</strong></span>

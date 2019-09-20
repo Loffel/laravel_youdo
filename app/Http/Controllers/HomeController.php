@@ -58,7 +58,7 @@ class HomeController extends Controller
     }
 
     public function welcome(){
-        $tasks = \App\Task::orderBy('created_at', 'DESC')->limit(5)->get();
+        $tasks = \App\Task::where('proposal_id', NULL)->orderBy('created_at', 'DESC')->limit(5)->get();
         $posts = \App\Post::orderBy('created_at', 'DESC')->limit(3)->get();
         $tasksCount = \App\Task::all()->count();
         $executorsCount = \App\User::where('type', 2)->count();

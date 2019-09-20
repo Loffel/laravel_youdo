@@ -65,7 +65,7 @@
                                                 <!-- Job Listing Footer -->
                                                 <div class="job-listing-footer">
                                                     <ul>
-                                                        <li><i class="icon-material-outline-access-time"></i> {{$task->created_at->diffForHumans()}}</li>
+                                                        <li><i class="icon-material-outline-access-time"></i> {{$task->date_end->diffForHumans()}}</li>
                                                     </ul>
                                                 </div>
                                             </div>

@@ -64,10 +64,12 @@
                                         </ul>
     
                                         <!-- Buttons -->
+                                        @if($proposal->status == 0)
                                         <div class="buttons-to-right always-visible">
                                             <a data-current-price="{{ $proposal->price }}" data-id="{{ $proposal->id }}" data-desc="{{ $proposal->description }}" data-price="{{ $proposal->task->price }}" id="proposalEdit" href="#small-dialog" class="popup-with-zoom-anim button dark ripple-effect ico" title="Редактировать" data-tippy-placement="top"><i class="icon-feather-edit"></i></a>
                                             <a href="{{ route('proposals.delete', $proposal->id) }}" class="button red ripple-effect ico" title="Отменить" data-tippy-placement="top"><i class="icon-feather-trash-2"></i></a>
                                         </div>
+                                        @endif
                                     </li>
                                     @endforeach
                                 </ul>
@@ -113,8 +115,9 @@
                         <span class="bidding-detail">Установите <strong>цену предложения</strong></span>
 
                         <!-- Price Slider -->
-                        <div class="bidding-value">₽<span id="biddingVal"></span></div>
-                        <input name="price" class="bidding-slider" type="text" value="" data-slider-handle="custom" data-slider-currency="₽" data-slider-min="0" data-slider-max="1000000" data-slider-value="0" data-slider-step="1000" data-slider-tooltip="hide" />
+                        {{--  <div class="bidding-value">₽<span id="biddingVal"></span></div>  --}}
+                        <div class="bidding-value"><input step="100" type="number" id="priceValue"></div>
+                        <input name="price" class="bidding-slider" type="text" value="" data-slider-handle="custom" data-slider-currency="₽" data-slider-min="0" data-slider-max="50000" data-slider-value="0" data-slider-step="100" data-slider-tooltip="hide" />
                         
                         <!-- Headline -->
                         <span class="bidding-detail margin-top-30">Оставьте <strong>комментарий</strong> к предложению</span>
