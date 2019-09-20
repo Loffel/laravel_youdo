@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use App\Task;
 use App\Review;
 use App\Proposal;
+use Cache;
 
 class User extends Authenticatable
 {
@@ -113,5 +114,9 @@ class User extends Authenticatable
 
     public function payouts(){
         return $this->hasMany('App\Payment');
+    }
+
+    public function isOnline(){
+        return Cache::has('user-online-'.$this->id);
     }
 }

@@ -1,15 +1,16 @@
 <template>
     <div class="messages-inbox">
         <div class="messages-headline">
-            <div class="input-with-icon">
+            Контакты
+            <!-- <div class="input-with-icon">
                     <input id="autocomplete-input" type="text" placeholder="Поиск">
                 <i class="icon-material-outline-search"></i>
-            </div>
+            </div> -->
         </div>
         <ul>
             <li v-for="contact in sortedContacts" :key="contact.id" @click="selectContact(contact)" :class="{'active-message': contact == selected, 'unread': contact.unread}">
                 <a href="#">
-                    <div class="message-avatar"><i class="status-icon status-online"></i><img :src="contact.avatar" alt="" /></div>
+                    <div class="message-avatar"><i class="status-icon" :class="[contact.online ? 'status-online': 'status-offline']"></i><img :src="contact.avatar" alt="" /></div>
 
                     <div class="message-by">
                         <div class="message-by-headline">

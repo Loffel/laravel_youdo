@@ -139,7 +139,7 @@
 										@foreach(auth()->user()->unreadMessages()->take(5) as $message)
 										<li class="notifications-not-read">
 											<a href="{{ route('messenger.index') }}">
-												<span class="notification-avatar status-online"><img src="{{ $message->from->getAvatar() }}" alt=""></span>
+												<span class="notification-avatar status-{{ $message->from->isOnline() ? 'online':'offline' }}"><img src="{{ $message->from->getAvatar() }}" alt=""></span>
 												<div class="notification-text">
 													<strong>{{ $message->from->name }}</strong>
 													<p class="notification-msg-text">{{ Str::limit($message->text, 58) }}</p>

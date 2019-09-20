@@ -27,8 +27,9 @@ class MessengerController extends Controller
             foreach($tasks as $task){
                 array_push($contacts, $task->user);
             }
-
-            $otherMessages = Message::where('to_id', auth()->user()->id)->whereNotIn('from_id', $contacts)->get()->unique('from_id');
+            
+            $contactsID = collect($contacts)->pluck('id');
+            $otherMessages = Message::where('to_id', auth()->user()->id)->whereNotIn('from_id', $contactsID)->get()->unique('from_id');
             foreach($otherMessages as $message){
                 array_push($contacts, $message->from);
             }
@@ -72,6 +73,7 @@ class MessengerController extends Controller
             if($lastMessage) $contact->lastMessage->diffForHumans = $lastMessage->created_at->diffForHumans();
 
             $contact->avatar = $contact->getAvatar();
+            $contact->online = $contact->isOnline();
             // $contact->diffForHumans = $lastMessage ? $lastMessage->created_at->diffForHumans() : "";
 
             $contact->unread = $contactUnread ? $contactUnread->messages_count : 0;

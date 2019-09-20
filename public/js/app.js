@@ -1867,6 +1867,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     contacts: {
@@ -57480,7 +57481,9 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "messages-inbox" }, [
-    _vm._m(0),
+    _c("div", { staticClass: "messages-headline" }, [
+      _vm._v("\n        Контакты\n        ")
+    ]),
     _vm._v(" "),
     _c(
       "ul",
@@ -57502,7 +57505,10 @@ var render = function() {
           [
             _c("a", { attrs: { href: "#" } }, [
               _c("div", { staticClass: "message-avatar" }, [
-                _c("i", { staticClass: "status-icon status-online" }),
+                _c("i", {
+                  staticClass: "status-icon",
+                  class: [contact.online ? "status-online" : "status-offline"]
+                }),
                 _c("img", { attrs: { src: contact.avatar, alt: "" } })
               ]),
               _vm._v(" "),
@@ -57541,26 +57547,7 @@ var render = function() {
     )
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "messages-headline" }, [
-      _c("div", { staticClass: "input-with-icon" }, [
-        _c("input", {
-          attrs: {
-            id: "autocomplete-input",
-            type: "text",
-            placeholder: "Поиск"
-          }
-        }),
-        _vm._v(" "),
-        _c("i", { staticClass: "icon-material-outline-search" })
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
