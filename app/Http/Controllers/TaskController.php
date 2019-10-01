@@ -47,7 +47,7 @@ class TaskController extends Controller
             $filters['sort'] = $sortParam;
         }else $tasks->orderBy('created_at', 'desc');
         
-        $tasks = $tasks->paginate(1)->appends($filters);
+        $tasks = $tasks->paginate(5)->appends($filters);
 
         return view('tasks.index', array('tasks' => $tasks, 'maxPrice' => $maxPrice, 'minPrice' => $minPrice, 'filters' => $filters));
     }
