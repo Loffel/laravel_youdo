@@ -4696,6 +4696,14 @@ span.blog-item-tag {
     box-shadow: 0 4px 12px rgba(102,103,107,0.15);
 }
 
+.job-listing.with-apply-button:hover .list-apply-button span {
+	display:none;
+}
+
+.job-listing.with-apply-button:hover .list-apply-button:after {
+	content: 'Подробнее';
+}
+
 /* Alt Styles for Single Company Profile */
 .boxed-list .compact-list-layout {
 	box-shadow: none;
@@ -13391,7 +13399,8 @@ a.dashboard-responsive-nav-trigger { display: none; }
 }
 /* IE 11 Fixes - End */
 
-.fun-fact-icon {
+.fun-fact-icon,
+.fun-fact-link {
 	border-radius: 4px;
 	background-color: rgba(0,0,0,0.04);
 	flex: 0 0 100px;
@@ -13400,11 +13409,21 @@ a.dashboard-responsive-nav-trigger { display: none; }
 	text-align: center;
 }
 
-.fun-fact-icon i {
+.fun-fact-link {
+	background-color: rgba(42, 65, 230, 0.07);
+	margin-left: 1rem;
+}
+
+.fun-fact-icon i,
+.fun-fact-link i {
 	font-size: 48px;
     align-self: center;
     margin: 0 auto;
     color: #666;
+}
+
+.fun-fact-link i {
+	color: #2a41e8!important;
 }
 
 .fun-fact-icon i.icon-material-outline-gavel {
@@ -14946,6 +14965,12 @@ ul.dashboard-box-list > li:hover {
 		bottom: 0;
 	}
 
+	.headline-new-task {
+		position: absolute;
+		right: 9rem;
+		bottom: 0;
+	}
+
 	a.headline-link.bottom-icon:after {
 		content: "\e957";
 		top: 3px;
@@ -14961,11 +14986,29 @@ ul.dashboard-box-list > li:hover {
 		margin-left: 5px;
 	}
 
+	.headline-new-task:after {
+		content: "\E90D";
+		font-family: "Material-Icons";
+		font-size: 21px;
+		line-height: 0;
+		position: relative;
+		top: 4px;
+		margin-left: 5px;
+	}
+
 	@media (max-width: 768px) { 
 		a.headline-link {
 			position: relative;
 			margin-top: 10px;
 			display: inline-block;
+		}
+
+		a.headline-new-task {
+			position: relative;
+			margin-top: 10px;
+			margin-left: 55px;
+			display: inline-block;
+			right: 0;
 		}
 	}
 

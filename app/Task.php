@@ -12,7 +12,9 @@ class Task extends Model
         'description',
         'price',
         'date_end',
-        'user_id'
+        'user_id',
+        'notice',
+        'logo'
     ];
 
     protected $dates = [
@@ -62,5 +64,12 @@ class Task extends Model
         $proposal = \App\Proposal::find($this->proposal_id);
 
         return $proposal;
+    }
+
+    public function getLogo(){
+        $logo = 'images/company-logo-05.png';
+        if($this->logo != NULL) $logo = 'storage/' . $this->logo;
+
+        return asset($logo);
     }
 }

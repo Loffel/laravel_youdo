@@ -7,9 +7,9 @@
 			<div class="col-md-12">
 				<div class="single-page-header-inner">
 					<div class="left-side">
-						<div class="header-image"><a href="#"><img src="{{ asset('images/browse-companies-02.png') }}" alt=""></a></div>
+						<div class="header-image"><a href="#"><img src="{{ $task->getLogo() }}" alt=""></a></div>
 						<div class="header-details">
-							<h3>{{ $task->title }}</h3>
+                            <h3>{{ $task->title }}</h3>
 							<h5>О заказчике</h5>
 							<ul>
 								<li><a href="{{ route('profile.show', $task->user->id) }}"><i class="icon-material-outline-business"></i> {{ $task->user->name }}</a></li>
@@ -253,28 +253,7 @@
                     <div class="job-overview">
                         <div class="job-overview-headline">О закупке</div>
                         <div class="job-overview-inner">
-                            <ul>
-                                <li>
-                                    <i class="icon-material-outline-info"></i>
-                                    <span>Номер</span>
-                                    <h5><a target="_blank" href="http://zakupki.gov.ru/epz/order/quicksearch/search.html?searchString=0172200000419000085&strictEqual=false&showLotsInfoHidden=false&fz44=on&fz223=on&af=on&ca=on&pc=on&pa=on&priceFrom=&priceTo=&currencyId=1&agencyTitle=&agencyCode=&agencyFz94id=&agencyFz223id=&agencyInn=&regions=&publishDateFrom=&publishDateTo=&sortBy=UPDATE_DATE&updateDateFrom=&updateDateTo=">0172105000219000085</a></h5>
-                                </li>
-                                <li>
-                                    <i class="icon-material-outline-local-atm"></i>
-                                    <span>Цена</span>
-                                    <h5>₽2,500,070</h5>
-                                </li>
-                                <li>
-                                    <i class="icon-material-outline-business-center"></i>
-                                    <span>Наименование объекта закупки</span>
-                                    <h5>43.99.90.190: Работы строительные с пециализированные прочие, не включенные в другие группировки;</h5>
-                                </li>
-                                <li>
-                                    <i class="icon-material-outline-note-add"></i>
-                                    <span>Разместил</span>
-                                    <h5>АДМИНИСТРАЦИЯ МОСКОВСКОГО РАЙОНА САНКТ-ПЕТЕРБУРГА</h5>
-                                </li>
-                            </ul>
+                            <notice-info :notice_id="{{ json_encode($task->notice) }}"></notice-info>
                         </div>
                     </div>
                 </div>

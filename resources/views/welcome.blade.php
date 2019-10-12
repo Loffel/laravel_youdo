@@ -49,6 +49,11 @@
 				<div class="section-headline margin-top-0 margin-bottom-35">
 					<h3>Последние задания</h3>
 					<a href="{{ route('tasks.index') }}" class="headline-link">Все задания</a>
+					@auth
+						@if(auth()->user()->type == 1)
+						<a href="{{ route('tasks.create') }}" class="headline-new-task">Новое задание</a>
+						@endif
+					@endauth
 				</div>
 				
 				<!-- Jobs Container -->
@@ -60,7 +65,7 @@
 						<div class="job-listing-details">
 							<!-- Logo -->
 							<div class="job-listing-company-logo">
-								<img src="images/company-logo-05.png" alt="">
+								<img src="{{ $task->getLogo() }}" alt="{{ $task->title }}">
 							</div>
 
 							<!-- Details -->
@@ -77,7 +82,7 @@
 							</div>
 
 							<!-- Apply Button -->
-							<span class="list-apply-button ripple-effect">Подробнее</span>
+							<span class="list-apply-button ripple-effect"><span>₽@money($task->price)</span></span>
 						</div>
 					</a>	
                     @endforeach
@@ -92,7 +97,7 @@
 
 
 <!-- Photo Section -->
-<div class="photo-section" data-background-image="images/section-background.jpg">
+<div class="photo-section" data-background-image="{{ asset('images/section-background.jpg')}}">
 
 	<!-- Infobox -->
 	<div class="text-content white-font">

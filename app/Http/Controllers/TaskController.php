@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Auth;
 use App\Task;
 use App\Proposal;
 use App\Notifications\ProposalStatusChanged;
+use Intervention\Image\Facades\Image;
+use Rct567\DomQuery\DomQuery;
+use Illuminate\Support\Str;
 
 class TaskController extends Controller
 {
@@ -120,12 +123,25 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
+        $title = "Первая часть заявки";
+
+        if($request->title == 1) $title = "Жалоба в ФАС";
+
+        $logoImage = NULL;
+        if($request->hasFile('logo')){
+            $logoImage = $request->file('logo')->store('images/task', 'public');
+            $image = Image::make(public_path('storage/'.$logoImage));
+            $image->save();
+        }
+
         $task = Task::create(array(
-            'title' => $request->title,
+            'title' => $title,
             'description' => $request->description,
             'price' => $request->price,
             'date_end' => $request->date_end,
-            'user_id' => Auth::user()->id
+            'user_id' => Auth::user()->id,
+            'notice' => trim($request->notice),
+            'logo' => $logoImage
         ));
 
         return redirect()->route('tasks.show', $task->id);
@@ -176,8 +192,21 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $title = "Первая часть заявки";
+
+        if($request->title == 1) $title = "Жалоба в ФАС";
+
         $requestData = $request->all();
         $requestData['date_end'] = \Carbon\Carbon::parse($request->date_end)->format('Y-m-d h:m:s');
+        $requestData['title'] = $title;
+
+        $logoImage = NULL;
+        if($request->hasFile('logo')){
+            $logoImage = $request->file('logo')->store('images/task', 'public');
+            $image = Image::make(public_path('storage/'.$logoImage));
+            $image->save();
+            $requestData['logo'] = $logoImage;
+        }else unset($requestData['logo']);
 
         Task::findOrFail($id)->update($requestData);
 
@@ -210,5 +239,57 @@ class TaskController extends Controller
         $task->selectProposal($request->prop_id);
 
         return redirect()->route('tasks.show', $request->task_id);
+    }
+
+    public function getNoticeInfo($id){
+        $info = array();
+        $client = new \GuzzleHttp\Client();
+        $govURL = "http://zakupki.gov.ru/epz/order/notice/ok504/view/common-info.html?regNumber=$id";
+       
+        $response = $client->request('GET', $govURL, array(
+            'headers' => array(
+                'User-Agent' => 'FydwApp'
+            )
+        ));
+        $html = $response->getBody()->getContents();
+
+        $dom = new DomQuery($html);
+
+        $infoLink = $dom->find('a.size14')->attr('href');
+
+        if(isset($infoLink)){
+            $info['id'] = $id;
+            $info['link'] = $govURL;
+
+            $infoLink = "http://zakupki.gov.ru/" . $infoLink;
+
+            $response = $client->request('GET', $infoLink, array(
+                'headers' => array(
+                    'User-Agent' => 'FydwApp'
+                )
+            ));
+            $html = $response->getBody()->getContents();
+
+            $startPrice = explode(" ", $this->getDomValue($html, "Начальная (максимальная) цена контракта"))[0];
+            $info['price'] = number_format($startPrice, 2, '.', ',');
+            $info['object'] = Str::limit($this->getDomValue($html, "Наименование объекта закупки"), 158);
+            $info['publishedBy'] = str_replace("Заказчик", '', $this->getDomValue($html, "Размещение осуществляет"));
+            $info['endDate'] = $this->getDomValue($html, "Дата и время окончания подачи заявок");
+            $info['auctionDate'] = $this->getDomValue($html, "Дата проведения аукциона в электронной форме");
+        }
+
+        return $info;
+    }
+
+    private function getDomValue($html, $text){
+        $dom = new DomQuery($html);
+
+        $elementText = $dom->find('p.parameter:contains('. $text .')')
+                            ->parent()
+                            ->next()
+                            ->find("p.parameterValue")
+                            ->text();
+
+        return $elementText;
     }
 }

@@ -29,6 +29,9 @@
                         <h4>{{ $tasksCount }}</h4>
                     </div>
                     <div class="fun-fact-icon"><i class="icon-material-outline-business-center"></i></div>
+                    @if(auth()->user()->type == 1)
+                    <a href="{{ route('tasks.create') }}"><div class="fun-fact-link"><i class="icon-material-outline-add"></i></div></a>
+                    @endif
                 </div>
                 <div class="fun-fact" data-fun-fact-color="#efa80f">
                     <div class="fun-fact-text">

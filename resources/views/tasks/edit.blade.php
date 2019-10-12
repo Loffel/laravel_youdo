@@ -41,9 +41,19 @@
                                     <div class="col-xl-12">
                                         <div class="submit-field">
                                             <h5>Название задания</h5>
-                                            <input type="text" class="with-border" name="title" value="{{$task->title}}" placeholder="e.g. build me a website" required>
+                                            <select name="title" class="custom-select" required>
+                                                <option {{ $task->title == 'Первая часть заявки' ? 'selected="selected"':''}} value="0">Первая часть заявки</option>
+                                                <option {{ $task->title == 'Жалоба в ФАС' ? 'selected="selected"':''}} value="1">Жалоба в ФАС</option>
+                                            </select>
                                         </div>
                                     </div>
+
+                                    <div class="col-xl-12">
+                                            <div class="submit-field">
+                                                <h5>Извещение №</h5>
+                                                <input type="text" class="with-border" value="{{ $task->notice }}" name="notice" placeholder="Введите номер извещения..." required>
+                                            </div>
+                                        </div>
 
                                     <div class="col-xl-6">
                                         <div class="submit-field">
@@ -76,6 +86,11 @@
                                         <div class="submit-field">
                                             <h5>Описание</h5>
                                             <textarea cols="30" rows="5" name="description" class="with-border">{{ $task->description }}</textarea>
+                                            <div class="uploadButton margin-top-30">
+                                                <input class="uploadButton-input" name="logo" type="file" accept="image/*" id="upload"/>
+                                                <label class="uploadButton-button ripple-effect" for="upload">Загрузить логотип</label>
+                                                <span class="uploadButton-file-name">Сменить логотип</span>
+                                            </div>
                                         </div>
                                     </div>
 
