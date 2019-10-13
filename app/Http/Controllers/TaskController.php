@@ -123,10 +123,6 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        $notice = $this->getNoticeInfo(trim($request->notice));
-
-        dd($notice);
-
         $title = "Первая часть заявки";
 
         if($request->title == 1) $title = "Жалоба в ФАС";
