@@ -21,6 +21,10 @@ class Task extends Model
         'date_end'
     ];
 
+    protected $casts = [
+        'notice' => 'array'
+    ];
+
     public function user(){
         return $this->belongsTo('App\User');
     }

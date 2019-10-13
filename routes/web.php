@@ -62,7 +62,6 @@ Route::prefix('tasks')->name('tasks.')->group(function(){
 
     Route::get('/proposal/{task_id}/{prop_id}', 'TaskController@selectProposalView')->name('select_proposal.view');
     Route::post('/proposal/accepted', 'TaskController@selectProposalStore')->name('select_proposal.store');
-    Route::get('/notice/{id}', 'TaskController@getNoticeInfo');
 });
 
 Route::prefix('posts')->name('posts.')->group(function(){

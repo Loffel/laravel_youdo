@@ -253,7 +253,42 @@
                     <div class="job-overview">
                         <div class="job-overview-headline">О закупке</div>
                         <div class="job-overview-inner">
-                            <notice-info :notice_id="{{ json_encode($task->notice) }}"></notice-info>
+                            @if(count($task->notice) > 1)
+                            <ul>
+                                <li>
+                                    <i class="icon-material-outline-info"></i>
+                                    <span>Номер</span>
+                                    <h5><a target="_blank" href="{{ $task->notice['link'] }}">{{ $task->notice['id'] }}</a></h5>
+                                </li>
+                                <li>
+                                    <i class="icon-material-outline-local-atm"></i>
+                                    <span>НМЦК</span>
+                                    <h5>₽{{ $task->notice['price'] }}</h5>
+                                </li>
+                                <li>
+                                    <i class="icon-material-outline-business-center"></i>
+                                    <span>Наименование объекта закупки</span>
+                                    <h5>{{ $task->notice['object'] }}</h5>
+                                </li>
+                                <li>
+                                    <i class="icon-material-outline-note-add"></i>
+                                    <span>Разместил</span>
+                                    <h5>{{ $task->notice['publishedBy'] }}</h5>
+                                </li>
+                                <li>
+                                    <i class="icon-material-outline-access-time"></i>
+                                    <span>Дата и время окончания подачи заявок</span>
+                                    <h5>{{ $task->notice['endDate'] }}</h5>
+                                </li>
+                                <li>
+                                    <i class="icon-material-outline-gavel"></i>
+                                    <span>Дата проведения аукциона</span>
+                                    <h5>{{ $task->notice['auctionDate'] }}</h5>
+                                </li>
+                            </ul>
+                            @else
+                            Ошибка загрузки данных
+                            @endif
                         </div>
                     </div>
                 </div>

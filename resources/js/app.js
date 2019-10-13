@@ -25,7 +25,6 @@ Vue.component('tasks-proposals-modal', require('./components/TasksProposalsModal
 Vue.component('tasks-filters', require('./components/TasksFilter.vue').default);
 Vue.component('contacts-maps', require('./components/ContactsMap.vue').default);
 Vue.component('date-end', require('./components/DateEndInput.vue').default);
-Vue.component('notice-info', require('./components/NoticeInfo.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

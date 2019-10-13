@@ -123,6 +123,10 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
+        $notice = $this->getNoticeInfo(trim($request->notice));
+
+        dd($notice);
+
         $title = "Первая часть заявки";
 
         if($request->title == 1) $title = "Жалоба в ФАС";
@@ -140,7 +144,7 @@ class TaskController extends Controller
             'price' => $request->price,
             'date_end' => $request->date_end,
             'user_id' => Auth::user()->id,
-            'notice' => trim($request->notice),
+            'notice' => $this->getNoticeInfo(trim($request->notice)),
             'logo' => $logoImage
         ));
 
@@ -199,6 +203,7 @@ class TaskController extends Controller
         $requestData = $request->all();
         $requestData['date_end'] = \Carbon\Carbon::parse($request->date_end)->format('Y-m-d h:m:s');
         $requestData['title'] = $title;
+        $requestData['notice'] = $this->getNoticeInfo(trim($request->notice));
 
         $logoImage = NULL;
         if($request->hasFile('logo')){
@@ -257,8 +262,8 @@ class TaskController extends Controller
 
         $infoLink = $dom->find('a.size14')->attr('href');
 
+        $info['id'] = $id;
         if(isset($infoLink)){
-            $info['id'] = $id;
             $info['link'] = $govURL;
 
             $infoLink = "http://zakupki.gov.ru/" . $infoLink;

@@ -51,7 +51,7 @@
                                     <div class="col-xl-12">
                                             <div class="submit-field">
                                                 <h5>Извещение №</h5>
-                                                <input type="text" class="with-border" value="{{ $task->notice }}" name="notice" placeholder="Введите номер извещения..." required>
+                                                <input type="text" class="with-border" value="{{ $task->notice != NULL ? $task->notice['id']:'' }}" name="notice" placeholder="Введите номер извещения..." required>
                                             </div>
                                         </div>
 
