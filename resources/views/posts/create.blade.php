@@ -48,7 +48,7 @@
                                             <h5>Контент</h5>
                                             <textarea cols="30" rows="5" name="content" class="with-border"></textarea>
                                             <div class="uploadButton margin-top-30">
-                                                <input class="uploadButton-input" type="file" accept="image/*" name="cover" id="upload">
+                                                <input class="uploadButton-input" type="file" accept="image/*" name="cover" id="upload" required>
                                                 <label class="uploadButton-button ripple-effect" for="upload">Загрузить обложку</label>
                                                 <span class="uploadButton-file-name">Данная картинка будет использована в качестве обложки поста.</span>
                                             </div>

@@ -63,14 +63,13 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        $post = Post::findOrFail($id);
-        $previousPost = Post::where('id', '<', $id)->orderBy('id', 'desc')->first();
-        $nextPost = Post::where('id', '>', $id)->orderBy('id', 'asc')->first();
+        $previousPost = Post::where('id', '<', $post->id)->orderBy('id', 'desc')->first();
+        $nextPost = Post::where('id', '>', $post->id)->orderBy('id', 'asc')->first();
 
         return view('posts.show', array('post' => $post, 'previousPost' => $previousPost, 'nextPost' => $nextPost));
     }
@@ -78,15 +77,11 @@ class PostController extends Controller
      /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        $post = Post::findOrFail($id);
-
-        if(Auth::user()->id != $post->user_id) redirect()->back();
-
         return view('posts.edit', array('post' => $post));
     }
 
@@ -94,12 +89,11 @@ class PostController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        $post = Post::findOrFail($id);
         $coverImage = NULL;
         if($request->hasFile('cover')){
             $coverImage = $request->file('cover')->store('images/blog', 'public');
@@ -122,12 +116,12 @@ class PostController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        Post::findOrFail($id)->delete();
+        $post->delete();
 
         return redirect()->route('posts.index');
     }

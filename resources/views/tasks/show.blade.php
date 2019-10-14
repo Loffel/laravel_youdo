@@ -53,7 +53,7 @@
 				<ul class="boxed-list-ul">
                     @auth
                         @if($userProposal === NULL)
-                            @if(auth()->user()->type == 1)
+                            @if(auth()->user()->type == 1 && auth()->user()->can('update', $task))
                                 @foreach($task->proposals as $proposal)
                                 <li>
                                     <div class="bid">
@@ -151,7 +151,7 @@
                 @endif
 
                 @auth
-                    @if($task->user->id != Auth::user()->id && auth()->user()->type == 2)
+                    @if(auth()->user()->type == 2)
                         @if($userProposal === NULL)
                             <div class="sidebar-widget">
                                 <div class="bidding-widget">
@@ -187,8 +187,6 @@
                                         Ваш аккаунт не проверен администраторами сайта.
                                         @endif
                                     </div>
-
-                                    {{--  <div class="bidding-signup">Нет аккаунта? <a href="#" class="register-tab sign-in popup-with-zoom-anim">Создайте!</a></div>  --}}
                                 </div>
                             </div>
                         @else
@@ -213,7 +211,7 @@
                             </div>
                             @endif
                         @endif
-                    @else
+                    @elseif(Auth::user()->can('update', $task))
                         <div class="sidebar-widget">
                             <div class="bidding-widget">
                                 <div class="bidding-headline"><h3>Управление заданием</h3></div>
@@ -293,6 +291,9 @@
                             @else
                             Номер не указан
                             @endif
+                            @guest
+                                <div class="bidding-signup">Нет аккаунта? <a href="{{ route('register') }}" class="register-tab sign-in popup-with-zoom-anim">Создайте!</a></div>
+                            @endguest
                         </div>
                     </div>
                 </div>
@@ -300,8 +301,6 @@
 				<!-- Sidebar Widget -->
 				<div class="sidebar-widget">
 					<h3>Поделиться</h3>
-
-
 					<!-- Copy URL -->
 					<div class="copy-url">
 						<input id="copy-url" type="text" value="" class="with-border">

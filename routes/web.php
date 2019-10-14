@@ -33,13 +33,13 @@ Route::prefix('admin')->middleware('auth')->name('admin.')->group(function(){
 Route::prefix('dashboard')->middleware('auth')->group(function(){
     Route::get('/tasks', 'TaskController@dashboard')->name('tasks.dashboard');
     Route::get('/tasks/new', 'TaskController@create')->name('tasks.create');
-    Route::get('/tasks/edit/{id}', 'TaskController@edit')->name('tasks.edit');
+    Route::get('/tasks/edit/{task}', 'TaskController@edit')->middleware('can:update,task')->name('tasks.edit');
     Route::get('/tasks/{id}', 'TaskController@proposals')->name('tasks.proposals');
 
     Route::get('/proposals', 'ProposalController@dashboard')->name('proposals.dashboard');
 
     Route::get('/posts/new', 'PostController@create')->name('posts.create');
-    Route::get('/posts/edit/{id}', 'PostController@edit')->name('posts.edit');
+    Route::get('/posts/edit/{post}', 'PostController@edit')->middleware('can:update,post')->name('posts.edit');
 
     Route::get('/messenger', 'MessengerController@index')->name('messenger.index');
 
@@ -55,9 +55,9 @@ Route::prefix('dashboard')->middleware('auth')->group(function(){
 Route::prefix('tasks')->name('tasks.')->group(function(){
     Route::get('/', 'TaskController@index')->name('index');
     Route::post('/new', 'TaskController@store')->name('store');
-    Route::get('/{id}', 'TaskController@show')->name('show');
-    Route::patch('/edit/{id}', 'TaskController@update')->name('update');
-    Route::delete('/delete/{id}', 'TaskController@destroy')->name('delete');
+    Route::get('/{task}', 'TaskController@show')->name('show');
+    Route::patch('/edit/{task}', 'TaskController@update')->middleware('can:update,task')->name('update');
+    Route::delete('/delete/{task}', 'TaskController@destroy')->middleware('can:update,task')->name('delete');
     Route::get('/close/{id}', 'TaskController@close')->name('close');
 
     Route::get('/proposal/{task_id}/{prop_id}', 'TaskController@selectProposalView')->name('select_proposal.view');
@@ -67,16 +67,16 @@ Route::prefix('tasks')->name('tasks.')->group(function(){
 Route::prefix('posts')->name('posts.')->group(function(){
     Route::get('/', 'PostController@index')->name('index');
     Route::post('new', 'PostController@store')->name('store');
-    Route::get('/{id}', 'PostController@show')->name('show');
+    Route::get('/{post}', 'PostController@show')->name('show');
     
-    Route::patch('/edit/{id}', 'PostController@update')->name('update');
-    Route::delete('/delete/{id}', 'PostController@destroy')->name('delete');
+    Route::patch('/edit/{post}', 'PostController@update')->middleware('can:update,post')->name('update');
+    Route::delete('/delete/{post}', 'PostController@destroy')->middleware('can:update,post')->name('delete');
 });
 
 Route::prefix('proposals')->middleware('auth')->name('proposals.')->group(function(){
     Route::post('/new', 'ProposalController@store')->name('store');
     Route::patch('/update', 'ProposalController@update')->name('update');
-    Route::get('/delete/{id}', 'ProposalController@destroy')->name('delete');
+    Route::get('/delete/{proposal}', 'ProposalController@destroy')->middleware('can:update,proposal')->name('delete');
 });
 
 Route::prefix('messenger')->middleware('auth')->name('messenger.')->group(function(){

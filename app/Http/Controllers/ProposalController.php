@@ -109,19 +109,18 @@ class ProposalController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Proposal $proposal
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Proposal $proposal)
     {
-        $proposal = Proposal::find($id);
-
         if($proposal != NULL){
             if($proposal->user_id == auth()->user()->id){
                 $proposal->delete();
                 return redirect()->back()->with('success', 'Предложение успешно удалено!');
             }
         }
+
         return redirect()->back()->with('error', 'Произошла ошибка!');
     }
 }

@@ -150,17 +150,16 @@ class TaskController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Task $task)
     {
-        $task = Task::findOrFail($id);
         $userProposal = NULL;
 
         if(Auth::check()){
             if(auth()->user()->type == 2)
-                $userProposal = Proposal::where('task_id', $id)->where('user_id', Auth::user()->id)->first();
+                $userProposal = Proposal::where('task_id', $task->id)->where('user_id', Auth::user()->id)->first();
         }
         
         return view('tasks.show', array('task' => $task, 'userProposal' => $userProposal));
@@ -169,15 +168,11 @@ class TaskController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Task $task)
     {
-        $task = Task::findOrFail($id);
-
-        if(Auth::user()->id != $task->user_id) redirect()->back();
-
         $dateEndString = $task->date_end->toDateTimeString();
 
         return view('tasks.edit', array('task' => $task, 'dateEndString' => $dateEndString));
@@ -187,10 +182,10 @@ class TaskController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Task $task)
     {
         $title = "Первая часть заявки";
 
@@ -209,20 +204,20 @@ class TaskController extends Controller
             $requestData['logo'] = $logoImage;
         }else unset($requestData['logo']);
 
-        Task::findOrFail($id)->update($requestData);
+        $task->update($requestData);
 
-        return redirect()->route('tasks.show', $id);
+        return redirect()->route('tasks.show', $task->id);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Task  $task
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Task $task)
     {
-        Task::findOrFail($id)->delete();
+        $task->delete();
 
         return redirect()->route('tasks.index');
     }
