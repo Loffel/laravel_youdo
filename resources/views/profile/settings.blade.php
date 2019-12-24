@@ -23,7 +23,7 @@
             </div>
     
             <!-- Row -->
-            <form action="{{ route('profile.settings.update') }}" method="POST">
+            <form action="{{ route('profile.settings.update') }}" method="POST" enctype="multipart/form-data">
                 @csrf
                 <div class="row">
                     <div class="col-xl-12">

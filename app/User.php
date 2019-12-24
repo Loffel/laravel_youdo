@@ -53,8 +53,8 @@ class User extends Authenticatable
     public function getAvatar(){
         $avatar = 'images/user-avatar-placeholder.png';
         if($this->avatar != NULL) $avatar = $this->avatar;
-
-        return asset($avatar);
+        
+        return asset('storage/'.$avatar);
     }
 
     public function getScoreAVG(){

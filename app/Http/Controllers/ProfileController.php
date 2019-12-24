@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
+use Intervention\Image\Facades\Image;
 
 class ProfileController extends Controller
 {
@@ -58,8 +59,18 @@ class ProfileController extends Controller
         }
 
         $user = User::find($request->user()->id);
-        $user->update($request->all());
 
+        
+        $user->update($request->all());
+        
+        if($request->hasFile('avatar')){
+            $avatarImage = $request->file('avatar')->store('images/users', 'public');
+            $image = Image::make(public_path('storage/'.$avatarImage))->fit(150, 150);
+            $image->save();
+
+            $user->avatar = $avatarImage;
+            $user->save();
+        }
         if(!empty($request->currentPassword)){
             if(Hash::check($request->currentPassword, $request->user()->password)){
                 $user->password = Hash::make($request->newPassword);         
