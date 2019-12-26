@@ -52,9 +52,9 @@ class User extends Authenticatable
 
     public function getAvatar(){
         $avatar = 'images/user-avatar-placeholder.png';
-        if($this->avatar != NULL) $avatar = $this->avatar;
+        if($this->avatar != NULL) $avatar = 'storage/'.$this->avatar;
         
-        return asset('storage/'.$avatar);
+        return asset($avatar);
     }
 
     public function getScoreAVG(){
