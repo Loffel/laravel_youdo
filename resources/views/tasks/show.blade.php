@@ -274,14 +274,18 @@
                                     @endif
                                     @if($task->proposal_id !== NULL && $task->getSelectedProposal()->status < 3)
                                     <span class="bidding-detail margin-top-10">Задание <strong>выполнено?</strong></span>
-                                    <div class="bidding-fields">
-                                        <div class="bidding-field">
-                                            <a href="{{ route('tasks.close', $task->id) }}?status=3" class="button ripple-effect move-on-hover">Да</a>
+                                    <form action="{{ route('tasks.close', $task->id) }}" method="POST" id="form-status" enctype="multipart/form-data">
+                                        @csrf
+                                        <input type="hidden" id="status" name="status" value="">
+                                        <div class="bidding-fields">
+                                            <div class="bidding-field">
+                                                <a href="#" data-status="3" class="button ripple-effect move-on-hover">Да</a>
+                                            </div>
+                                            <div class="bidding-field">
+                                                <a href="#" data-status="5" class="button ripple-effect move-on-hover">Нет</a>
+                                            </div>
                                         </div>
-                                        <div class="bidding-field">
-                                            <a href="{{ route('tasks.close', $task->id) }}?status=5" class="button ripple-effect move-on-hover">Нет</a>
-                                        </div>
-                                    </div>
+                                    </form>
                                     @endif
                                 </div>
                             </div>
