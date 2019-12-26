@@ -130,6 +130,11 @@ import Axios from 'axios';
           $("input[name='price']").on('slide', function(ev) {
             $("input#priceValue").val(ev.value);
           });
+
+          $("form#form-status a").on('click', function(el){
+            $("form#form-status #status").val($(this).data('status'));
+            $("form#form-status").submit();
+          });
           
           console.log('Boom');
         }

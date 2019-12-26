@@ -6,10 +6,12 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Task;
 use App\Proposal;
+use App\File;
 use App\Notifications\ProposalStatusChanged;
 use Intervention\Image\Facades\Image;
 use Rct567\DomQuery\DomQuery;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Validator;
 
 class TaskController extends Controller
 {
@@ -67,19 +69,51 @@ class TaskController extends Controller
     }
 
     public function close(Request $request, $id){
+        $user = auth()->user();
+
+        $validator = Validator::make($request->all(),[
+            'file' => ['file', 'mimes:doc,docx'],
+        ],[
+            'file.*'    =>  'Ошибка загрузки файла',
+        ]);
+        
+        if($user->type == 2){
+            if ($validator->fails()) {
+                return redirect()
+                            ->back()
+                            ->withErrors($validator)
+                            ->withInput();
+            }
+        }
+
         $status = $request->status;
         $statusFreelancer = array(2, 5);
         $statusEmployer = array(3, 5);
 
-        if(auth()->user()->type == 1) {
+        if($user->type == 1) {
             $statusCheck = in_array($status, $statusEmployer);
-            $task = auth()->user()->tasks->where('id', $id)->first();
+            $task = $user->tasks->where('id', $id)->first();
         }else {
             $statusCheck = in_array($status, $statusFreelancer);
-            $task = auth()->user()->proposals->where('task_id', $id)->first()->task;
+            $task = $user->proposals->where('task_id', $id)->first()->task;
         }
 
         if(!$status || !$task || !$statusCheck) return redirect()->back();
+
+        if($request->hasFile('file') && $user->type == 2){
+            $this->authorize('upload', $task);
+            $taskFile = $request->file('file')->store('files/tasks', 'public');
+
+            $newFile = File::create(array(
+                'name'      =>  pathinfo($request->file('file')->getClientOriginalName(), PATHINFO_FILENAME),
+                'path'      =>  $taskFile,
+                'user_id'   =>  $user->id,
+                'task_id'   =>  $task->id
+            ));
+
+            $task->file_id = $newFile->id;
+            $task->save();
+        }
 
         $proposal = $task->getSelectedProposal();
 

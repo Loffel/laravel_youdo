@@ -21,4 +21,8 @@ class TaskPolicy
     {
         return $user->id === $task->user_id;
     }
+
+    public function upload(User $user, Task $task){
+        return $user->id === $task->getSelectedProposal()->user->id;
+    }
 }

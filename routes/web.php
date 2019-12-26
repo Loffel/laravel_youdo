@@ -58,7 +58,11 @@ Route::prefix('tasks')->name('tasks.')->group(function(){
     Route::get('/{task}', 'TaskController@show')->name('show');
     Route::patch('/edit/{task}', 'TaskController@update')->middleware('can:update,task')->name('update');
     Route::delete('/delete/{task}', 'TaskController@destroy')->middleware('can:update,task')->name('delete');
-    Route::get('/close/{id}', 'TaskController@close')->name('close');
+    Route::post('/close/{id}', 'TaskController@close')->name('close');
+
+    // File
+    Route::post('/upload/{id}', 'FileController@upload')->name('upload');
+    Route::get('/{id}/download', 'FileController@download')->name('download');
 
     Route::get('/proposal/{task_id}/{prop_id}', 'TaskController@selectProposalView')->name('select_proposal.view');
     Route::post('/proposal/accepted', 'TaskController@selectProposalStore')->name('select_proposal.store');

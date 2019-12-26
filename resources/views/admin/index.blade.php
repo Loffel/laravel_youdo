@@ -114,6 +114,7 @@
                                             <th>Описание предложения</th>
                                             <th>Цена</th>
                                             <th>Статус</th>
+                                            <th>Файл</th>
                                             <th>Действие</th>
                                         </tr>
                                         @foreach($proposals as $proposal)
@@ -124,6 +125,11 @@
                                             <td>{{ $proposal->description }}</td>
                                             <td>{{ $proposal->price }}</td>
                                             <td>{{ $proposal->getStatusText() }}</td>
+                                            @if(!empty($proposal->task->file))
+                                            <td><a href="{{ route('tasks.download', $proposal->task) }}">Скачать файл</a></td>
+                                            @else
+                                            <td>Файла нет</td>
+                                            @endif
                                             <td>
                                                 @if($proposal->status == 3)
                                                 <a href="{{ route('admin.payoutProposal', $proposal->id) }}">Произвести выплату</a>

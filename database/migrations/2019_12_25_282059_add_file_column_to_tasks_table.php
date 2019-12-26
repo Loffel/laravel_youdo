@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddFieldsToTasksTableT extends Migration
+class AddFileColumnToTasksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,8 +14,12 @@ class AddFieldsToTasksTableT extends Migration
     public function up()
     {
         Schema::table('tasks', function (Blueprint $table) {
-            $table->string('notice')->after('proposal_id');
-            $table->string('logo')->nullable()->after('notice');
+            $table->unsignedBigInteger('file_id')->nullable()->after('logo');
+
+            $table->foreign('file_id')
+                  ->references('id')
+                  ->on('files')
+                  ->onDelete('cascade');
         });
     }
 
@@ -27,8 +31,8 @@ class AddFieldsToTasksTableT extends Migration
     public function down()
     {
         Schema::table('tasks', function (Blueprint $table) {
-            $table->dropColumn('logo');
-            $table->dropColumn('notice');
+            $table->dropForeign('tasks_file_id_foreign');
+            $table->dropColumn('file_id');
         });
     }
 }

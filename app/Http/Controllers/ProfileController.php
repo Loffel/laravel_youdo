@@ -71,6 +71,7 @@ class ProfileController extends Controller
             $user->avatar = $avatarImage;
             $user->save();
         }
+        
         if(!empty($request->currentPassword)){
             if(Hash::check($request->currentPassword, $request->user()->password)){
                 $user->password = Hash::make($request->newPassword);         

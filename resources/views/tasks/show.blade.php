@@ -194,17 +194,53 @@
                             <div class="sidebar-widget">
                                 <div class="bidding-widget">
                                     <div class="bidding-headline"><h3>Вы выбраны исполнителем!</h3></div>
+                                    @foreach ($errors->all() as $error)
+                                    <div class="notification error closeable">
+                                        <p>{{ $error }}</p>
+                                        <a class="close"></a>
+                                    </div>
+                                    @endforeach
                                     <div class="bidding-inner">
                                         @if($task->getSelectedProposal()->status < 2)
                                         <span class="bidding-detail">Задание <strong>выполнено</strong>?</span>
-                                        <div class="bidding-fields">
-                                            <div class="bidding-field">
-                                                <a href="{{ route('tasks.close', $task->id) }}?status=2" class="button ripple-effect move-on-hover">Да</a>
+                                        <form action="{{ route('tasks.close', $task->id) }}" method="POST" id="form-status" enctype="multipart/form-data">
+                                            @csrf
+                                            <input type="hidden" id="status" name="status" value="">
+                                            <div class="uploadButton margin-top-10">
+                                                <input name="file" type="file" accept="application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" id="upload" class="uploadButton-input">
+                                                <label for="upload" class="uploadButton-button ripple-effect">Загрузить документ</label>
                                             </div>
-                                            <div class="bidding-field">
-                                                <a href="{{ route('tasks.close', $task->id) }}?status=5" class="button ripple-effect move-on-hover">Нет</a>
+                                            <div class="bidding-fields">
+                                                <div class="bidding-field">
+                                                    <a href="#" data-status="2" class="button ripple-effect move-on-hover">Да</a>
+                                                </div>
+                                                <div class="bidding-field">
+                                                    <a href="#" data-status="5" class="button ripple-effect move-on-hover">Нет</a>
+                                                </div>
                                             </div>
-                                        </div>
+                                        </form>
+                                        @else
+                                        <span class="bidding-detail margin-top-10">Прикреплённый <strong>документ</strong></span>
+                                        @if(isset($task->file))
+                                        <a href="{{ route('tasks.download', $task->id) }}">Скачать документ</a>
+                                        @else
+                                        Нет прикреплённого документ
+                                        @endif
+                                        <span class="bidding-detail margin-top-10">Прикрепить <strong>новый документ</strong></span>
+                                        <form action="{{ route('tasks.upload', $task->id) }}" method="POST" id="form-status" enctype="multipart/form-data">
+                                            @csrf
+                                            <div class="bidding-fields">
+                                                <div class="bidding-field">
+                                                    <div class="uploadButton">
+                                                        <input name="file" type="file" accept="application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" id="upload" class="uploadButton-input">
+                                                        <label for="upload" class="uploadButton-button ripple-effect">Выбрать...</label>
+                                                    </div>
+                                                </div>
+                                                <div class="bidding-field">
+                                                    <button type="submit" class="button ripple-effect move-on-hover">Обновить</button>
+                                                </div>
+                                            </div>
+                                        </form>
                                         @endif
                                     </div>
                                 </div>
@@ -230,8 +266,14 @@
                                             </form>
                                         </div>
                                     </div>
+                                    <span class="bidding-detail margin-top-10">Прикреплённый <strong>документ</strong></span>
+                                    @if(isset($task->file))
+                                    <a href="{{ route('tasks.download', $task->id) }}">Скачать документ</a>
+                                    @else
+                                    Нет прикреплённого документ
+                                    @endif
                                     @if($task->proposal_id !== NULL && $task->getSelectedProposal()->status < 3)
-                                    <span class="bidding-detail margin-top-30">Задание <strong>выполнено?</strong></span>
+                                    <span class="bidding-detail margin-top-10">Задание <strong>выполнено?</strong></span>
                                     <div class="bidding-fields">
                                         <div class="bidding-field">
                                             <a href="{{ route('tasks.close', $task->id) }}?status=3" class="button ripple-effect move-on-hover">Да</a>

@@ -116,6 +116,10 @@ class User extends Authenticatable
         return $this->hasMany('App\Payment');
     }
 
+    public function files(){
+        return $this->hasMany('App\File');
+    }
+
     public function isOnline(){
         return Cache::has('user-online-'.$this->id);
     }

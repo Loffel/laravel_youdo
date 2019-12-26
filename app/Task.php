@@ -45,6 +45,10 @@ class Task extends Model
         return $this->hasOne('App\Payout');
     }
 
+    public function file(){
+        return $this->hasOne('App\File');
+    }
+
     public function selectProposal($id){
         $this->proposal_id = $id;
         $this->save();
