@@ -23,7 +23,7 @@
     
             <!-- Row -->
             <div class="row">
-                <form action="{{ route('tasks.update', $task->id) }}" method="POST">
+                <form action="{{ route('tasks.update', $task->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     {{ method_field('PATCH') }}
                     <!-- Dashboard Box -->

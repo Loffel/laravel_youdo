@@ -22,9 +22,9 @@ class FileController extends Controller
 
     public function upload(Request $request, $id){
         $validator = Validator::make($request->all(),[
-            'file' => ['file', 'mimes:doc,docx'],
+            'file' => ['required', 'file', 'mimes:doc,docx,rar,zip'],
         ],[
-
+            'file.required'    =>  'Загрузите файл.',
         ]);
         
         if ($validator->fails()) {
@@ -62,6 +62,6 @@ class FileController extends Controller
             }
         }
 
-        return redirect()->back();
+        return redirect()->back()->with('updated', 'Файл задания обновлён!');
     }
 }

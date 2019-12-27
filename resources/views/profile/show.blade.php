@@ -167,30 +167,16 @@
 				</div>
 					
 				<!-- Form -->
-				<form method="post">
+				<form id="offer-task" action="{{ route('tasks.offer') }}" method="post">
+					@csrf
+					<input type="hidden" name="user_id" value="{{ $user->id }}">
 
-					<div class="input-with-icon-left">
-						<i class="icon-material-outline-account-circle"></i>
-						<input type="text" class="input-text with-border" name="name" id="name" placeholder="Имя"/>
-					</div>
-
-					<div class="input-with-icon-left">
-						<i class="icon-material-baseline-mail-outline"></i>
-						<input type="text" class="input-text with-border" name="emailaddress" id="emailaddress" placeholder="Email"/>
-					</div>
-
-					<textarea name="textarea" cols="10" placeholder="Сообщение..." class="with-border"></textarea>
-
-					<div class="uploadButton margin-top-25">
-						<input class="uploadButton-input" type="file" accept="image/*, application/pdf" id="upload" multiple/>
-						<label class="uploadButton-button ripple-effect" for="upload">Прикрепить файл</label>
-						<span class="uploadButton-file-name">Расширения: pdf, png, jpg <br> Максимальный размер файла: 50 МБ.</span>
-					</div>
+					<textarea name="message" cols="10" placeholder="Сообщение..." class="with-border"></textarea>
 
 				</form>
 				
 				<!-- Button -->
-				<button class="button margin-top-35 full-width button-sliding-icon ripple-effect" type="submit">Отправить предложение <i class="icon-material-outline-arrow-right-alt"></i></button>
+				<button form="offer-task" class="button margin-top-35 full-width button-sliding-icon ripple-effect" type="submit">Отправить предложение <i class="icon-material-outline-arrow-right-alt"></i></button>
 
 			</div>
 		</div>

@@ -200,6 +200,12 @@
                                         <a class="close"></a>
                                     </div>
                                     @endforeach
+                                    @if(Session::has('updated'))
+                                    <div class="notification success closeable">
+                                        <p>{{ Session::get('updated') }}</p>
+                                        <a class="close"></a>
+                                    </div>
+                                    @endif
                                     <div class="bidding-inner">
                                         @if($task->getSelectedProposal()->status < 2)
                                         <span class="bidding-detail">Задание <strong>выполнено</strong>?</span>
@@ -212,7 +218,7 @@
                                             </div>
                                             <div class="bidding-fields">
                                                 <div class="bidding-field">
-                                                    <a href="#" data-status="2" class="button ripple-effect move-on-hover">Да</a>
+                                                    <a href="#" data-status="2" class="button ripple-effect move-on-hover disabled" disabled>Да</a>
                                                 </div>
                                                 <div class="bidding-field">
                                                     <a href="#" data-status="5" class="button ripple-effect move-on-hover">Нет</a>
@@ -237,7 +243,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="bidding-field">
-                                                    <button type="submit" class="button ripple-effect move-on-hover">Обновить</button>
+                                                    <button type="submit" class="button ripple-effect move-on-hover" disabled>Обновить</button>
                                                 </div>
                                             </div>
                                         </form>

@@ -131,9 +131,22 @@ import Axios from 'axios';
             $("input#priceValue").val(ev.value);
           });
 
+          $("form#form-status input#upload").on('change', function(){
+            var $valFile = $(this).val(),
+                $button = $("form#form-status a:first, form#form-status button[type='submit']");
+
+            if($valFile.length > 0) {
+              $button.removeAttr("disabled");
+            }else{
+              $button.attr("disabled", "disabled");
+            }
+          });
+
           $("form#form-status a").on('click', function(el){
-            $("form#form-status #status").val($(this).data('status'));
-            $("form#form-status").submit();
+            if($(this).attr("disabled") != "disabled"){
+              $("form#form-status #status").val($(this).data('status'));
+              $("form#form-status").submit();
+            }
           });
           
           console.log('Boom');

@@ -2015,7 +2015,7 @@ Vue.component('datetime', vue_datetime__WEBPACK_IMPORTED_MODULE_0__["Datetime"])
   methods: {
     changeInput: function changeInput(value) {
       if (value == '' || value == undefined) return;
-      var dateTime = luxon__WEBPACK_IMPORTED_MODULE_1__["DateTime"].fromISO(value).toFormat("yyyy-LL-dd HH:mm:ss");
+      var dateTime = luxon__WEBPACK_IMPORTED_MODULE_1__["DateTime"].fromISO(value).toFormat("yyyy-LL-dd HH:mm:00");
       $("input[name='date_end']").val(dateTime);
     }
   }
@@ -57624,7 +57624,7 @@ var render = function() {
     [
       _c("datetime", {
         attrs: {
-          format: "yyyy-LL-dd HH:mm:ss",
+          format: "yyyy-LL-dd HH:mm:00",
           auto: "",
           "input-id": "date_end",
           "input-class": "mywith-border",
@@ -70503,9 +70503,21 @@ window.onload = function () {
       $("input[name='price']").on('slide', function (ev) {
         $("input#priceValue").val(ev.value);
       });
+      $("form#form-status input#upload").on('change', function () {
+        var $valFile = $(this).val(),
+            $button = $("form#form-status a:first, form#form-status button[type='submit']");
+
+        if ($valFile.length > 0) {
+          $button.removeAttr("disabled");
+        } else {
+          $button.attr("disabled", "disabled");
+        }
+      });
       $("form#form-status a").on('click', function (el) {
-        $("form#form-status #status").val($(this).data('status'));
-        $("form#form-status").submit();
+        if ($(this).attr("disabled") != "disabled") {
+          $("form#form-status #status").val($(this).data('status'));
+          $("form#form-status").submit();
+        }
       });
       console.log('Boom');
     }

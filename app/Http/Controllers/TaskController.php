@@ -7,11 +7,15 @@ use Illuminate\Support\Facades\Auth;
 use App\Task;
 use App\Proposal;
 use App\File;
+use App\Message;
+use App\User;
 use App\Notifications\ProposalStatusChanged;
+use App\Notifications\OfferTask;
 use Intervention\Image\Facades\Image;
 use Rct567\DomQuery\DomQuery;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
+use App\Events\NewMessage;
 
 class TaskController extends Controller
 {
@@ -72,9 +76,9 @@ class TaskController extends Controller
         $user = auth()->user();
 
         $validator = Validator::make($request->all(),[
-            'file' => ['file', 'mimes:doc,docx'],
+            'file' => ['required', 'file', 'mimes:doc,docx,rar,zip'],
         ],[
-            'file.*'    =>  'Ошибка загрузки файла',
+            'file.required'    =>  'Загрузите файл.',
         ]);
         
         if($user->type == 2){
@@ -116,6 +120,7 @@ class TaskController extends Controller
         }
 
         $proposal = $task->getSelectedProposal();
+        $succesMessage = '';
 
         if($proposal->status < $status){
             $proposal->update(array(
@@ -124,8 +129,9 @@ class TaskController extends Controller
 
             if($status == 2) $task->user->notify(new ProposalStatusChanged($task, $task->user));
             else $proposal->user->notify(new ProposalStatusChanged($task, $proposal->user));
+
         }
-        return redirect()->route('tasks.show', $task->id);
+        return redirect()->route('tasks.show', $task->id)->with('updated', 'Статус задания изменён на "'.$proposal->getStatusText().'"!');
     }
 
     public function proposals($id){
@@ -226,9 +232,12 @@ class TaskController extends Controller
         if($request->title == 1) $title = "Жалоба в ФАС";
 
         $requestData = $request->all();
-        $requestData['date_end'] = \Carbon\Carbon::parse($request->date_end)->format('Y-m-d h:m:s');
+        // $requestData['date_end'] = \Carbon\Carbon::parse($request->date_end)->format('Y-m-d h:m:s');
+        $requestData['date_end'] = $request->date_end;
         $requestData['title'] = $title;
         $requestData['notice'] = $this->getNoticeInfo(trim($request->notice));
+
+        // dd($requestData['date_end']);
 
         $logoImage = NULL;
         if($request->hasFile('logo')){
@@ -321,5 +330,23 @@ class TaskController extends Controller
                             ->text();
 
         return $elementText;
+    }
+
+    public function offerTask(Request $request){
+        $user = User::findOrFail($request->user_id);
+
+        $user->notify(new OfferTask(auth()->user(), $request->message));
+
+        $message = Message::create([
+            'from_id' => Auth::id(),
+            'to_id' => $request->user_id,
+            'text' => 'Предложено задание: '.$request->message,
+        ]);
+
+        $message->diffForHumans = $message->created_at->diffForHumans();
+        
+        broadcast(new NewMessage($message));
+
+        return redirect()->route('messenger.index');
     }
 }

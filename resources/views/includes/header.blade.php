@@ -91,7 +91,7 @@
 										<li class="notifications-not-read">
 											<a data-id="{{ $notification->id }}" id="notify-read" href="#">
 												<span class="notification-icon">
-													@if($notification->type == "App\Notifications\UserSelected")
+													@if($notification->type == "App\Notifications\UserSelected" || $notification->type == "App\Notifications\OfferTask")
 													<i class=" icon-material-outline-group"></i>
 													@elseif($notification->type == "App\Notifications\NewProposal" || $notification->type == "App\Notifications\ProposalStatusChanged")
 													<i class="icon-material-outline-gavel"></i>
@@ -104,6 +104,8 @@
 													<strong>{{ $notification->data["user_name"] }}</strong> оставил предложение к вашему заданию <strong>{{ $notification->data["task_title"] }}</strong>
 													@elseif($notification->type == "App\Notifications\ProposalStatusChanged")
 													{{ $notification->data["message"] }}
+													@elseif($notification->type == "App\Notifications\OfferTask")
+													<strong>{{ $notification->data["user_name"] }}</strong> предложил вам задание!
 													@endif
 												</span>
 											</a>
@@ -112,7 +114,12 @@
 									</ul>
 								</div>
 							</div>
-
+							
+							@if(auth()->user()->type == 1)
+							<a href="{{ route('tasks.dashboard') }}" class="header-notifications-button ripple-effect button-sliding-icon">Мои задания<i class="icon-material-outline-arrow-right-alt"></i></a>
+							@else
+							<a href="{{ route('proposals.dashboard') }}" class="header-notifications-button ripple-effect button-sliding-icon">Мои предложения<i class="icon-material-outline-arrow-right-alt"></i></a>
+							@endif
 						</div>
 
 					</div>

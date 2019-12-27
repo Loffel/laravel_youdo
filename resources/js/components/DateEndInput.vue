@@ -1,6 +1,6 @@
 <template>
     <div>
-    <datetime format="yyyy-LL-dd HH:mm:ss" auto input-id="date_end" input-class="mywith-border" :phrases="{ok: 'Выбрать', cancel: 'Закрыть'}" type="datetime" @input="changeInput(date_end)" v-model="date_end"></datetime>
+    <datetime format="yyyy-LL-dd HH:mm:00" auto input-id="date_end" input-class="mywith-border" :phrases="{ok: 'Выбрать', cancel: 'Закрыть'}" type="datetime" @input="changeInput(date_end)" v-model="date_end"></datetime>
     <input type="hidden" name="date_end" required>
     </div>
 
@@ -30,7 +30,7 @@ export default {
     methods: {
         changeInput(value){
             if(value == '' || value == undefined) return;
-            var dateTime = DateTime.fromISO(value).toFormat("yyyy-LL-dd HH:mm:ss");
+            var dateTime = DateTime.fromISO(value).toFormat("yyyy-LL-dd HH:mm:00");
             $("input[name='date_end']").val(dateTime);
         }
     }
