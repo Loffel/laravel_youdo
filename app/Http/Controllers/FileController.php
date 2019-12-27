@@ -40,6 +40,7 @@ class FileController extends Controller
         $this->authorize('upload', $task);
 
         if($request->hasFile('file')){
+            setlocale(LC_ALL,'en_US.UTF-8');
             $taskFile = $request->file('file')->store('files/tasks', 'public');
             $fileName = pathinfo($request->file('file')->getClientOriginalName(), PATHINFO_FILENAME);
 

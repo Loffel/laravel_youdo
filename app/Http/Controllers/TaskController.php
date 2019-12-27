@@ -105,6 +105,7 @@ class TaskController extends Controller
         if(!$status || !$task || !$statusCheck) return redirect()->back();
 
         if($request->hasFile('file') && $user->type == 2){
+            setlocale(LC_ALL,'en_US.UTF-8');
             $this->authorize('upload', $task);
             $taskFile = $request->file('file')->store('files/tasks', 'public');
 
