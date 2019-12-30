@@ -82,7 +82,8 @@ return [
         'string' => 'The :attribute may not be greater than :max characters.',
         'array' => 'The :attribute may not have more than :max items.',
     ],
-    'mimes' => ':attribute должен иметь одно из данных расширений: :values.',
+    // 'mimes' => ':attribute должен иметь одно из данных расширений: :values.',
+    'mimes' => 'Файл должен иметь одно из данных расширений: :values.',
     'mimetypes' => ':attribute должен иметь одно из данных расширений: :values.',
     'min' => [
         'numeric' => 'The :attribute must be at least :min.',

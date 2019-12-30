@@ -9205,6 +9205,11 @@ transform: translateY(-18px);
 	color: #a18d29;
 }
 
+.countdown.red {
+	background-color: #ffe9e9;
+	color: #de5959;
+}
+
 
 /* ---------------------------------- */
 /* Bidding Widget

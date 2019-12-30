@@ -144,113 +144,129 @@
 		<div class="col-xl-4 col-lg-4">
 			<div class="sidebar-container">
 
-                @if(now()->diffInMinutes($task->date_end, false) >= 0)
-                <div class="countdown green margin-bottom-35">Будет завершено {{ $task->date_end->diffForHumans() }}</div>
+                @if($taskProposal !== NULL)
+                    @if($taskProposal->status < 3)
+                        <div class="countdown yellow margin-bottom-35">Задание выполняется</div>
+                    @elseif(in_array($taskProposal->status, array(3,4)))
+                        <div class="countdown green margin-bottom-35">Задание выполнено</div>
+                    @elseif($taskProposal->status == 5)
+                        <div class="countdown red margin-bottom-35">Задание в арбитраже</div>
+                    @elseif($taskProposal->status == 6)
+                        <div class="countdown red margin-bottom-35">Задание отменено</div>
+                    @elseif($taskProposal->status == 7)
+                        <div class="countdown red margin-bottom-35">Задание не выполнено</div>
+                    @endif
                 @else
-                <div class="countdown yellow margin-bottom-35">Было завершено {{ $task->date_end->diffForHumans() }}</div>
+                    @if(now()->diffInMinutes($task->date_end, false) >= 0)
+                    <div class="countdown green margin-bottom-35">Будет завершено {{ $task->date_end->diffForHumans() }}</div>
+                    @else
+                    <div class="countdown yellow margin-bottom-35">Было завершено {{ $task->date_end->diffForHumans() }}</div>
+                    @endif
+                @endif
+
+                
+
+                @foreach ($errors->all() as $error)
+                <div class="notification error closeable">
+                    <p>{{ $error }}</p>
+                    <a class="close"></a>
+                </div>
+                @endforeach
+                @if(Session::has('updated'))
+                <div class="notification success closeable">
+                    <p>{{ Session::get('updated') }}</p>
+                    <a class="close"></a>
+                </div>
                 @endif
 
                 @auth
                     @if(auth()->user()->type == 2)
-                        @if($userProposal === NULL)
-                            <div class="sidebar-widget">
-                                <div class="bidding-widget">
-                                    <div class="bidding-headline"><h3>Оставить предложение</h3></div>
-                                    <div class="bidding-inner">
-                                        @if(auth()->user()->is_verified)
-                                        <form action="{{ route('proposals.store') }}" method="POST">
-                                            @csrf
-                                            <input type="hidden" name="task_id" value="{{ $task->id }}">
-                                            <!-- Headline -->
-                                            <span class="bidding-detail">Установите вашу <strong>цену</strong></span>
+                        @if($taskProposal->status < 5)
+                            @if($userProposal === NULL)
+                                <div class="sidebar-widget">
+                                    <div class="bidding-widget">
+                                        <div class="bidding-headline"><h3>Оставить предложение</h3></div>
+                                        <div class="bidding-inner">
+                                            @if(auth()->user()->is_verified)
+                                            <form action="{{ route('proposals.store') }}" method="POST">
+                                                @csrf
+                                                <input type="hidden" name="task_id" value="{{ $task->id }}">
+                                                <!-- Headline -->
+                                                <span class="bidding-detail">Установите вашу <strong>цену</strong></span>
 
-                                            <!-- Price Slider -->
-                                            {{--  <div class="bidding-value">₽<span id="biddingVal"></span></div>  --}}
-                                            <div class="bidding-value"><input step="100" type="number" id="priceValue"></div>
-                                            <input class="bidding-slider" name="price" type="text" value="" data-slider-handle="custom" data-slider-currency="₽" data-slider-min="0" data-slider-max="50000" data-slider-value="auto" data-slider-step="100" data-slider-tooltip="hide" />
-                                            
-                                            <!-- Headline -->
-                                            <span class="bidding-detail margin-top-30">Укажите <strong>комментарий</strong></span>
+                                                <!-- Price Slider -->
+                                                {{--  <div class="bidding-value">₽<span id="biddingVal"></span></div>  --}}
+                                                <div class="bidding-value"><input step="100" type="number" id="priceValue"></div>
+                                                <input class="bidding-slider" name="price" type="text" value="" data-slider-handle="custom" data-slider-currency="₽" data-slider-min="0" data-slider-max="50000" data-slider-value="auto" data-slider-step="100" data-slider-tooltip="hide" />
+                                                
+                                                <!-- Headline -->
+                                                <span class="bidding-detail margin-top-30">Укажите <strong>комментарий</strong></span>
 
-                                            <!-- Fields -->
-                                            <div class="bidding-field">
-                                                <textarea class="with-border" name="description" id="description" rows="3" required></textarea>
-                                            </div>
+                                                <!-- Fields -->
+                                                <div class="bidding-field">
+                                                    <textarea class="with-border" name="description" id="description" rows="3" required></textarea>
+                                                </div>
 
-                                            @if($task->proposal_id !== NULL)
-                                            <button id="snackbar-place-bid" data-original-title="Исполнитель выбран" data-tippy data-tippy-placement="top" class="button gray ripple-effect full-width margin-top-30" disabled><span>Отправить</span></button>
+                                                @if($task->proposal_id !== NULL)
+                                                <button id="snackbar-place-bid" data-original-title="Исполнитель выбран" data-tippy data-tippy-placement="top" class="button gray ripple-effect full-width margin-top-30" disabled><span>Отправить</span></button>
+                                                @else
+                                                <button type="submit" id="snackbar-place-bid" class="button ripple-effect move-on-hover full-width margin-top-30"><span>Отправить</span></button>
+                                                @endif
+                                            </form>
                                             @else
-                                            <button type="submit" id="snackbar-place-bid" class="button ripple-effect move-on-hover full-width margin-top-30"><span>Отправить</span></button>
+                                            Ваш аккаунт не проверен администраторами сайта.
                                             @endif
-                                        </form>
-                                        @else
-                                        Ваш аккаунт не проверен администраторами сайта.
-                                        @endif
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        @else
-                            @if($task->proposal_id == $userProposal->id)
-                            <div class="sidebar-widget">
-                                <div class="bidding-widget">
-                                    <div class="bidding-headline"><h3>Вы выбраны исполнителем!</h3></div>
-                                    @foreach ($errors->all() as $error)
-                                    <div class="notification error closeable">
-                                        <p>{{ $error }}</p>
-                                        <a class="close"></a>
-                                    </div>
-                                    @endforeach
-                                    @if(Session::has('updated'))
-                                    <div class="notification success closeable">
-                                        <p>{{ Session::get('updated') }}</p>
-                                        <a class="close"></a>
-                                    </div>
-                                    @endif
-                                    <div class="bidding-inner">
-                                        @if($task->getSelectedProposal()->status < 2)
-                                        <span class="bidding-detail">Задание <strong>выполнено</strong>?</span>
-                                        <form action="{{ route('tasks.close', $task->id) }}" method="POST" id="form-status" enctype="multipart/form-data">
-                                            @csrf
-                                            <input type="hidden" id="status" name="status" value="">
-                                            <div class="uploadButton margin-top-10">
-                                                <input name="file" type="file" accept="application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" id="upload" class="uploadButton-input">
-                                                <label for="upload" class="uploadButton-button ripple-effect">Загрузить документ</label>
-                                            </div>
-                                            <div class="bidding-fields">
-                                                <div class="bidding-field">
-                                                    <a href="#" data-status="2" class="button ripple-effect move-on-hover disabled" disabled>Да</a>
+                            @else
+                                @if($task->proposal_id == $userProposal->id)
+                                <div class="sidebar-widget">
+                                    <div class="bidding-widget">
+                                        <div class="bidding-headline"><h3>Вы выбраны исполнителем!</h3></div>
+                                        <div class="bidding-inner">
+                                            @if($taskProposal->status < 2)
+                                            <span class="bidding-detail">Управление <strong>заданием</strong></span>
+                                            <form action="{{ route('tasks.close', $task->id) }}" method="POST" id="form-status" enctype="multipart/form-data">
+                                                @csrf
+                                                <input type="hidden" id="status" name="status" value="">
+                                                <div class="uploadButton margin-top-10">
+                                                    <input name="file" type="file" accept="application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/zip, application/x-rar-compressed" id="upload" class="uploadButton-input">
+                                                    <label for="upload" class="uploadButton-button ripple-effect">Загрузить документ</label>
                                                 </div>
-                                                <div class="bidding-field">
-                                                    <a href="#" data-status="5" class="button ripple-effect move-on-hover">Нет</a>
-                                                </div>
-                                            </div>
-                                        </form>
-                                        @else
-                                        <span class="bidding-detail margin-top-10">Прикреплённый <strong>документ</strong></span>
-                                        @if(isset($task->file))
-                                        <a href="{{ route('tasks.download', $task->id) }}">Скачать документ</a>
-                                        @else
-                                        Нет прикреплённого документ
-                                        @endif
-                                        <span class="bidding-detail margin-top-10">Прикрепить <strong>новый документ</strong></span>
-                                        <form action="{{ route('tasks.upload', $task->id) }}" method="POST" id="form-status" enctype="multipart/form-data">
-                                            @csrf
-                                            <div class="bidding-fields">
-                                                <div class="bidding-field">
-                                                    <div class="uploadButton">
-                                                        <input name="file" type="file" accept="application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document" id="upload" class="uploadButton-input">
-                                                        <label for="upload" class="uploadButton-button ripple-effect">Выбрать...</label>
+                                                <div class="bidding-fields">
+                                                    <div class="bidding-field">
+                                                        <a href="#" data-status="2" class="button ripple-effect move-on-hover disabled" disabled>Задание выполнено</a>
                                                     </div>
                                                 </div>
-                                                <div class="bidding-field">
-                                                    <button type="submit" class="button ripple-effect move-on-hover" disabled>Обновить</button>
+                                            </form>
+                                            @else
+                                            <span class="bidding-detail margin-top-10">Прикреплённый <strong>документ</strong></span>
+                                            @if(isset($task->file))
+                                            <a href="{{ route('tasks.download', $task->id) }}">Скачать документ</a>
+                                            @else
+                                            Нет прикреплённого документ
+                                            @endif
+                                            <span class="bidding-detail margin-top-10">Прикрепить <strong>новый документ</strong></span>
+                                            <form action="{{ route('tasks.upload', $task->id) }}" method="POST" id="form-status" enctype="multipart/form-data">
+                                                @csrf
+                                                <div class="bidding-fields">
+                                                    <div class="bidding-field">
+                                                        <div class="uploadButton">
+                                                            <input name="file" type="file" accept="application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/zip, application/x-rar-compressed" id="upload" class="uploadButton-input">
+                                                            <label for="upload" class="uploadButton-button ripple-effect">Выбрать...</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="bidding-field">
+                                                        <button type="submit" class="button ripple-effect move-on-hover" disabled>Обновить</button>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                        </form>
-                                        @endif
+                                            </form>
+                                            @endif
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                                @endif
                             @endif
                         @endif
                     @elseif(Auth::user()->can('update', $task))
@@ -278,7 +294,7 @@
                                     @else
                                     Нет прикреплённого документ
                                     @endif
-                                    @if($task->proposal_id !== NULL && $task->getSelectedProposal()->status < 3)
+                                    @if($task->proposal_id !== NULL && $taskProposal->status < 3)
                                     <span class="bidding-detail margin-top-10">Задание <strong>выполнено?</strong></span>
                                     <form action="{{ route('tasks.close', $task->id) }}" method="POST" id="form-status" enctype="multipart/form-data">
                                         @csrf

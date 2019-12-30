@@ -197,13 +197,14 @@ class TaskController extends Controller
     public function show(Task $task)
     {
         $userProposal = NULL;
+        $taskProposal = $task->getSelectedProposal();
 
         if(Auth::check()){
             if(auth()->user()->type == 2)
                 $userProposal = Proposal::where('task_id', $task->id)->where('user_id', Auth::user()->id)->first();
         }
         
-        return view('tasks.show', array('task' => $task, 'userProposal' => $userProposal));
+        return view('tasks.show', array('task' => $task, 'userProposal' => $userProposal, 'taskProposal' => $taskProposal));
     }
 
     /**
