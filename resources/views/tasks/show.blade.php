@@ -219,54 +219,52 @@
                                 </div>
                             </div>
                         @else
-                            @if($taskProposal->status < 5)
-                                @if($task->proposal_id == $userProposal->id)
-                                <div class="sidebar-widget">
-                                    <div class="bidding-widget">
-                                        <div class="bidding-headline"><h3>Вы выбраны исполнителем!</h3></div>
-                                        <div class="bidding-inner">
-                                            @if($taskProposal->status < 2)
-                                            <span class="bidding-detail">Управление <strong>заданием</strong></span>
-                                            <form action="{{ route('tasks.close', $task->id) }}" method="POST" id="form-status" enctype="multipart/form-data">
-                                                @csrf
-                                                <input type="hidden" id="status" name="status" value="">
-                                                <div class="uploadButton margin-top-10">
-                                                    <input name="file" type="file" accept="application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/zip, application/x-rar-compressed" id="upload" class="uploadButton-input">
-                                                    <label for="upload" class="uploadButton-button ripple-effect">Загрузить документ</label>
+                            @if($task->proposal_id == $userProposal->id)
+                            <div class="sidebar-widget">
+                                <div class="bidding-widget">
+                                    <div class="bidding-headline"><h3>Вы выбраны исполнителем!</h3></div>
+                                    <div class="bidding-inner">
+                                        @if($taskProposal->status < 2)
+                                        <span class="bidding-detail">Управление <strong>заданием</strong></span>
+                                        <form action="{{ route('tasks.close', $task->id) }}" method="POST" id="form-status" enctype="multipart/form-data">
+                                            @csrf
+                                            <input type="hidden" id="status" name="status" value="">
+                                            <div class="uploadButton margin-top-10">
+                                                <input name="file" type="file" accept="application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/zip, application/x-rar-compressed" id="upload" class="uploadButton-input">
+                                                <label for="upload" class="uploadButton-button ripple-effect">Загрузить документ</label>
+                                            </div>
+                                            <div class="bidding-fields">
+                                                <div class="bidding-field">
+                                                    <a href="#" data-status="2" class="button ripple-effect move-on-hover disabled" disabled>Задание выполнено</a>
                                                 </div>
-                                                <div class="bidding-fields">
-                                                    <div class="bidding-field">
-                                                        <a href="#" data-status="2" class="button ripple-effect move-on-hover disabled" disabled>Задание выполнено</a>
+                                            </div>
+                                        </form>
+                                        @else
+                                        <span class="bidding-detail margin-top-10">Прикреплённый <strong>документ</strong></span>
+                                        @if(isset($task->file))
+                                        <a href="{{ route('tasks.download', $task->id) }}">Скачать документ</a>
+                                        @else
+                                        Нет прикреплённого документ
+                                        @endif
+                                        <span class="bidding-detail margin-top-10">Прикрепить <strong>новый документ</strong></span>
+                                        <form action="{{ route('tasks.upload', $task->id) }}" method="POST" id="form-status" enctype="multipart/form-data">
+                                            @csrf
+                                            <div class="bidding-fields">
+                                                <div class="bidding-field">
+                                                    <div class="uploadButton">
+                                                        <input name="file" type="file" accept="application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/zip, application/x-rar-compressed" id="upload" class="uploadButton-input">
+                                                        <label for="upload" class="uploadButton-button ripple-effect">Выбрать...</label>
                                                     </div>
                                                 </div>
-                                            </form>
-                                            @else
-                                            <span class="bidding-detail margin-top-10">Прикреплённый <strong>документ</strong></span>
-                                            @if(isset($task->file))
-                                            <a href="{{ route('tasks.download', $task->id) }}">Скачать документ</a>
-                                            @else
-                                            Нет прикреплённого документ
-                                            @endif
-                                            <span class="bidding-detail margin-top-10">Прикрепить <strong>новый документ</strong></span>
-                                            <form action="{{ route('tasks.upload', $task->id) }}" method="POST" id="form-status" enctype="multipart/form-data">
-                                                @csrf
-                                                <div class="bidding-fields">
-                                                    <div class="bidding-field">
-                                                        <div class="uploadButton">
-                                                            <input name="file" type="file" accept="application/msword, application/vnd.openxmlformats-officedocument.wordprocessingml.document, application/zip, application/x-rar-compressed" id="upload" class="uploadButton-input">
-                                                            <label for="upload" class="uploadButton-button ripple-effect">Выбрать...</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="bidding-field">
-                                                        <button type="submit" class="button ripple-effect move-on-hover" disabled>Обновить</button>
-                                                    </div>
+                                                <div class="bidding-field">
+                                                    <button type="submit" class="button ripple-effect move-on-hover" disabled>Обновить</button>
                                                 </div>
-                                            </form>
-                                            @endif
-                                        </div>
+                                            </div>
+                                        </form>
+                                        @endif
                                     </div>
                                 </div>
-                                @endif
+                            </div>
                             @endif
                         @endif
                     @elseif(Auth::user()->can('update', $task))
