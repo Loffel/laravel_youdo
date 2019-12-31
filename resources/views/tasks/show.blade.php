@@ -181,45 +181,45 @@
 
                 @auth
                     @if(auth()->user()->type == 2)
-                        @if($taskProposal->status < 5)
-                            @if($userProposal === NULL)
-                                <div class="sidebar-widget">
-                                    <div class="bidding-widget">
-                                        <div class="bidding-headline"><h3>Оставить предложение</h3></div>
-                                        <div class="bidding-inner">
-                                            @if(auth()->user()->is_verified)
-                                            <form action="{{ route('proposals.store') }}" method="POST">
-                                                @csrf
-                                                <input type="hidden" name="task_id" value="{{ $task->id }}">
-                                                <!-- Headline -->
-                                                <span class="bidding-detail">Установите вашу <strong>цену</strong></span>
+                        @if($userProposal === NULL)
+                            <div class="sidebar-widget">
+                                <div class="bidding-widget">
+                                    <div class="bidding-headline"><h3>Оставить предложение</h3></div>
+                                    <div class="bidding-inner">
+                                        @if(auth()->user()->is_verified)
+                                        <form action="{{ route('proposals.store') }}" method="POST">
+                                            @csrf
+                                            <input type="hidden" name="task_id" value="{{ $task->id }}">
+                                            <!-- Headline -->
+                                            <span class="bidding-detail">Установите вашу <strong>цену</strong></span>
 
-                                                <!-- Price Slider -->
-                                                {{--  <div class="bidding-value">₽<span id="biddingVal"></span></div>  --}}
-                                                <div class="bidding-value"><input step="100" type="number" id="priceValue"></div>
-                                                <input class="bidding-slider" name="price" type="text" value="" data-slider-handle="custom" data-slider-currency="₽" data-slider-min="0" data-slider-max="50000" data-slider-value="auto" data-slider-step="100" data-slider-tooltip="hide" />
-                                                
-                                                <!-- Headline -->
-                                                <span class="bidding-detail margin-top-30">Укажите <strong>комментарий</strong></span>
+                                            <!-- Price Slider -->
+                                            {{--  <div class="bidding-value">₽<span id="biddingVal"></span></div>  --}}
+                                            <div class="bidding-value"><input step="100" type="number" id="priceValue"></div>
+                                            <input class="bidding-slider" name="price" type="text" value="" data-slider-handle="custom" data-slider-currency="₽" data-slider-min="0" data-slider-max="50000" data-slider-value="auto" data-slider-step="100" data-slider-tooltip="hide" />
+                                            
+                                            <!-- Headline -->
+                                            <span class="bidding-detail margin-top-30">Укажите <strong>комментарий</strong></span>
 
-                                                <!-- Fields -->
-                                                <div class="bidding-field">
-                                                    <textarea class="with-border" name="description" id="description" rows="3" required></textarea>
-                                                </div>
+                                            <!-- Fields -->
+                                            <div class="bidding-field">
+                                                <textarea class="with-border" name="description" id="description" rows="3" required></textarea>
+                                            </div>
 
-                                                @if($task->proposal_id !== NULL)
-                                                <button id="snackbar-place-bid" data-original-title="Исполнитель выбран" data-tippy data-tippy-placement="top" class="button gray ripple-effect full-width margin-top-30" disabled><span>Отправить</span></button>
-                                                @else
-                                                <button type="submit" id="snackbar-place-bid" class="button ripple-effect move-on-hover full-width margin-top-30"><span>Отправить</span></button>
-                                                @endif
-                                            </form>
+                                            @if($task->proposal_id !== NULL)
+                                            <button id="snackbar-place-bid" data-original-title="Исполнитель выбран" data-tippy data-tippy-placement="top" class="button gray ripple-effect full-width margin-top-30" disabled><span>Отправить</span></button>
                                             @else
-                                            Ваш аккаунт не проверен администраторами сайта.
+                                            <button type="submit" id="snackbar-place-bid" class="button ripple-effect move-on-hover full-width margin-top-30"><span>Отправить</span></button>
                                             @endif
-                                        </div>
+                                        </form>
+                                        @else
+                                        Ваш аккаунт не проверен администраторами сайта.
+                                        @endif
                                     </div>
                                 </div>
-                            @else
+                            </div>
+                        @else
+                            @if($taskProposal->status < 5)
                                 @if($task->proposal_id == $userProposal->id)
                                 <div class="sidebar-widget">
                                     <div class="bidding-widget">
