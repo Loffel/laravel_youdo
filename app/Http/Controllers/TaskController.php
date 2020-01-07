@@ -272,7 +272,7 @@ class TaskController extends Controller
         if(auth()->user()->tasks->where('id', $task_id)->first() == NULL || auth()->user()->type != 1) return redirect()->back();
 
         $proposalPrice = Proposal::findOrFail($prop_id)->price;
-        return view('tasks.select_proposal', array('task_id' => $task_id, 'prop_id' => $prop_id, 'proposalPrice' => $proposalPrice, 'taskTitle' => Task::find($task_id)->first()->title));
+        return view('tasks.select_proposal', array('task_id' => $task_id, 'prop_id' => $prop_id, 'proposalPrice' => $proposalPrice, 'taskTitle' => Task::find($task_id)->title));
     }
 
     public function selectProposalStore(Request $request){

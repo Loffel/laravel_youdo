@@ -195,7 +195,7 @@
 
                                             <!-- Price Slider -->
                                             {{--  <div class="bidding-value">₽<span id="biddingVal"></span></div>  --}}
-                                            <div class="bidding-value"><input step="100" type="number" id="priceValue"></div>
+                                            <div class="bidding-value"><input type="number" id="priceValue"></div>
                                             <input class="bidding-slider" name="price" type="text" value="" data-slider-handle="custom" data-slider-currency="₽" data-slider-min="0" data-slider-max="50000" data-slider-value="auto" data-slider-step="100" data-slider-tooltip="hide" />
                                             
                                             <!-- Headline -->

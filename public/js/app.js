@@ -1949,6 +1949,9 @@ __webpack_require__.r(__webpack_exports__);
     messages: {
       type: Array,
       "default": []
+    },
+    avatar: {
+      type: String
     }
   },
   methods: {
@@ -2010,7 +2013,11 @@ Vue.component('datetime', vue_datetime__WEBPACK_IMPORTED_MODULE_0__["Datetime"])
       'date_end': luxon__WEBPACK_IMPORTED_MODULE_1__["DateTime"].fromSQL(this.curdate).toISO()
     };
   },
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    if (this.curdate) {
+      this.changeInput(this.date_end);
+    }
+  },
   render: function render() {},
   methods: {
     changeInput: function changeInput(value) {
@@ -2089,6 +2096,9 @@ __webpack_require__.r(__webpack_exports__);
     messages: {
       type: Array,
       required: true
+    },
+    avatar: {
+      type: String
     }
   },
   methods: {
@@ -2139,6 +2149,9 @@ __webpack_require__.r(__webpack_exports__);
     user: {
       type: Object,
       required: true
+    },
+    avatar: {
+      type: String
     }
   },
   data: function data() {
@@ -57586,7 +57599,11 @@ var render = function() {
       _vm._v(" "),
       _vm.contact
         ? _c("MessagesHistory", {
-            attrs: { contact: _vm.contact, messages: _vm.messages }
+            attrs: {
+              avatar: _vm.avatar,
+              contact: _vm.contact,
+              messages: _vm.messages
+            }
           })
         : _vm._e(),
       _vm._v(" "),
@@ -57645,7 +57662,10 @@ var render = function() {
         }
       }),
       _vm._v(" "),
-      _c("input", { attrs: { type: "hidden", name: "date_end", required: "" } })
+      _c("input", {
+        staticStyle: { display: "none" },
+        attrs: { type: "text", name: "date_end", required: "" }
+      })
     ],
     1
   )
@@ -57751,7 +57771,16 @@ var render = function() {
         [
           _c("div", { staticClass: "message-bubble-inner" }, [
             _c("div", { staticClass: "message-avatar" }, [
-              _c("img", { attrs: { src: _vm.contact.avatar, alt: "" } })
+              _c("img", {
+                attrs: {
+                  src:
+                    "" +
+                    (message.to_id == _vm.contact.id
+                      ? _vm.avatar
+                      : _vm.contact.avatar),
+                  alt: ""
+                }
+              })
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "message-text" }, [
@@ -57799,7 +57828,11 @@ var render = function() {
         }),
         _vm._v(" "),
         _c("Conversation", {
-          attrs: { contact: _vm.selectedContact, messages: _vm.messages },
+          attrs: {
+            avatar: _vm.avatar,
+            contact: _vm.selectedContact,
+            messages: _vm.messages
+          },
           on: { new: _vm.saveNewMessage }
         })
       ],

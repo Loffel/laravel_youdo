@@ -4,7 +4,7 @@
             <h4>{{contact ? contact.name : ''}}</h4>
             <a v-if="contact" href="#" class="message-action"><i class="icon-feather-trash-2"></i> Удалить диалог</a>
         </div>
-        <MessagesHistory v-if="contact" :contact="contact" :messages="messages"/>
+        <MessagesHistory :avatar="avatar" v-if="contact" :contact="contact" :messages="messages"/>
         <MessageComposer v-if="contact" @send="sendMessage"/>
     </div>
 </template>
@@ -22,6 +22,9 @@
             messages: {
                 type: Array,
                 default: []
+            },
+            avatar: {
+                type: String
             }
         },
         methods: {

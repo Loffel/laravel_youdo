@@ -70,7 +70,10 @@
 
                                     <div class="col-xl-6">
                                         <div class="submit-field">
-                                            <h5>Завершить до</h5>
+                                            <h5>Завершить до
+                                                <span>(*)</span>
+                                                <i class="help-icon" data-tippy-placement="right" title="Время завершения задания"></i>
+                                            </h5>
                                             <div class="row">
                                                 <div class="col-xl-12">
                                                     <div class="input-with-icon">

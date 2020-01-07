@@ -1,7 +1,7 @@
 <template>
     <div>
     <datetime format="yyyy-LL-dd HH:mm:00" auto input-id="date_end" input-class="mywith-border" :phrases="{ok: 'Выбрать', cancel: 'Закрыть'}" type="datetime" @input="changeInput(date_end)" v-model="date_end"></datetime>
-    <input type="hidden" name="date_end" required>
+    <input style="display:none;" type="text" name="date_end" required>
     </div>
 
 </template>
@@ -24,6 +24,9 @@ export default {
         }
     },
     mounted(){
+        if(this.curdate){
+            this.changeInput(this.date_end);
+        }
     },
     render(){
     },

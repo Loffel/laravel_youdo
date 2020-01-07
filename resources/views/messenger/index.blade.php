@@ -32,7 +32,7 @@
 				</nav>
 			</div>
     
-            <messenger :user="{{ auth()->user() }}"></messenger>
+            <messenger :user="{{ auth()->user() }}" :avatar="`{{ auth()->user()->getAvatar() }}`"></messenger>
 			
 			<!-- Messages Container / End -->
             @include('includes/dashboard_footer')

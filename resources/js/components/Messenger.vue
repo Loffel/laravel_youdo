@@ -2,7 +2,7 @@
     <div class="messages-container margin-top-0">
         <div class="messages-container-inner">
             <ContactList :contacts="contacts" @selected="startConversationWith"/>
-            <Conversation :contact="selectedContact" :messages="messages" @new="saveNewMessage"/>
+            <Conversation :avatar="avatar" :contact="selectedContact" :messages="messages" @new="saveNewMessage"/>
         </div>
     </div>
 </template>
@@ -16,6 +16,9 @@
             user: {
                 type: Object,
                 required: true
+            },
+            avatar: {
+                type: String
             }
         },
         data(){
